@@ -89,6 +89,28 @@
     font-size: 12px;
     color: rgba(170, 176, 214, 0.6);
   }
+  .stop-block {
+    margin-top: 26px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+  }
+  .stop-q {
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .stop-t {
+    margin-top: 8px;
+    font-size: clamp(18px, 4.6vw, 24px);
+    font-weight: 700;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.5px;
+  }
+  .stop-note {
+    margin-top: 8px;
+    font-size: 12px;
+    color: rgba(170, 176, 214, 0.6);
+  }
   @media (max-width: 480px) {
     .card { padding: 36px 24px; }
   }
@@ -122,12 +144,35 @@
     </p>
 
     <div class="meta">
-      服务终止时间：<b>2026 年</b>　·　本页为停运公告，长期保留
+      服务终止时间：<b>2026-09-20</b>　·　本页为停运公告，长期保留
     </div>
 
     <footer>
       山水有相逢，后会有期。愿前路皆坦途。
     </footer>
+
+    <div class="stop-block">
+      <div class="stop-q">本网站已停止服务多长时间？</div>
+      <div class="stop-t" id="elapsed">计算中…</div>
+      <div class="stop-note">自服务终止时刻起，这一时长在真实时间里每秒递增。</div>
+    </div>
   </main>
+
+  <script>
+    // 服务终止时刻：北京时间 2026-09-20 01:26:00（= UTC 2026-09-19 17:26:00）
+    var STOP = Date.UTC(2026, 8, 19, 17, 26, 0);
+    function pad(n) { return String(n).padStart(2, "0"); }
+    function fmtElapsed(ms) {
+      var s = Math.max(0, Math.floor(ms / 1000));
+      var d = Math.floor(s / 86400); s %= 86400;
+      var h = Math.floor(s / 3600); s %= 3600;
+      var m = Math.floor(s / 60); s %= 60;
+      return d + " 天 " + pad(h) + " 小时 " + pad(m) + " 分 " + pad(s) + " 秒";
+    }
+    var el = document.getElementById("elapsed");
+    function tick() { el.textContent = fmtElapsed(Date.now() - STOP); }
+    tick();
+    setInterval(tick, 1000);
+  </script>
 </body>
 </html>
