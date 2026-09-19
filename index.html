@@ -260,7 +260,7 @@
         '<a href="'+esc(k.url)+'" target="_blank" rel="noopener">GitHub 仓库</a></div></div>';
   }
 
-  function show(key){
+  function show(key, push){
     cur = key;
     Array.prototype.forEach.call(document.querySelectorAll(".sec"), function(el){
       el.classList.toggle("on", el.id === "s_"+key);
@@ -268,8 +268,9 @@
     Array.prototype.forEach.call(document.querySelectorAll(".tab"), function(el){
       el.classList.toggle("on", el.getAttribute("data-k") === key);
     });
+    if(push !== false && history.replaceState) history.replaceState(null, "", "#"+key);
     filter();
-    window.scrollTo({top:0, behavior:"smooth"});
+    if(push !== false) window.scrollTo({top:0, behavior:"smooth"});
   }
   document.getElementById("tabs").addEventListener("click", function(e){
     var t = e.target.closest(".tab"); if(t) show(t.getAttribute("data-k"));
@@ -354,7 +355,9 @@
     tip("已下载 " + curSet.icon.name + ".svg");
   };
 
-  show(tabs[0].key);
+  var h = location.hash.slice(1);
+  var valid = tabs.some(function(t){return t.key === h;});
+  show(valid ? h : tabs[0].key, false);
 })();
 </script>
 </body>
