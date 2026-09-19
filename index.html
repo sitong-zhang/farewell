@@ -91,8 +91,10 @@
   }
   .stop-block {
     margin-top: 26px;
-    padding-top: 22px;
-    border-top: 1px solid var(--line);
+    padding: 18px 16px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: rgba(255, 212, 121, 0.04);
   }
   .stop-q {
     color: var(--muted);
@@ -120,8 +122,12 @@
   <main class="card">
     <div class="mark" aria-hidden="true">
       <svg viewBox="0 0 24 24" fill="none" stroke="#ffd479" stroke-width="1.8"
-           stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 21s-7.5-4.6-9.5-9.2C1 8.4 2.7 5 6 5c2 0 3.2 1.2 4 2.4C10.8 6.2 12 5 14 5c3.3 0 5 3.4 3.5 6.8C19.5 16.4 12 21 12 21z"/>
+           stroke-linecap="round" stroke-linejoin="round"
+           xmlns="http://www.w3.org/2000/svg" role="img" aria-label="server">
+        <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/>
+        <rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+        <line x1="6" y1="6" x2="6.01" y2="6"/>
+        <line x1="6" y1="18" x2="6.01" y2="18"/>
       </svg>
     </div>
 
@@ -144,17 +150,17 @@
     </p>
 
     <div class="meta">
-      服务终止时间：<b>2026-09-20</b>　·　本页为停运公告，长期保留
+      服务终止时间：<b>2026年09月20日 01:26（北京时间）</b>　·　本页为停运公告 · 长期保留
     </div>
 
     <footer>
-      山水有相逢，后会有期。愿前路皆坦途。
+      山水有相逢 · 后会有期 · 愿前路皆坦途
     </footer>
 
     <div class="stop-block">
       <div class="stop-q">本网站已停止服务多长时间？</div>
       <div class="stop-t" id="elapsed">计算中…</div>
-      <div class="stop-note">自服务终止时刻起，这一时长在真实时间里每秒递增。</div>
+      <div class="stop-note">此计时与真实时间同步 · 逐秒递增 · 永久保留</div>
     </div>
   </main>
 
