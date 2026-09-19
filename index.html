@@ -4,13 +4,13 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>UI 图标与设计资源库 · GitHub 高星收录</title>
-<meta name="description" content="收录 GitHub 上高星的 SVG 图标库与各端 UI 组件库：通用 UI 图标、品牌与技术图标、表情旗帜、Web UI 组件库、移动端与小程序 UI、设计系统与开源字体。全部图标均为真实 SVG，可搜索、复制、下载。" />
+<meta name="description" content="收录 GitHub 上高星的 SVG 图标库与各端 UI 组件库：8688 个真实 SVG 图标、45 套图标库、85 个 UI 设计项目。可搜索、一键复制源码、直接下载。" />
 <style>
   :root{
     --bg:#0b0d17; --bg2:#121529; --card:rgba(255,255,255,.045);
     --line:rgba(255,255,255,.10); --line2:rgba(255,255,255,.06);
     --ink:#e8ebff; --muted:#98a0c8; --dim:#6f77a0;
-    --acc:#7dd3fc; --acc2:#a78bfa; --gold:#ffd479;
+    --acc:#7dd3fc; --acc2:#a78bfa; --gold:#ffd479; --sz:26px; --ic:#cbd5f5;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{
@@ -25,70 +25,60 @@
   a{color:inherit;text-decoration:none}
   .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
 
-  header.hero{padding:52px 0 26px;text-align:center}
+  header.hero{padding:48px 0 22px;text-align:center}
   .badge{
     display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--acc);
     border:1px solid rgba(125,211,252,.32);background:rgba(125,211,252,.08);
-    padding:5px 14px;border-radius:999px;margin-bottom:18px;
+    padding:5px 14px;border-radius:999px;margin-bottom:16px;
   }
-  h1{font-size:clamp(24px,4.4vw,38px);font-weight:800;letter-spacing:.5px;line-height:1.25}
+  h1{font-size:clamp(24px,4.4vw,38px);font-weight:800;letter-spacing:.5px}
   h1 span{background:linear-gradient(92deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .sub{margin-top:12px;color:var(--muted);font-size:15px;max-width:720px;margin-left:auto;margin-right:auto}
-  .stats{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:22px}
-  .stat{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:10px 18px;min-width:104px}
+  .sub{margin-top:12px;color:var(--muted);font-size:15px;max-width:760px;margin-left:auto;margin-right:auto}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:20px}
+  .stat{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:10px 18px;min-width:112px}
   .stat b{display:block;font-size:20px;color:var(--gold);font-variant-numeric:tabular-nums}
   .stat i{font-style:normal;font-size:12px;color:var(--dim)}
+  .loadbar{margin:14px auto 0;max-width:420px;height:4px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+  .loadbar i{display:block;height:100%;width:0;background:linear-gradient(92deg,var(--acc),var(--acc2));transition:.3s}
+  .loadtxt{font-size:11.5px;color:var(--dim);margin-top:6px}
 
-  .toolbar{
-    position:sticky;top:0;z-index:40;margin-top:26px;
-    backdrop-filter:blur(14px);background:rgba(11,13,23,.86);
-    border-top:1px solid var(--line2);border-bottom:1px solid var(--line2);
-  }
+  .toolbar{position:sticky;top:0;z-index:40;margin-top:22px;backdrop-filter:blur(14px);background:rgba(11,13,23,.88);border-top:1px solid var(--line2);border-bottom:1px solid var(--line2)}
   .toolbar .wrap{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:12px 20px}
   .search{flex:1;min-width:240px;position:relative}
-  .search input{
-    width:100%;padding:10px 14px 10px 38px;border-radius:10px;
-    border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--ink);font-size:14px;outline:none;
-  }
+  .search input{width:100%;padding:10px 14px 10px 38px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--ink);font-size:14px;outline:none}
   .search input:focus{border-color:rgba(125,211,252,.55);box-shadow:0 0 0 3px rgba(125,211,252,.12)}
   .search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--dim)}
   .ctrl{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dim)}
-  .ctrl input[type=range]{width:96px;accent-color:var(--acc)}
+  .ctrl input[type=range]{width:92px;accent-color:var(--acc)}
   .ctrl input[type=color]{width:30px;height:26px;padding:0;border:1px solid var(--line);border-radius:6px;background:none;cursor:pointer}
-
   nav.tabs{display:flex;gap:6px;overflow-x:auto;padding:2px}
-  .tab{
-    white-space:nowrap;font-size:13px;padding:7px 14px;border-radius:999px;cursor:pointer;
-    border:1px solid var(--line);color:var(--muted);background:rgba(255,255,255,.03);transition:.15s;
-  }
+  .tab{white-space:nowrap;font-size:13px;padding:7px 14px;border-radius:999px;cursor:pointer;border:1px solid var(--line);color:var(--muted);background:rgba(255,255,255,.03);transition:.15s}
   .tab:hover{color:var(--ink);border-color:rgba(125,211,252,.4)}
   .tab.on{background:linear-gradient(92deg,rgba(125,211,252,.22),rgba(167,139,250,.22));color:#fff;border-color:rgba(125,211,252,.5)}
 
-  main{padding:26px 0 60px}
+  main{padding:24px 0 60px}
   .sec{display:none}
   .sec.on{display:block}
-  .sec-head{margin:30px 0 14px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .sec-head{margin:26px 0 14px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
   .sec-head h2{font-size:19px;font-weight:700}
   .sec-head p{font-size:13px;color:var(--dim)}
 
-  .set{border:1px solid var(--line);background:var(--card);border-radius:16px;margin-bottom:18px;overflow:hidden}
-  .set-hd{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line2)}
-  .set-hd h3{font-size:16px;font-weight:700;margin-right:2px}
+  .set{border:1px solid var(--line);background:var(--card);border-radius:16px;margin-bottom:18px;overflow:hidden;content-visibility:auto;contain-intrinsic-size:auto 460px}
+  .set-hd{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:15px 18px;border-bottom:1px solid var(--line2)}
+  .set-hd h3{font-size:16px;font-weight:700}
   .star{color:var(--gold);font-size:13px;font-variant-numeric:tabular-nums}
   .tag{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:2px 8px}
   .tag.lic{color:#8ee0b8;border-color:rgba(142,224,184,.28)}
   .spacer{flex:1}
   .set-hd a.lnk{font-size:12px;color:var(--acc);border-bottom:1px dashed rgba(125,211,252,.4)}
-  .set-hd a.lnk:hover{color:#fff}
-  .set-desc{padding:0 18px 12px;font-size:12.5px;color:var(--dim);margin-top:-4px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:8px;padding:14px 18px 20px}
-  .ico{
-    aspect-ratio:1/1;display:grid;place-items:center;cursor:pointer;border-radius:11px;
-    border:1px solid var(--line2);background:rgba(255,255,255,.03);transition:.14s;position:relative;
-  }
+  .set-desc{padding:10px 18px 0;font-size:12.5px;color:var(--dim)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(66px,1fr));gap:7px;padding:14px 18px 20px}
+  .ico{aspect-ratio:1/1;display:grid;place-items:center;cursor:pointer;border-radius:10px;border:1px solid var(--line2);background:rgba(255,255,255,.03);transition:.14s}
   .ico:hover{border-color:rgba(125,211,252,.55);background:rgba(125,211,252,.09);transform:translateY(-2px)}
-  .ico svg{width:var(--sz,26px);height:var(--sz,26px);display:block}
-  .mono svg{color:var(--ic,#cbd5f5)}
+  .ico svg{width:var(--sz);height:var(--sz);display:block}
+  .mono svg{color:var(--ic)}
+  .sk{border-radius:10px;background:rgba(255,255,255,.05);aspect-ratio:1/1;animation:pl 1.2s infinite}
+  @keyframes pl{0%,100%{opacity:.35}50%{opacity:.12}}
   .empty{padding:22px 18px;color:var(--dim);font-size:13px}
 
   .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(288px,1fr));gap:14px}
@@ -97,44 +87,36 @@
   .kit h4{font-size:14.5px;font-weight:700;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
   .kit .repo{font-size:11.5px;color:var(--dim);margin-top:3px;word-break:break-all}
   .kit p{font-size:12.5px;color:var(--muted);margin-top:8px;min-height:38px}
-  .kit .row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;align-items:center}
+  .kit .row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
   .kit .go{margin-top:12px;display:flex;gap:12px;font-size:12px}
   .kit .go a{color:var(--acc)}
-  .kit .go a:hover{text-decoration:underline}
 
-  .modal{position:fixed;inset:0;display:none;place-items:center;background:rgba(6,8,16,.72);z-index:80;padding:20px}
+  .modal{position:fixed;inset:0;display:none;place-items:center;background:rgba(6,8,16,.74);z-index:80;padding:20px}
   .modal.on{display:grid}
   .sheet{width:min(440px,100%);border:1px solid var(--line);background:#151935;border-radius:16px;padding:22px}
   .sheet .pv{display:grid;place-items:center;height:170px;border:1px solid var(--line2);border-radius:12px;background:rgba(255,255,255,.03);margin-bottom:14px}
-  .sheet .pv svg{width:96px;height:96px;color:var(--ic,#cbd5f5)}
-  .sheet h5{font-size:15px;font-weight:700;word-break:break-all}
-  .sheet .meta{font-size:12px;color:var(--dim);margin-top:4px}
+  .sheet .pv svg{width:96px;height:96px;color:var(--ic)}
   .btns{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
   .btn{cursor:pointer;font-size:13px;padding:9px 15px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--ink)}
   .btn:hover{border-color:rgba(125,211,252,.5)}
   .btn.pri{background:linear-gradient(92deg,rgba(125,211,252,.28),rgba(167,139,250,.28));border-color:rgba(125,211,252,.45)}
-  .toast{
-    position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
-    background:#1c2145;border:1px solid rgba(125,211,252,.45);color:#fff;
-    padding:10px 20px;border-radius:12px;font-size:13px;opacity:0;pointer-events:none;transition:.22s;z-index:99;
-  }
+  .toast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);background:#1c2145;border:1px solid rgba(125,211,252,.45);color:#fff;padding:10px 20px;border-radius:12px;font-size:13px;opacity:0;pointer-events:none;transition:.22s;z-index:99}
   .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
-  footer.ft{border-top:1px solid var(--line2);padding:26px 0 40px;font-size:12px;color:var(--dim);text-align:center}
-  footer.ft a{color:var(--acc)}
-  .hint{font-size:12px;color:var(--dim);margin-top:8px}
+  footer.ft{border-top:1px solid var(--line2);padding:24px 0 40px;font-size:12px;color:var(--dim);text-align:center}
+  .hint{font-size:12px;color:var(--dim);margin-top:10px}
+  code{background:rgba(255,255,255,.08);padding:1px 5px;border-radius:4px}
 </style>
 </head>
 <body>
 
 <header class="hero">
   <div class="wrap">
-    <div class="badge">
-      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 6 6 .9-4.5 4.3 1 6.3L12 16.8 6.5 19.5l1-6.3L3 8.9 9 8z"/></svg>
-      数据实时来自 GitHub API · 图标为仓库原文件 SVG
-    </div>
+    <div class="badge">数据实时来自 GitHub API · 图标为仓库原始 SVG 文件</div>
     <h1>UI 图标与<span>设计资源库</span></h1>
-    <p class="sub">收录 GitHub 上星标最高、质量最好的开源图标库与 UI 设计资源：通用 UI 图标、品牌与技术图标、表情旗帜、Web 组件库、移动端与小程序 UI、设计系统与开源字体。所有图标均为官方仓库内的真实 SVG 文件，可搜索、一键复制源码、直接下载。</p>
+    <p class="sub">收录 GitHub 上星标最高、质量最好的开源图标库与 UI 设计资源。全部图标均为官方仓库内的真实 SVG 源文件，支持搜索、一键复制源码、直接下载。</p>
     <div class="stats" id="stats"></div>
+    <div class="loadbar"><i id="lb"></i></div>
+    <div class="loadtxt" id="lt">图标按库分文件懒加载中…</div>
   </div>
 </header>
 
@@ -142,7 +124,7 @@
   <div class="wrap">
     <div class="search">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-      <input id="q" type="search" placeholder="搜索图标名称（如 arrow / home / github）或 UI 库名称…" autocomplete="off" />
+      <input id="q" type="search" placeholder="搜索图标名 / 库名（如 arrow、home、github、button）" autocomplete="off" />
     </div>
     <div class="ctrl">
       <span>尺寸</span><input id="szR" type="range" min="16" max="56" value="26" />
@@ -155,14 +137,12 @@
 <main class="wrap">
   <div id="iconSecs"></div>
   <div id="kitSecs"></div>
-  <div class="empty" id="noRes" style="display:none">没有匹配的结果，换个关键词试试。</div>
+  <div class="empty" id="noRes" style="display:none">没有匹配结果，换个关键词试试。</div>
 </main>
 
 <footer class="ft">
   <div class="wrap">
-    数据来源：<a href="https://github.com" target="_blank" rel="noopener">GitHub</a> 官方 API 与仓库原始文件 ·
-    图标版权与许可证归各开源项目所有，请遵循对应 License 使用<br/>
-    <span id="ftStat"></span>
+    数据来源：GitHub 官方 API 与仓库原始文件 · 图标版权与许可证归各开源项目所有，请遵循对应 License 使用<br/><span id="ftStat"></span>
   </div>
 </footer>
 
@@ -170,14 +150,14 @@
   <div class="sheet">
     <div class="pv" id="pv"></div>
     <h5 id="mName"></h5>
-    <div class="meta" id="mMeta"></div>
+    <div class="meta" id="mMeta" style="font-size:12px;color:#6f77a0;margin-top:4px"></div>
     <div class="btns">
       <button class="btn pri" id="bCopy">复制 SVG 源码</button>
       <button class="btn" id="bDown">下载 .svg</button>
       <button class="btn" id="bName">复制图标名</button>
       <button class="btn" id="bClose">关闭</button>
     </div>
-    <div class="hint">提示：单色图标已统一为 <code>currentColor</code>，可通过 CSS <code>color</code> 任意改色。</div>
+    <div class="hint">单色图标已统一为 <code>currentColor</code>，可用 CSS <code>color</code> 任意改色。</div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
@@ -187,177 +167,201 @@
 <script>
 (function(){
   var SETS = window.ICON_SETS || [], KITS = window.UI_KITS || [];
-  var GROUP_LABEL = {general:"通用 UI 图标", brand:"品牌 · 技术 · 应用图标", emoji:"表情 · 旗帜 · 动效"};
-  var GROUP_NOTE = {
-    general:"界面通用图标，覆盖导航、操作、文件、媒体、设备等日常 UI 场景，全部为单色 SVG，可任意改色。",
-    brand:"品牌 logo、技术栈、文件类型与应用图标，多为彩色原图，适合落地页与技术栈展示。",
-    emoji:"表情、国旗与加载动效图标，均为矢量源文件。"
+  var DATA = {};
+  var GL = {general:"通用 UI 图标", brand:"品牌 · 技术 · 应用图标", emoji:"表情 · 旗帜 · 动效"};
+  var GN = {
+    general:"界面通用图标：导航、操作、文件、媒体、设备等，全部单色 SVG，可任意改色。",
+    brand:"品牌 logo、技术栈、文件类型与应用图标，多为彩色原图。",
+    emoji:"表情、国旗与加载动效，均为矢量源文件。"
   };
   var ORDER = ["general","brand","emoji"];
-  var cur = "general", curSet = null;
-
-  // 统计
-  var totalIcons = SETS.reduce(function(a,s){return a+s.icons.length;},0);
-  var totalKits = KITS.reduce(function(a,g){return a+g.items.length;},0);
-  var stars = SETS.concat(KITS.reduce(function(a,g){return a.concat(g.items);},[]))
-                  .reduce(function(a,x){return a+(x.stars||0);},0);
-  document.getElementById("stats").innerHTML = [
-    ["图标库", SETS.length+" 套"], ["收录图标", totalIcons+" 个 SVG"],
-    ["UI 资源", totalKits+" 个项目"], ["星标合计", stars>=1e6 ? (stars/1e6).toFixed(2)+"M" : (stars/1000).toFixed(1)+"k"]
-  ].map(function(p){return '<div class="stat"><b>'+p[1]+'</b><i>'+p[0]+'</i></div>';}).join("");
-  document.getElementById("ftStat").textContent =
-    "共收录 "+SETS.length+" 套图标库 / "+totalIcons+" 个 SVG 图标 / "+totalKits+" 个 UI 设计项目 · 抓取于 2026-09-20";
-
-  // Tabs
-  var tabs = ORDER.map(function(g){
-    return {key:g, label:GROUP_LABEL[g]};
-  }).filter(function(t){ return SETS.some(function(s){return s.group===t.key;}); });
-  KITS.forEach(function(g){ tabs.push({key:"k_"+g.key, label:g.label}); });
-  document.getElementById("tabs").innerHTML = tabs.map(function(t,i){
-    return '<div class="tab'+(i===0?" on":"")+'" data-k="'+t.key+'">'+t.label+'</div>';
-  }).join("");
-
-  // 图标分区
-  var secs = "";
-  ORDER.forEach(function(g){
-    var list = SETS.filter(function(s){return s.group===g;});
-    if(!list.length) return;
-    secs += '<section class="sec" id="s_'+g+'"><div class="sec-head"><h2>'+GROUP_LABEL[g]+'</h2>'+
-            '<p>'+GROUP_NOTE[g]+'</p></div>'+ list.map(renderSet).join("") +'</section>';
-  });
-  // UI 资源分区
-  KITS.forEach(function(g){
-    secs += '<section class="sec" id="s_k_'+g.key+'"><div class="sec-head"><h2>'+g.label+'</h2><p>'+g.note+'</p></div>'+
-            '<div class="cards">'+ g.items.map(renderKit).join("") +'</div></section>';
-  });
-  document.getElementById("iconSecs").innerHTML = secs;
+  var loaded = {}, loading = {}, allRequested = false, curIcon = null;
 
   function esc(s){return String(s||"").replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
-  function renderSet(s){
+
+  var totalIcons = SETS.reduce(function(a,s){return a+s.count;},0);
+  var totalKits = KITS.reduce(function(a,g){return a+g.items.length;},0);
+  var stars = SETS.concat(KITS.reduce(function(a,g){return a.concat(g.items);},[])).reduce(function(a,x){return a+(x.stars||0);},0);
+  document.getElementById("stats").innerHTML = [
+    ["图标库", SETS.length+" 套"], ["收录图标", totalIcons.toLocaleString()+" 个"],
+    ["UI 资源", totalKits+" 个项目"], ["星标合计", stars>=1e6?(stars/1e6).toFixed(2)+"M":(stars/1000).toFixed(1)+"k"]
+  ].map(function(p){return '<div class="stat"><b>'+p[1]+'</b><i>'+p[0]+'</i></div>';}).join("");
+  document.getElementById("ftStat").textContent =
+    "共 "+SETS.length+" 套图标库 / "+totalIcons.toLocaleString()+" 个 SVG 图标 / "+totalKits+" 个 UI 设计项目 · 抓取于 2026-09-20";
+
+  function setCard(s){
     return '<div class="set" data-set="'+esc(s.repo)+'">'+
-      '<div class="set-hd"><h3>'+esc(s.name)+'</h3>'+
-      '<span class="star">★ '+s.stars.toLocaleString()+'</span>'+
+      '<div class="set-hd"><h3>'+esc(s.name)+'</h3><span class="star">★ '+s.stars.toLocaleString()+'</span>'+
       (s.license?'<span class="tag lic">'+esc(s.license)+'</span>':'')+
-      '<span class="tag">收录 '+s.icons.length+' / 库内 '+s.total+'</span>'+
+      '<span class="tag">'+s.count+' 个 / 库内 '+(s.total||s.count)+'</span>'+
       (s.mono?'<span class="tag">单色可改色</span>':'<span class="tag">彩色原图</span>')+
       '<span class="spacer"></span>'+
       (s.homepage?'<a class="lnk" href="'+esc(s.homepage)+'" target="_blank" rel="noopener">官方预览</a>':'')+
       '<a class="lnk" href="'+esc(s.url)+'" target="_blank" rel="noopener">仓库</a></div>'+
       (s.desc?'<div class="set-desc">'+esc(s.desc)+'</div>':'')+
-      '<div class="grid">'+ s.icons.map(function(i){
-        return '<div class="ico'+(s.mono?" mono":"")+'" title="'+esc(i.name)+'" data-set="'+esc(s.repo)+'" data-name="'+esc(i.name)+'">'+i.svg+'</div>';
-      }).join("") +'</div></div>';
+      '<div class="grid" id="g_'+esc(s.repo)+'">'+ skeleton(12) +'</div></div>';
   }
-  function renderKit(k){
+  function skeleton(n){ var h=""; for(var i=0;i<n;i++) h+='<div class="sk"></div>'; return h; }
+  function kitCard(k){
     return '<div class="kit" data-kit="'+esc(k.repo)+'">'+
       '<h4>'+esc(k.name)+' <span class="star">★ '+k.stars.toLocaleString()+'</span>'+
       (k.license?'<span class="tag lic">'+esc(k.license)+'</span>':'')+'</h4>'+
-      '<div class="repo">'+esc(k.repo)+'</div>'+
-      '<p>'+esc(k.desc||"（暂无描述）")+'</p>'+
-      '<div class="row">'+(k.lang?'<span class="tag">'+esc(k.lang)+'</span>':'')+
-        (k.homepage?'<span class="tag">有官网</span>':'')+'</div>'+
+      '<div class="repo">'+esc(k.repo)+'</div><p>'+esc(k.desc||"（暂无描述）")+'</p>'+
+      '<div class="row">'+(k.lang?'<span class="tag">'+esc(k.lang)+'</span>':'')+(k.homepage?'<span class="tag">有官网</span>':'')+'</div>'+
       '<div class="go">'+(k.homepage?'<a href="'+esc(k.homepage)+'" target="_blank" rel="noopener">官网 / 预览</a>':'')+
-        '<a href="'+esc(k.url)+'" target="_blank" rel="noopener">GitHub 仓库</a></div></div>';
+      '<a href="'+esc(k.url)+'" target="_blank" rel="noopener">GitHub 仓库</a></div></div>';
   }
 
-  function show(key, push){
-    cur = key;
-    Array.prototype.forEach.call(document.querySelectorAll(".sec"), function(el){
-      el.classList.toggle("on", el.id === "s_"+key);
-    });
-    Array.prototype.forEach.call(document.querySelectorAll(".tab"), function(el){
-      el.classList.toggle("on", el.getAttribute("data-k") === key);
-    });
-    if(push !== false && history.replaceState) history.replaceState(null, "", "#"+key);
+  var tabs = ORDER.filter(function(g){return SETS.some(function(s){return s.group===g;});})
+                  .map(function(g){return {key:g,label:GL[g]};});
+  KITS.forEach(function(g){tabs.push({key:"k_"+g.key,label:g.label});});
+  document.getElementById("tabs").innerHTML = tabs.map(function(t,i){
+    return '<div class="tab'+(i===0?" on":"")+'" data-k="'+t.key+'">'+t.label+'</div>';});
+
+  var html = "";
+  ORDER.forEach(function(g){
+    var list = SETS.filter(function(s){return s.group===g;});
+    if(!list.length) return;
+    html += '<section class="sec" id="s_'+g+'"><div class="sec-head"><h2>'+GL[g]+'（'+list.length+' 套 · '+
+            list.reduce(function(a,s){return a+s.count;},0)+' 个）</h2><p>'+GN[g]+'</p></div>'+list.map(setCard).join("")+'</section>';
+  });
+  KITS.forEach(function(g){
+    html += '<section class="sec" id="s_k_'+g.key+'"><div class="sec-head"><h2>'+g.label+'（'+g.items.length+' 个）</h2><p>'+g.note+'</p></div>'+
+            '<div class="cards">'+g.items.map(kitCard).join("")+'</div></section>';
+  });
+  document.getElementById("iconSecs").innerHTML = html;
+
+  window.__ADD = function(repo, icons){ DATA[repo] = icons; loaded[repo] = true; paint(repo); progress(); };
+  function load(repo){
+    if(loaded[repo] || loading[repo]) return;
+    var s = SETS.filter(function(x){return x.repo===repo;})[0]; if(!s) return;
+    loading[repo] = true;
+    var el = document.createElement("script");
+    el.src = s.file; el.async = true;
+    el.onerror = function(){
+      loading[repo] = false;
+      var g = document.getElementById("g_"+repo);
+      if(g) g.innerHTML = '<div class="empty">该库图标加载失败，请刷新重试</div>';
+    };
+    document.head.appendChild(el);
+  }
+  function paint(repo){
+    var g = document.getElementById("g_"+repo); if(!g) return;
+    var icons = DATA[repo] || [];
+    var mono = (SETS.filter(function(x){return x.repo===repo;})[0]||{}).mono;
+    g.innerHTML = icons.map(function(i){
+      return '<div class="ico'+(mono?" mono":"")+'" title="'+esc(i.n)+'" data-set="'+esc(repo)+'" data-name="'+esc(i.n)+'">'+i.s+'</div>';
+    }).join("");
     filter();
-    if(push !== false) window.scrollTo({top:0, behavior:"smooth"});
+  }
+  function progress(){
+    var n = Object.keys(loaded).length, tot = SETS.length;
+    var ic = Object.keys(loaded).reduce(function(a,r){return a+(DATA[r]||[]).length;},0);
+    document.getElementById("lb").style.width = (n/tot*100).toFixed(1)+"%";
+    document.getElementById("lt").textContent = n>=tot
+      ? ("全部 "+tot+" 套图标已就绪 · 共 "+ic.toLocaleString()+" 个 SVG 可搜索")
+      : ("已加载 "+n+"/"+tot+" 套 · "+ic.toLocaleString()+" 个图标"+(allRequested?"（加载中…）":""));
+  }
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ load(e.target.getAttribute("data-set")); io.unobserve(e.target); } });
+  }, {rootMargin:"400px"});
+  Array.prototype.forEach.call(document.querySelectorAll(".set"), function(el){ io.observe(el); });
+
+  function loadAll(){
+    if(allRequested) return;
+    allRequested = true;
+    var queue = SETS.map(function(s){return s.repo;}).filter(function(r){return !loaded[r] && !loading[r];});
+    var i = 0;
+    (function next(){
+      for(var k=0;k<4 && i<queue.length;k++) load(queue[i++]);
+      if(i < queue.length) setTimeout(next, 120);
+    })();
+  }
+  setTimeout(loadAll, 800);
+
+  function show(key, push){
+    Array.prototype.forEach.call(document.querySelectorAll(".sec"), function(el){ el.classList.toggle("on", el.id==="s_"+key); });
+    Array.prototype.forEach.call(document.querySelectorAll(".tab"), function(el){ el.classList.toggle("on", el.getAttribute("data-k")===key); });
+    if(push!==false && history.replaceState) history.replaceState(null,"","#"+key);
+    filter();
+    if(push!==false) window.scrollTo({top:0,behavior:"smooth"});
   }
   document.getElementById("tabs").addEventListener("click", function(e){
     var t = e.target.closest(".tab"); if(t) show(t.getAttribute("data-k"));
   });
 
-  // 搜索过滤
   var q = document.getElementById("q");
-  q.addEventListener("input", filter);
+  q.addEventListener("input", function(){ loadAll(); filter(); });
+  q.addEventListener("focus", function(){ loadAll(); });
   function filter(){
     var v = q.value.trim().toLowerCase();
-    var shownSets = 0, shownKits = 0, shownIcons = 0;
+    var si=0, ss=0, sk=0;
     Array.prototype.forEach.call(document.querySelectorAll(".set"), function(set){
+      var repo = set.getAttribute("data-set");
+      var g = document.getElementById("g_"+repo);
       var n = 0;
-      Array.prototype.forEach.call(set.querySelectorAll(".ico"), function(el){
-        var hit = !v || el.getAttribute("data-name").toLowerCase().indexOf(v) >= 0
-                     || el.getAttribute("data-set").toLowerCase().indexOf(v) >= 0;
-        el.style.display = hit ? "" : "none";
-        if(hit) n++;
-      });
-      var vis = n > 0;
-      set.style.display = vis ? "" : "none";
-      if(vis){ shownSets++; shownIcons += n; }
+      if(loaded[repo] && g){
+        Array.prototype.forEach.call(g.children, function(el){
+          if(!el.classList || !el.classList.contains("ico")) return;
+          var hit = !v || el.getAttribute("data-name").toLowerCase().indexOf(v)>=0
+                       || repo.toLowerCase().indexOf(v)>=0;
+          el.style.display = hit?"":"none";
+          if(hit) n++;
+        });
+      } else if(!v){ n = 1; }
+      var vis = n>0;
+      set.style.display = vis?"":"none";
+      if(vis){ ss++; si += (loaded[repo]?n:0); }
     });
     Array.prototype.forEach.call(document.querySelectorAll(".kit"), function(el){
       var txt = (el.getAttribute("data-kit")+" "+el.textContent).toLowerCase();
-      var hit = !v || txt.indexOf(v) >= 0;
-      el.style.display = hit ? "" : "none";
-      if(hit) shownKits++;
+      var hit = !v || txt.indexOf(v)>=0;
+      el.style.display = hit?"":"none"; if(hit) sk++;
     });
-    document.getElementById("noRes").style.display = (shownSets + shownKits) === 0 ? "" : "none";
-    if(v){
-      document.getElementById("ftStat").textContent = "当前筛选：" + shownIcons + " 个图标 · " + shownSets + " 套图标库 · " + shownKits + " 个 UI 项目";
-    }
+    document.getElementById("noRes").style.display = (ss+sk)===0?"":"none";
+    var ft = document.getElementById("ftStat");
+    if(v) ft.textContent = "当前筛选："+si+" 个图标 · "+ss+" 套图标库 · "+sk+" 个 UI 项目"+(Object.keys(loaded).length<SETS.length?"（图标仍在加载，结果持续增加）":"");
+    else ft.textContent = "共 "+SETS.length+" 套图标库 / "+totalIcons.toLocaleString()+" 个 SVG 图标 / "+totalKits+" 个 UI 设计项目 · 抓取于 2026-09-20";
   }
 
-  // 尺寸与颜色
   var szR = document.getElementById("szR"), col = document.getElementById("col");
   szR.addEventListener("input", function(){ document.documentElement.style.setProperty("--sz", szR.value+"px"); });
   col.addEventListener("input", function(){ document.documentElement.style.setProperty("--ic", col.value); });
-  document.documentElement.style.setProperty("--sz", szR.value+"px");
-  document.documentElement.style.setProperty("--ic", col.value);
 
-  // 弹窗
   var modal = document.getElementById("modal"), toast = document.getElementById("toast");
-  function tip(msg){ toast.textContent = msg; toast.classList.add("on"); setTimeout(function(){toast.classList.remove("on");},1600); }
-  function findIcon(repo,name){
-    var s = SETS.filter(function(x){return x.repo===repo;})[0]; if(!s) return null;
-    var i = s.icons.filter(function(x){return x.name===name;})[0]; if(!i) return null;
-    return {set:s, icon:i};
-  }
+  function tip(m){ toast.textContent=m; toast.classList.add("on"); setTimeout(function(){toast.classList.remove("on");},1600); }
   document.addEventListener("click", function(e){
     var el = e.target.closest(".ico"); if(!el) return;
-    var f = findIcon(el.getAttribute("data-set"), el.getAttribute("data-name")); if(!f) return;
-    curSet = f;
-    document.getElementById("pv").innerHTML = f.icon.svg;
-    document.getElementById("mName").textContent = f.icon.name;
-    document.getElementById("mMeta").textContent = f.set.name + " · ★" + f.set.stars.toLocaleString() + " · " + (f.set.license||"开源") + " · " + (f.set.mono?"单色 currentColor":"彩色原图");
+    var repo = el.getAttribute("data-set"), nm = el.getAttribute("data-name");
+    var arr = DATA[repo]||[]; var ic = arr.filter(function(x){return x.n===nm;})[0]; if(!ic) return;
+    var s = SETS.filter(function(x){return x.repo===repo;})[0];
+    curIcon = ic;
+    document.getElementById("pv").innerHTML = ic.s;
+    document.getElementById("mName").textContent = ic.n;
+    document.getElementById("mMeta").textContent = (s?s.name:repo)+" · ★"+(s?s.stars.toLocaleString():"")+" · "+((s&&s.license)||"开源")+" · "+((s&&s.mono)?"单色 currentColor":"彩色原图");
     modal.classList.add("on");
   });
   function close(){ modal.classList.remove("on"); }
   document.getElementById("bClose").onclick = close;
-  modal.addEventListener("click", function(e){ if(e.target === modal) close(); });
-  document.addEventListener("keydown", function(e){ if(e.key === "Escape") close(); });
+  modal.addEventListener("click", function(e){ if(e.target===modal) close(); });
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape") close(); });
   document.getElementById("bCopy").onclick = function(){
-    if(!curSet) return;
-    var t = curSet.icon.svg;
-    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(function(){tip("SVG 源码已复制");}); }
+    if(!curIcon) return;
+    var t = curIcon.s;
+    if(navigator.clipboard) navigator.clipboard.writeText(t).then(function(){tip("SVG 源码已复制");});
     else { var ta=document.createElement("textarea"); ta.value=t; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove(); tip("SVG 源码已复制"); }
   };
-  document.getElementById("bName").onclick = function(){
-    if(!curSet) return; tip("已复制：" + curSet.icon.name);
-    if(navigator.clipboard) navigator.clipboard.writeText(curSet.icon.name);
-  };
+  document.getElementById("bName").onclick = function(){ if(!curIcon) return; if(navigator.clipboard) navigator.clipboard.writeText(curIcon.n); tip("已复制："+curIcon.n); };
   document.getElementById("bDown").onclick = function(){
-    if(!curSet) return;
-    var blob = new Blob([curSet.icon.svg], {type:"image/svg+xml;charset=utf-8"});
-    var a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = curSet.icon.name + ".svg";
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(function(){URL.revokeObjectURL(a.href);}, 1500);
-    tip("已下载 " + curSet.icon.name + ".svg");
+    if(!curIcon) return;
+    var blob = new Blob([curIcon.s],{type:"image/svg+xml;charset=utf-8"});
+    var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = curIcon.n+".svg";
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){URL.revokeObjectURL(a.href);},1500);
+    tip("已下载 "+curIcon.n+".svg");
   };
 
   var h = location.hash.slice(1);
-  var valid = tabs.some(function(t){return t.key === h;});
-  show(valid ? h : tabs[0].key, false);
+  show(tabs.some(function(t){return t.key===h;}) ? h : tabs[0].key, false);
 })();
 </script>
 </body>
