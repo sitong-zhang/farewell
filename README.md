@@ -2,7 +2,7 @@
 
 一个纯静态站点，收录 GitHub 上星标最高、质量最好的开源 **SVG 图标库** 与各端 **UI 设计资源**，全部数据通过 GitHub 官方 API 与仓库原始文件抓取，图标为仓库内的真实 SVG 源文件，可搜索、一键复制源码、直接下载。
 
-线上地址：<https://111qqq333www444.github.io/farewell-site/>
+线上地址：<https://111qqq333www444.github.io/farewell/>
 
 ## 收录内容
 
