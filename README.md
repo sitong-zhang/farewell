@@ -1,5 +1,7 @@
 # Farewell · UI 图标与设计资源库
 
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
 一站式 **UI 图标与设计资源聚合平台** —— 汇集主流开源图标库、技术栈品牌 Logo、AI 大厂视觉与 Web UI 设计系统，全部以 **SVG 图标/资源包** 形式在线可查、可复制、可下载。
 
 ## 资源规模
