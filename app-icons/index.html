@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>iOS26 · 苹果风格应用图标分区 · Farewell UI 图标库</title>
+<meta name="description" content="iOS26 风格应用图标包全量收录 · 797 个应用图标（PNG），苹果 iOS 圆角风格" />
+<style>
+  :root{--bg:#0b0d17;--bg2:#121529;--card:rgba(255,255,255,.045);--line:rgba(255,255,255,.10);--line2:rgba(255,255,255,.06);
+    --ink:#e8ebff;--muted:#98a0c8;--dim:#6f77a0;--acc:#7dd3fc;--acc2:#a78bfa;--gold:#ffd479;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:radial-gradient(1100px 520px at 15% -8%,rgba(125,211,252,.14),transparent 62%),
+      radial-gradient(900px 480px at 85% 0%,rgba(167,139,250,.13),transparent 60%),linear-gradient(180deg,var(--bg),var(--bg2));
+    color:var(--ink);min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+  header.hero{padding:40px 0 18px;text-align:center}
+  .badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--acc);border:1px solid rgba(125,211,252,.32);background:rgba(125,211,252,.08);padding:5px 14px;border-radius:999px;margin-bottom:16px}
+  h1{font-size:clamp(24px,4.4vw,38px);font-weight:800}
+  h1 span{background:linear-gradient(92deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{margin-top:10px;color:var(--muted);font-size:14px;max-width:760px;margin-left:auto;margin-right:auto}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:18px}
+  .stat{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:10px 18px;min-width:112px}
+  .stat b{display:block;font-size:20px;color:var(--gold);font-variant-numeric:tabular-nums}
+  .stat i{font-style:normal;font-size:12px;color:var(--dim)}
+  .toolbar{position:sticky;top:0;z-index:40;margin-top:20px;backdrop-filter:blur(14px);background:rgba(11,13,23,.9);border-top:1px solid var(--line2);border-bottom:1px solid var(--line2)}
+  .toolbar .wrap{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:12px 20px}
+  .search{flex:1;min-width:240px;position:relative}
+  .search input{width:100%;padding:10px 14px 10px 38px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--ink);font-size:14px;outline:none}
+  .search input:focus{border-color:rgba(125,211,252,.55);box-shadow:0 0 0 3px rgba(125,211,252,.12)}
+  .search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--dim)}
+  .ctrl{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dim)}
+  .ctrl input[type=range]{width:92px;accent-color:var(--acc)}
+  main{padding:22px 0 60px}
+  .sec-head{margin:16px 0 12px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .sec-head h2{font-size:19px;font-weight:700}
+  .sec-head p{font-size:13px;color:var(--dim)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:10px;padding:4px 0 16px}
+  .ico{aspect-ratio:1/1;display:grid;place-items:center;cursor:pointer;border-radius:16px;border:1px solid var(--line2);background:rgba(255,255,255,.05);transition:.18s;overflow:hidden}
+  .ico:hover{border-color:rgba(125,211,252,.55);background:rgba(125,211,252,.10);transform:translateY(-3px)}
+  .ico img{width:calc(var(--sz,52px) * 0.92);height:calc(var(--sz,52px) * 0.92);display:block;border-radius:14px;pointer-events:none}
+  .no-res{display:none;text-align:center;color:var(--dim);padding:60px 0}
+  .pv-bg{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;background:rgba(8,10,20,.72);backdrop-filter:blur(8px)}
+  .pv-bg.on{display:flex}
+  .pv-card{background:linear-gradient(180deg,#182038,#10162a);border:1px solid var(--line);border-radius:22px;padding:26px;max-width:520px;width:92%;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.55)}
+  .pv-card img{width:120px;height:120px;border-radius:26px;margin:0 auto 14px;display:block}
+  .pv-card h4{font-size:18px;margin-bottom:6px}
+  .pv-card .meta{font-size:12px;color:var(--dim);margin-bottom:16px}
+  .btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+  .btn{cursor:pointer;font-size:13px;padding:8px 15px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--ink)}
+  .btn.pri{background:linear-gradient(92deg,rgba(125,211,252,.22),rgba(167,139,250,.22));border-color:rgba(125,211,252,.5);color:#fff}
+  .btn:hover{border-color:rgba(125,211,252,.6)}
+  .toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:rgba(20,28,48,.96);border:1px solid var(--line);padding:9px 20px;border-radius:999px;font-size:13px;color:var(--ink);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+  .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+  footer{padding:18px 0 44px;text-align:center;color:var(--dim);font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap hero">
+  <a class="badge" href="../index.html">← 返回 Farewell UI 图标库</a>
+  <h1>iOS26 <span>苹果风格应用图标</span></h1>
+  <p class="sub">从「iOS26」图标包（v2026.06.09.1）提取的 <b>797 个应用图标</b>,苹果 iOS 风格圆角图标（PNG）,按应用名命名。点击图标可预览 / 下载。</p>
+  <div class="stats" id="stats"></div>
+</div>
+<div class="toolbar"><div class="wrap">
+  <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input id="q" placeholder="搜索应用名,如 WeChat / QQ / Alipay" /></div>
+  <div class="ctrl">尺寸 <input type="range" id="szR" min="36" max="96" value="52" /> <span id="szT">52px</span></div>
+</div></div>
+<main class="wrap">
+  <div class="sec-head"><h2>全量 797 个应用图标</h2><p id="cnt"></p></div>
+  <div class="grid" id="grid"></div>
+  <div class="no-res" id="noRes">未找到匹配图标</div>
+</main>
+<div class="pv-bg" id="pv"><div class="pv-card">
+  <img id="pvImg" alt="" />
+  <h4 id="pvName"></h4>
+  <div class="meta" id="pvMeta"></div>
+  <div class="btns">
+    <button class="btn pri" id="bDown">下载 PNG</button>
+    <button class="btn" id="bName">复制文件名</button>
+    <button class="btn" id="bClose">关闭</button>
+  </div>
+</div></div>
+<div class="toast" id="toast"></div>
+<footer>Farewell UI 图标库 · iOS26 应用图标分区 · 数据来源：iOS26 图标包（开源）</footer>
+<script src="icons.js"></script>
+<script>
+(function(){
+  var ICONS = window.APP_ICONS || [];
+  var cur = null, qv = "";
+  function esc(s){return String(s||"");}
+  document.getElementById("stats").innerHTML = [
+    ["应用图标",ICONS.length+" 个"],["风格","Apple iOS"],["格式","PNG"]
+  ].map(function(p){return '<div class="stat"><b>'+p[1]+'</b><i>'+p[0]+'</i></div>';}).join("");
+  document.getElementById("cnt").textContent = "共收录 "+ICONS.length+" 个图标 · 点击任意图标可预览与下载";
+  function render(){
+    var grid = document.getElementById("grid"), out = "", n = 0;
+    for(var i=0;i<ICONS.length;i++){
+      var it = ICONS[i];
+      if(qv && it.n.toLowerCase().indexOf(qv) < 0) continue;
+      out += '<div class="ico" title="'+esc(it.n)+'" data-n="'+esc(it.n)+'" data-f="'+esc(it.f)+'"><img loading="lazy" src="'+esc(it.f)+'" alt="'+esc(it.n)+'" /></div>';
+      n++;
+    }
+    grid.innerHTML = out;
+    document.getElementById("noRes").style.display = n ? "none" : "";
+  }
+  render();
+  var timer = null;
+  document.getElementById("q").addEventListener("input", function(){
+    clearTimeout(timer);
+    var el = this;
+    timer = setTimeout(function(){ qv = el.value.trim().toLowerCase(); render(); }, 120);
+  });
+  var szR = document.getElementById("szR"), szT = document.getElementById("szT");
+  szR.addEventListener("input", function(){ document.documentElement.style.setProperty("--sz", szR.value+"px"); szT.textContent = szR.value+"px"; });
+  function tip(m){ var t=document.getElementById("toast"); t.textContent=m; t.classList.add("on"); clearTimeout(t._t); t._t=setTimeout(function(){t.classList.remove("on");},1600); }
+  document.getElementById("grid").addEventListener("click", function(e){
+    var el = e.target.closest(".ico"); if(!el) return;
+    var nm = el.getAttribute("data-n"), f = el.getAttribute("data-f");
+    cur = {n:nm, f:f};
+    document.getElementById("pvImg").src = f;
+    document.getElementById("pvName").textContent = nm;
+    document.getElementById("pvMeta").textContent = "iOS26 应用图标 · PNG";
+    document.getElementById("pv").classList.add("on");
+  });
+  document.getElementById("bClose").onclick = function(){ document.getElementById("pv").classList.remove("on"); };
+  document.getElementById("pv").addEventListener("click", function(e){ if(e.target===this) this.classList.remove("on"); });
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape") document.getElementById("pv").classList.remove("on"); });
+  document.getElementById("bDown").onclick = function(){
+    if(!cur) return;
+    var a=document.createElement("a"); a.href=cur.f; a.download=cur.n+".png"; document.body.appendChild(a); a.click(); a.remove();
+    tip("已开始下载 "+cur.n+".png");
+  };
+  document.getElementById("bName").onclick = function(){
+    if(!cur) return;
+    if(navigator.clipboard) navigator.clipboard.writeText(cur.n).then(function(){tip("已复制："+cur.n);});
+    else tip(cur.n);
+  };
+})();
+</script>
+</body>
+</html>

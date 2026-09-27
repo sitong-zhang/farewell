@@ -39,3 +39,8 @@
 ## 数据说明
 
 - 图标均来自开源项目，版权归原作者所有（如 Font Awesome 为 CC BY 4.0、Simple Icons 为 CC0-1.0、部分为 MIT / Apache-2.0），使用请遵守对应 License。
+---
+
+## 独立分区
+
+- [iOS26 苹果风格应用图标](app-icons/index.html) - 797 个 PNG 应用图标，Apple iOS 圆角风格，来自 iOS26 图标包应用
