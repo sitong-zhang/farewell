@@ -3,6 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#0b0d17" />
+<link rel="manifest" href="manifest.webmanifest" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="图标库" />
+<link rel="apple-touch-icon" href="icons/app-icon-192.png" />
+<link rel="icon" href="icons/app-icon-192.png" />
 <title>UI 图标与设计资源库 · GitHub 高星全量收录</title>
 <meta name="description" content="全量收录 GitHub 上高星开源图标库的完整图标目录：数万个真实 SVG 图标、45+ 套图标库、85 个 UI 设计项目。支持全库搜索、一键复制源码、下载。" />
 <style>
@@ -89,6 +97,41 @@
   .skills .ic{width:30px;height:30px;flex:none;color:var(--acc2)}
   .skills b{display:block;font-size:13.5px}
   .skills i{display:block;font-style:normal;font-size:11.5px;color:var(--dim);margin-top:2px;line-height:1.5}
+
+  /* ---- App 化：底部导航 + 我的面板 ---- */
+  .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;backdrop-filter:blur(14px);
+    background:rgba(11,13,23,.94);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+  .tabbar button{flex:1;background:none;border:0;color:var(--dim);font-size:11.5px;display:flex;flex-direction:column;
+    align-items:center;gap:3px;padding:5px 0;cursor:pointer;font-family:inherit}
+  .tabbar button svg{width:21px;height:21px}
+  .tabbar button.on{color:var(--acc)}
+  .tabbar button span{line-height:1}
+  .appsheet{position:fixed;inset:0;z-index:90;display:none}
+  .appsheet.on{display:block}
+  .appsheet .mask{position:absolute;inset:0;background:rgba(6,8,16,.72);backdrop-filter:blur(6px)}
+  .appsheet .panel{position:absolute;left:0;right:0;bottom:0;max-height:78vh;overflow:auto;background:#11152b;
+    border-top:1px solid var(--line);border-radius:18px 18px 0 0;padding:16px 18px calc(20px + env(safe-area-inset-bottom))}
+  .appsheet h3{font-size:15px;display:flex;align-items:center;justify-content:space-between}
+  .appsheet h3 .x{cursor:pointer;font-size:20px;color:var(--dim);padding:0 6px}
+  .as-tabs{display:flex;gap:8px;margin:12px 0 10px;flex-wrap:wrap}
+  .as-tabs button{cursor:pointer;font-size:12.5px;padding:6px 14px;border-radius:999px;border:1px solid var(--line);
+    background:rgba(255,255,255,.05);color:var(--muted);font-family:inherit}
+  .as-tabs button.on{border-color:rgba(125,211,252,.55);background:rgba(125,211,252,.14);color:var(--ink)}
+  .as-body{font-size:13px;color:var(--muted)}
+  .as-row{border:1px solid var(--line2);background:rgba(255,255,255,.04);border-radius:11px;padding:11px 13px;margin:9px 0}
+  .as-row b{color:var(--ink)}
+  .as-links a{display:block;padding:11px 13px;margin:8px 0;border:1px solid var(--line2);border-radius:11px;
+    background:rgba(255,255,255,.04);color:var(--ink);font-size:13.5px}
+  .as-links i{display:block;font-style:normal;font-size:11.5px;color:var(--dim);margin-top:2px}
+  .as-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(62px,1fr));gap:8px;margin-top:10px}
+  .as-grid .ico{aspect-ratio:1/1;display:grid;place-items:center;border:1px solid var(--line2);border-radius:10px;
+    background:rgba(255,255,255,.04);cursor:pointer}
+  .as-grid .ico svg{width:26px;height:26px;color:var(--ic)}
+  @media (max-width:760px){
+    .tabbar{display:flex}
+    main.wrap{padding-bottom:96px}
+    footer.ft{padding-bottom:96px}
+  }
 </style>
 </head>
 <body>
@@ -161,12 +204,32 @@
       <button class="btn pri" id="bCopy">复制 SVG 源码</button>
       <button class="btn" id="bDown">下载 .svg</button>
       <button class="btn" id="bName">复制图标名</button>
+      <button class="btn" id="bFav">收藏</button>
       <button class="btn" id="bClose">关闭</button>
     </div>
     <div class="hint">单色图标已统一为 <code>currentColor</code>，可用 CSS <code>color</code> 任意改色。</div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
+<nav class="tabbar" id="tabbar">
+  <button class="on" data-act="browse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>图标库</span></button>
+  <button data-act="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span>搜索</span></button>
+  <button data-act="skills"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg><span>设计技能</span></button>
+  <button data-act="me"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg><span>我的</span></button>
+</nav>
+<div class="appsheet" id="appsheet">
+  <div class="mask" data-close="1"></div>
+  <div class="panel">
+    <h3 id="asTitle">我的<span class="x" data-close="1">&#215;</span></h3>
+    <div class="as-tabs" id="asTabs">
+      <button class="on" data-t="dl">已下载</button>
+      <button data-t="fav">我的收藏</button>
+      <button data-t="sk">设计技能</button>
+      <button data-t="about">关于</button>
+    </div>
+    <div class="as-body" id="asBody"></div>
+  </div>
+</div>
 
 <script src="vendor/flexsearch.min.js"></script>
 <script src="search.js"></script>
@@ -460,7 +523,7 @@
     var arr = DATA[repo]||[]; var ic=null;
     for(var i=0;i<arr.length;i++) if(arr[i].n===nm){ ic=arr[i]; break; }
     if(!ic) return;
-    var s = byRepo(repo); curIcon = ic;
+    var s = byRepo(repo); curIcon = ic; curIcon.__repo = repo; syncFavBtn();
     document.getElementById("pv").innerHTML = ic.s;
     document.getElementById("mName").textContent = ic.n;
     document.getElementById("mMeta").textContent = (s?s.name:repo)+" · ★"+(s?s.stars.toLocaleString():"")+" · "+((s&&s.license)||"开源")+" · "+((s&&s.mono)?"单色 currentColor":"彩色原图");
@@ -486,6 +549,187 @@
 
   var h = location.hash.slice(1);
   show(tabs.some(function(t){return t.key===h;}) ? h : tabs[0].key, false);
+
+  // ================= App 化：收藏 / 我的 / PWA =================
+  var FAVK = "uih.fav";
+  function favs(){ try{ return JSON.parse(localStorage.getItem(FAVK)||"[]"); }catch(e){ return []; } }
+  function setFavs(a){ try{ localStorage.setItem(FAVK, JSON.stringify(a)); }catch(e){} }
+  var bFav = document.getElementById("bFav");
+  function syncFavBtn(){
+    if(!curIcon || !bFav) return;
+    var a = favs(), hit = false;
+    for(var i=0;i<a.length;i++) if(a[i].r===curIcon.__repo && a[i].n===curIcon.n) hit = true;
+    bFav.textContent = hit ? "已收藏 · 点击取消" : "收藏";
+    bFav.style.borderColor = hit ? "rgba(125,211,252,.6)" : "";
+  }
+  if(bFav) bFav.onclick = function(){
+    if(!curIcon) return;
+    var a = favs(), idx = -1;
+    for(var i=0;i<a.length;i++) if(a[i].r===curIcon.__repo && a[i].n===curIcon.n) idx = i;
+    if(idx >= 0){ a.splice(idx,1); tip("已取消收藏"); }
+    else { if(a.length >= 300){ tip("收藏最多 300 个"); return; }
+           a.push({r:curIcon.__repo, n:curIcon.n, s:curIcon.s}); tip("已收藏，可在「我的」查看"); }
+    setFavs(a); syncFavBtn();
+  };
+
+  var sheet = document.getElementById("appsheet"), asBody = document.getElementById("asBody"),
+      asTitle = document.getElementById("asTitle"), asTabs = document.getElementById("asTabs");
+  function openSheet(){ sheet.classList.add("on"); }
+  function closeSheet(){ sheet.classList.remove("on"); }
+  sheet.addEventListener("click", function(e){ if(e.target.getAttribute("data-close")) closeSheet(); });
+
+  function cachedChunks(){
+    if(!window.caches) return Promise.resolve([]);
+    return caches.keys().then(function(keys){
+      return Promise.all(keys.map(function(k){ return caches.open(k).then(function(c){ return c.keys(); }); }));
+    }).then(function(groups){
+      var out = [];
+      groups.forEach(function(reqs){ reqs.forEach(function(r){
+        var u = r.url; if(/\/data\/.+\.js$/.test(u) || /\/app-icons\/png\//.test(u)) out.push(u);
+      }); });
+      return out;
+    });
+  }
+  function renderDL(){
+    asTitle.innerHTML = '已下载<span class="x" data-close="1">&#215;</span>';
+    asBody.innerHTML = '<div class="as-row">正在统计本地缓存…</div>';
+    cachedChunks().then(function(urls){
+      var bySet = {}, nAppIcons = 0;
+      urls.forEach(function(u){
+        var f = u.split("/").pop();
+        if(/^png/.test(f) || /app-icons\/png/.test(u)) { nAppIcons++; return; }
+        var key = f.replace(/__\d+\.js$/, "");
+        bySet[key] = (bySet[key]||0) + 1;
+      });
+      var slugs = Object.keys(bySet), lines = [];
+      slugs.forEach(function(sl){
+        var st = null;
+        for(var i=0;i<SETS.length;i++) if(SETS[i].slug === sl) { st = SETS[i]; break; }
+        lines.push('<div class="as-row"><b>'+(st?esc(st.name):esc(sl))+'</b><br/>'
+          + '已缓存 '+bySet[sl]+' / '+(st?st.chunks:"?")+' 个数据块'
+          + (st? ' · 约 '+Math.round(st.count * bySet[sl] / Math.max(st.chunks,1)).toLocaleString()+' 个图标' : '')
+          + '</div>');
+      });
+      var head = '<div class="as-row"><b>共 '+urls.length.toLocaleString()+' 个本地文件</b><br/>'
+        + (window.__OFFLINE ? '离线版：全部数据已随安装包内置，断网可用' : '联网版：浏览过的图标库会自动存到本机，之后断网也能继续看；进入 App 后下拉/搜索即开始下载')
+        + '</div>';
+      asBody.innerHTML = head + (lines.join("") || '<div class="as-row">还没有缓存。随便浏览或搜索几套图标库，数据块会自动存到本机。</div>')
+        + (nAppIcons ? '<div class="as-row"><b>iOS26 应用图标</b><br/>已缓存 '+nAppIcons+' 张 PNG</div>' : '')
+        + '<div class="as-row"><button class="btn" id="clearCache">清除本机缓存</button> '
+        + '<button class="btn" id="dlAll" >下载全部（离线完整包，约数百 MB）</button></div>';
+      var cc = document.getElementById("clearCache");
+      if(cc) cc.onclick = function(){
+        if(!window.caches) return;
+        caches.keys().then(function(ks){ return Promise.all(ks.map(function(k){ return caches.delete(k); })); })
+          .then(function(){ tip("已清除本机缓存"); renderDL(); });
+      };
+      var da = document.getElementById("dlAll");
+      if(da) da.onclick = function(){
+        if(!confirm("将逐块下载全部图标库数据（约 305MB），建议在 Wi-Fi 下进行。确定继续？")) return;
+        da.disabled = true; da.textContent = "正在下载…";
+        var jobs = [], i, j;
+        for(i=0;i<SETS.length;i++) for(j=0;j<SETS[i].chunks;j++) jobs.push([SETS[i].repo, j]);
+        var done = 0, ptr = 0;
+        function pump(){
+          while(ptr < jobs.length && document.querySelectorAll('head script[src^="data/"]').length < 6){
+            var job = jobs[ptr++];
+            loadChunkOnce(job[0], job[1], function(){
+              done++;
+              da.textContent = "正在下载… " + Math.round(done*100/jobs.length) + "%（" + done + "/" + jobs.length + "）";
+              if(done >= jobs.length){ da.disabled = false; da.textContent = "全部已下载"; tip("全部图标数据已存到本机"); }
+              else pump();
+            });
+          }
+        }
+        pump();
+      };
+    });
+  }
+  function renderFav(){
+    asTitle.innerHTML = '我的收藏<span class="x" data-close="1">&#215;</span>';
+    var a = favs();
+    if(!a.length){ asBody.innerHTML = '<div class="as-row">还没有收藏。点开任意图标 → 弹窗里点「收藏」，之后在这里就能看到源码。</div>'; return; }
+    var grid = "";
+    for(var i=0;i<a.length;i++){
+      grid += '<div class="ico" data-set="'+esc(a[i].r)+'" data-name="'+esc(a[i].n)+'" title="'+esc(a[i].n)+'">'+a[i].s+'</div>';
+      if(!DATA[a[i].r]) DATA[a[i].r] = [];
+      var has = false, arr = DATA[a[i].r];
+      for(var k=0;k<arr.length;k++) if(arr[k].n === a[i].n) has = true;
+      if(!has) arr.push({n:a[i].n, s:a[i].s});
+    }
+    asBody.innerHTML = '<div class="as-row"><b>'+a.length+' 个收藏</b><br/>点任意图标可看源码、复制或下载</div>'
+      + '<div class="as-grid" id="favGrid">'+grid+'</div>'
+      + '<div class="as-row"><button class="btn" id="expFav">导出全部 SVG（打包 .zip 需手动）</button> '
+      + '<button class="btn" id="clrFav">清空收藏</button></div>';
+    var ex = document.getElementById("expFav");
+    if(ex) ex.onclick = function(){
+      var out = [];
+      favs().forEach(function(f){ out.push("<!-- "+f.r+" / "+f.n+" -->\n"+f.s); });
+      var blob = new Blob([out.join("\n")], {type:"image/svg+xml;charset=utf-8"});
+      var el = document.createElement("a"); el.href = URL.createObjectURL(blob); el.download = "favorites.svg";
+      document.body.appendChild(el); el.click(); el.remove(); tip("已导出 favorites.svg");
+    };
+    var cl = document.getElementById("clrFav");
+    if(cl) cl.onclick = function(){ if(confirm("清空全部收藏？")){ setFavs([]); renderFav(); } };
+  }
+  function renderSkills(){
+    asTitle.innerHTML = '设计技能<span class="x" data-close="1">&#215;</span>';
+    asBody.innerHTML = '<div class="as-links">'
+      + '<a href="skills/software/index.html"><b>软件界面设计规范</b><i>栅格 / 密度 / 颜色对比 / 图标系统 / 无障碍</i></a>'
+      + '<a href="skills/website/index.html"><b>网站设计方法论</b><i>首屏 / 响应式 / 排版 / 性能预算 / SEO</i></a>'
+      + '<a href="skills/game/index.html"><b>游戏 UI 设计要点</b><i>HUD 分层 / 数值 / 触屏手势 / 多分辨率</i></a>'
+      + '<a href="app-icons/index.html"><b>iOS26 应用图标分区</b><i>797 个 Apple 风格应用图标（PNG）</i></a>'
+      + '</div>';
+  }
+  function renderAbout(){
+    asTitle.innerHTML = '关于<span class="x" data-close="1">&#215;</span>';
+    asBody.innerHTML = '<div class="as-row"><b>ui-icons-hub</b><br/>'+SETS.length+' 套图标库 · '
+      + (SETS.reduce(function(a,s){return a+s.count;},0)).toLocaleString()+' 个 SVG 图标 · '
+      + '<span id="verLine"></span></div>'
+      + '<div class="as-row">素材版权归各上游项目所有，<b>没有统一许可证</b>，请以每个集合上游的实际许可证为准；'
+      + '本站代码与生成脚本为 MIT。详见仓库 <code>LICENSE</code> 与 README 收录清单。</div>'
+      + '<div class="as-row" id="pwaLine"></div>'
+      + '<div class="as-links"><a href="https://github.com/sitong-zhang/ui-icons-hub" target="_blank" rel="noopener">GitHub 仓库</a>'
+      + '<a href="https://sitong-zhang.github.io/ui-icons-hub/" target="_blank" rel="noopener">在线版本</a></div>';
+    var pl = document.getElementById("pwaLine");
+    if(pl) pl.innerHTML = window.__OFFLINE
+      ? '<b>离线版</b><br/>全部数据已内置，无需联网；如需更新请重新下载离线包。'
+      : '<b>联网版</b><br/>数据按需从 GitHub Pages 拉取并自动缓存到本地。安装到桌面 / 主屏后即为 App（支持离线重开）。';
+  }
+  var RENDER = {dl:renderDL, fav:renderFav, sk:renderSkills, about:renderAbout};
+  asTabs.addEventListener("click", function(e){
+    var t = e.target.closest("button[data-t]"); if(!t) return;
+    Array.prototype.forEach.call(asTabs.children, function(x){ x.classList.toggle("on", x===t); });
+    (RENDER[t.getAttribute("data-t")] || renderDL)();
+  });
+  document.getElementById("tabbar").addEventListener("click", function(e){
+    var b = e.target.closest("button[data-act]"); if(!b) return;
+    var act = b.getAttribute("data-act");
+    Array.prototype.forEach.call(this.children, function(x){ x.classList.toggle("on", x===b); });
+    if(act === "search"){
+      closeSheet();
+      document.getElementById("q").focus();
+      window.scrollTo({top:0, behavior:"smooth"});
+    } else if(act === "skills"){
+      sheet.classList.add("on");
+      Array.prototype.forEach.call(asTabs.children, function(x){ x.classList.toggle("on", x.getAttribute("data-t")==="sk"); });
+      renderSkills();
+    } else if(act === "me"){
+      sheet.classList.add("on");
+      Array.prototype.forEach.call(asTabs.children, function(x){ x.classList.toggle("on", x.getAttribute("data-t")==="dl"); });
+      renderDL();
+    } else {
+      closeSheet();
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+  });
+
+  // PWA：注册 Service Worker（仅 http/https 环境，file:// 打开时跳过）
+  if("serviceWorker" in navigator && location.protocol.indexOf("http") === 0){
+    addEventListener("load", function(){
+      navigator.serviceWorker.register("sw.js").catch(function(){ /* 不支持则忽略 */ });
+    });
+  }
 })();
 </script>
 </body>
