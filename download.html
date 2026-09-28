@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#0b0d17" />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="icon" href="icons/app-icon-192.png" />
+<title>下载客户端 · UI 图标与设计资源库</title>
+<meta name="description" content="ui-icons-hub 三端客户端下载：Android APK、Apple（macOS / iPhone）、PC（Windows / macOS / Linux），各分联网版与离线版。" />
+<style>
+  :root{--bg:#0b0d17;--bg2:#121529;--card:rgba(255,255,255,.045);--line:rgba(255,255,255,.10);--line2:rgba(255,255,255,.06);
+    --ink:#e8ebff;--muted:#98a0c8;--dim:#6f77a0;--acc:#7dd3fc;--acc2:#a78bfa;--gold:#ffd479;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:radial-gradient(1100px 520px at 15% -8%,rgba(125,211,252,.14),transparent 62%),
+      radial-gradient(900px 480px at 85% 0%,rgba(167,139,250,.13),transparent 60%),linear-gradient(180deg,var(--bg),var(--bg2));
+    color:var(--ink);min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  header{padding:38px 0 12px;text-align:center}
+  h1{font-size:clamp(22px,4vw,34px);font-weight:800}
+  h1 span{background:linear-gradient(92deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{margin-top:10px;color:var(--muted);font-size:14.5px}
+  .back{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:13px;color:var(--acc)}
+  main{padding:18px 0 70px}
+  h2{font-size:18px;font-weight:700;margin:26px 0 6px}
+  .note{font-size:13px;color:var(--dim);margin-bottom:12px}
+  .cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0 6px}
+  @media(max-width:760px){.cmp{grid-template-columns:1fr}}
+  .cmp>div{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:14px 16px}
+  .cmp h4{font-size:14.5px;margin-bottom:6px}
+  .cmp p{font-size:13px;color:var(--muted)}
+  .cmp .ok{color:#8ee0b8}
+  .plat{border:1px solid var(--line);background:var(--card);border-radius:16px;padding:16px 18px;margin-bottom:14px}
+  .plat-hd{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+  .plat-hd h3{font-size:16.5px;font-weight:700}
+  .pill{font-size:11.5px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:2px 8px}
+  .spacer{flex:1}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line2);vertical-align:top}
+  th{color:var(--dim);font-weight:600;font-size:12.5px}
+  td b{color:#fff}
+  .dl{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;padding:6px 12px;border-radius:9px;
+    border:1px solid rgba(125,211,252,.42);background:linear-gradient(92deg,rgba(125,211,252,.18),rgba(167,139,250,.18));color:#eaf6ff;white-space:nowrap}
+  .dl:hover{border-color:rgba(125,211,252,.75)}
+  .dl.gray{border-color:var(--line);background:rgba(255,255,255,.04);color:var(--muted)}
+  .steps{font-size:13px;color:var(--muted);margin-top:10px;padding-left:18px}
+  .steps li{margin:3px 0}
+  code{background:rgba(255,255,255,.07);border:1px solid var(--line2);border-radius:5px;padding:1px 6px;font-size:12.5px}
+  .alert{border:1px solid rgba(255,212,121,.3);background:rgba(255,212,121,.08);border-radius:12px;padding:12px 16px;font-size:13px;color:#ffe6b0;margin:14px 0}
+  footer{border-top:1px solid var(--line2);padding:20px 0 40px;font-size:12.5px;color:var(--dim);text-align:center}
+  footer a{color:var(--acc)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>下载 <span>客户端</span>：三端 × 联网 / 离线</h1>
+  <div class="sub">同一个库，同一套检索：215 套图标库 · 352,371 个 SVG 图标 · 软件 / 网站 / 游戏设计技能</div>
+  <a class="back" href="./index.html">← 回到图标库</a>
+</header>
+
+<main>
+
+  <div class="cmp">
+    <div>
+      <h4>联网版 <span class="pill">约 2 MB</span></h4>
+      <p>只装外壳和检索索引，<b>搜到哪才下载哪</b>：命中后自动从仓库拉对应数据块并存在本机。<br/>
+      <span class="ok">优点</span>：秒装、随时更新、体积几乎可以忽略。<br/>
+      <span class="ok">适合</span>：日常查图标、只需要其中十几套的人。</p>
+    </div>
+    <div>
+      <h4>离线版 <span class="pill">约 100 MB</span></h4>
+      <p>215 套图标库 + 797 个应用图标 PNG 全部打包进安装包，装完<b>断网也能完整使用</b>。<br/>
+      <span class="ok">优点</span>：飞机上、内网、出差路上都照常用。<br/>
+      <span class="ok">适合</span>：离线环境、需要整库比稿、不想等加载的人。</p>
+    </div>
+  </div>
+
+  <div class="alert">安装包由 GitHub Actions 每次发布自动构建并上传到 <a href="https://github.com/sitong-zhang/ui-icons-hub/releases" style="color:#ffd479;text-decoration:underline">Releases</a>。若某个文件还没生成，可到 <a href="https://github.com/sitong-zhang/ui-icons-hub/actions" style="color:#ffd479;text-decoration:underline">Actions</a> 里下载同名构建产物。</div>
+
+  <h2>Android</h2>
+  <div class="note">Android 7.0（API 24）以上，直接装 APK，无需 Google Play。两个版本可同时安装。</div>
+  <div class="plat">
+    <div class="plat-hd"><h3>APK</h3><span class="pill">联网版 约 3 MB</span><span class="pill">离线版 约 120 MB</span><span class="spacer"></span></div>
+    <table>
+      <tr><th>版本</th><th>体积</th><th>说明</th><th style="width:120px">下载</th></tr>
+      <tr>
+        <td><b>联网版</b></td><td>约 3 MB</td>
+        <td>内置全库检索索引；命中后按需从仓库下载图标数据并缓存，「我的 → 已下载」可查看已存了多少</td>
+        <td><a class="dl" href="https://github.com/sitong-zhang/ui-icons-hub/releases/latest/download/ui-icons-hub-online-v1.0.0.apk">下载 APK</a></td>
+      </tr>
+      <tr>
+        <td><b>离线版</b></td><td>约 120 MB</td>
+        <td>全量站点打进 assets，<code>file:///android_asset/</code> 直接跑，断网可用</td>
+        <td><a class="dl" href="https://github.com/sitong-zhang/ui-icons-hub/releases/latest/download/ui-icons-hub-offline-v1.0.0.apk">下载 APK</a></td>
+      </tr>
+    </table>
+    <ol class="steps">
+      <li>手机上允许「未知来源应用」安装（不同品牌位置不同，一般在设置 → 安全/隐私）。</li>
+      <li>装好后打开即进入图标库；底部四个 tab：图标库 / 搜索 / 设计技能 / 我的。</li>
+      <li>源码、复制、下载、收藏都在图标弹窗里；收藏可一键导出 SVG。</li>
+    </ol>
+  </div>
+
+  <h2>Apple</h2>
+  <div class="note">Apple 平台不允许第三方浏览器引擎，因此 iPhone / iPad 用「添加到主屏」的 Web App，macOS 提供 .app。</div>
+  <div class="plat">
+    <div class="plat-hd"><h3>macOS</h3><span class="pill">联网版 约 0.1 MB</span><span class="pill">离线版 约 100 MB</span><span class="spacer"></span></div>
+    <table>
+      <tr><th>版本</th><th>体积</th><th>说明</th><th style="width:120px">下载</th></tr>
+      <tr>
+        <td><b>联网版</b></td><td>约 0.1 MB</td>
+        <td>打开线上站点；在 Safari 里「分享 → 添加到 Dock」即可像独立 App 一样启动（macOS Sonoma 起为 Web App）</td>
+        <td><a class="dl" href="https://github.com/sitong-zhang/ui-icons-hub/releases/latest/download/ui-icons-hub-online-macos.zip">下载 .app</a></td>
+      </tr>
+      <tr>
+        <td><b>离线版</b></td><td>约 100 MB</td>
+        <td>.app 内 Resources/site 是全量站点，双击即用浏览器打开，断网可用</td>
+        <td><a class="dl" href="https://github.com/sitong-zhang/ui-icons-hub/releases/latest/download/ui-icons-hub-offline-macos.zip">下载 .app</a></td>
+      </tr>
+    </table>
+    <ol class="steps">
+      <li>解压得到「UI Icons Hub.app」，拖进「应用程序」文件夹。</li>
+      <li>首次打开若提示「来自身份不明的开发者」：系统设置 → 隐私与安全性 → 仍要打开。</li>
+    </ol>
+  </div>
+  <div class="plat">
+    <div class="plat-hd"><h3>iPhone / iPad</h3><span class="pill">添加到主屏</span></div>
+    <ol class="steps">
+      <li>用 Safari 打开 <a href="https://sitong-zhang.github.io/ui-icons-hub/" style="color:var(--acc);text-decoration:underline">sitong-zhang.github.io/ui-icons-hub</a>。</li>
+      <li>点底部「分享」→「添加到主屏幕」，图标会出现在桌面，点开就是全屏 App（无地址栏）。</li>
+      <li>这就是 Apple 端的「联网版」：检索索引随页面加载，图标数据按需下载并缓存到本机，之后断网也能再看已下载过的部分。</li>
+    </ol>
+  </div>
+
+  <h2>PC</h2>
+  <div class="note">Windows / macOS / Linux 三件套，联网版与离线版各一份。</div>
+  <div class="plat">
+    <div class="plat-hd"><h3>Windows</h3><span class="pill">.exe 安装包</span><span class="pill">联网版 1.8 MB</span><span class="pill">离线版 99 MB</span><span class="spacer"></span></div>
+    <table>
+      <tr><th>版本</th><th>体积</th><th>说明</th><th style="width:120px">下载</th></tr>
+      <tr>
+        <td><b>联网版</b></td><td>1.8 MB</td>
+        <td>装外壳 + 检索索引，附带一个 PowerShell 本地服务（Windows 自带，无需装任何东西），数据按需下载并缓存</td>
+        <td><a class="dl" href="https://github.com/sitong-zhang/ui-icons-hub/releases/latest/download/ui-icons-hub-online-windows-setup.exe">下载 .exe</a></td>
+      </tr>
+      <tr>
+        <td><b>离线版</b></td><td>99 MB</td>
+        <td>全量站点装到本机，断网可用</td>
+        <td><a class="dl" href="https://github.com/sitong-zhang/ui-icons-hub/releases/latest/download/ui-icons-hub-offline-windows-setup.exe">下载 .exe</a></td>
+      </tr>
+    </table>
+    <ol class="steps">
+      <li>双击安装（默认装到当前用户的 <code>%LOCALAPPDATA%\ui-icons-hub</code>，不需要管理员权限）。</li>
+      <li>装完自动创建桌面和开始菜单快捷方式；双击会开一个黑色命令行窗口（本地服务），并自动打开浏览器 —— <b>关掉那个窗口就是退出</b>。</li>
+    </ol>
+  </div>
+  <div class="plat">
+    <div class="plat-hd"><h3>Linux</h3><span class="pill">.tar.gz</span><span class="pill">联网版 1.6 MB</span><span class="pill">离线版 99 MB</span><span class="spacer"></span></div>
+    <table>
+      <tr><th>版本</th><th>体积</th><th>说明</th><th style="width:120px">下载</th></tr>
+      <tr>
+        <td><b>联网版</b></td><td>1.6 MB</td>
+        <td>外壳 + 索引，用系统自带 python3 起本地服务，数据按需下载并缓存</td>
+        <td><a class="dl" href="https://github.com/sitong-zhang/ui-icons-hub/releases/latest/download/ui-icons-hub-online-linux.tar.gz">下载 .tar.gz</a></td>
+      </tr>
+      <tr>
+        <td><b>离线版</b></td><td>99 MB</td>
+        <td>全量站点，断网可用</td>
+        <td><a class="dl" href="https://github.com/sitong-zhang/ui-icons-hub/releases/latest/download/ui-icons-hub-offline-linux.tar.gz">下载 .tar.gz</a></td>
+      </tr>
+    </table>
+    <ol class="steps">
+      <li><code>tar xzf ui-icons-hub-*-linux.tar.gz &amp;&amp; cd ui-icons-hub &amp;&amp; ./安装.sh</code></li>
+      <li>脚本会装到 <code>~/.local/share/ui-icons-hub</code> 并在应用菜单里加一个「UI Icons Hub」；直接跑 <code>ui-icons-hub</code> 也行。</li>
+      <li>也可以不安装：进目录执行 <code>./ui-icons-hub</code> 直接启动。</li>
+    </ol>
+  </div>
+  <div class="plat">
+    <div class="plat-hd"><h3>macOS（PC 三件套里的 Apple 端）</h3><span class="pill">见上方 Apple 区</span></div>
+    <div class="note" style="margin:0">macOS 与 Apple 端共用同一个 .app 包，见上面的 Apple → macOS 表格。</div>
+  </div>
+
+  <h2>压缩包</h2>
+  <div class="note">不想装客户端？拿这个：解压即用，任何有浏览器的设备都能跑。</div>
+  <div class="plat">
+    <table>
+      <tr><th>文件</th><th>体积</th><th>说明</th><th style="width:120px">下载</th></tr>
+      <tr>
+        <td><b>离线全量包</b> <code>ui-icons-hub-offline-full.zip</code></td><td>100 MB（解压 340 MB）</td>
+        <td>整个站点（含 data 全部分片、应用图标 PNG、三个技能分区）。解压后双击 index.html 即用，断网可用</td>
+        <td><a class="dl" href="https://github.com/sitong-zhang/ui-icons-hub/releases/latest/download/ui-icons-hub-offline-full.zip">下载 ZIP</a></td>
+      </tr>
+    </table>
+    <ol class="steps">
+      <li>解压路径尽量不含中文和空格。</li>
+      <li>若浏览器对本地文件有限制，在目录里执行 <code>python3 -m http.server 8899</code>，再访问 <code>http://127.0.0.1:8899</code>。</li>
+    </ol>
+  </div>
+
+  <h2>常见问题</h2>
+  <div class="plat">
+    <ol class="steps" style="list-style:decimal">
+      <li><b>联网版和离线版内容一样吗？</b>一样。只是数据到达本机的时机不同：一个是边用边下，一个是安装时就全给你。</li>
+      <li><b>离线版会旧吗？</b>会跟随发布版本。图标库有新增时我们会重新发版，重装即可。</li>
+      <li><b>「我的 → 已下载」是什么？</b>联网版里被缓存下来的数据块清单，看过的图标库会一条条累积，之后再断网也能看。</li>
+      <li><b>许可证？</b>图标素材版权归各上游项目所有，请以每个集合上游的实际许可证为准，完整清单见 <a href="https://github.com/sitong-zhang/ui-icons-hub#readme" style="color:var(--acc);text-decoration:underline">README</a> 与仓库 LICENSE。</li>
+    </ol>
+  </div>
+
+</main>
+<footer>
+  ui-icons-hub · <a href="./index.html">图标库</a> · <a href="./skills/software/index.html">软件设计</a> ·
+  <a href="./skills/website/index.html">网站设计</a> · <a href="./skills/game/index.html">游戏 UI</a> ·
+  <a href="https://github.com/sitong-zhang/ui-icons-hub">GitHub 仓库</a>
+</footer>
+</div>
+</body>
+</html>

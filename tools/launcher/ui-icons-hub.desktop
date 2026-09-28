@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=UI Icons Hub
+GenericName=UI 图标与设计资源库
+Comment=215 套开源图标库 / 352,371 个 SVG 图标，支持中文意图检索、一键复制源码，含软件·网站·游戏设计技能
+Exec=ui-icons-hub
+Icon=ui-icons-hub
+Terminal=false
+Categories=Graphics;Development;Utility;
+Keywords=icon;svg;ui;design;图标;
+StartupWMClass=ui-icons-hub

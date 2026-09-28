@@ -1,0 +1,5 @@
+// ui-icons-hub Android 壳：WebView 容器，业务逻辑全在站点里
+plugins {
+    id 'com.android.application' version '8.2.2' apply false
+}
+task clean(type: Delete) { delete rootProject.buildDir }
