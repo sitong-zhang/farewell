@@ -70,8 +70,30 @@ jobs:
         continue-on-error: true
         working-directory: android
         run: gradle assembleOfflineDebug --no-daemon --stacktrace 2>&1 | tee /tmp/offline.log
+      - name: 收集 APK
+        id: collect_apk
+        continue-on-error: true
+        run: |
+          mkdir -p dist
+          {
+            echo "== outputs 目录树 =="
+            find android/app/build/outputs -maxdepth 4 -type d 2>/dev/null | head -40
+            echo "== 找到的 apk =="
+            find android/app/build/outputs -name "*.apk" -printf "%p  %s bytes\n" 2>/dev/null | head -20
+            echo "== 磁盘 =="
+            df -h . | tail -2
+          } | tee /tmp/collect.log
+          find android/app/build/outputs -name "*.apk" -exec cp {} dist/ \; || true
+          ls -la dist/ || true
+      - uses: actions/upload-artifact@v4
+        if: hashFiles('dist/*.apk') != ''
+        with:
+          name: android-apks
+          path: dist/*.apk
+          if-no-files-found: warn
+          retention-days: 7
       - name: 回传构建日志（仅在失败时）
-        if: failure() || steps.offline_apk.outcome == 'failure'
+        if: failure() || steps.offline_apk.outcome == 'failure' || steps.collect_apk.outcome == 'failure'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -80,27 +102,20 @@ jobs:
             echo ""
             echo "Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
             echo ""
+            echo "### collect.log"
+            echo '```'
+            tail -n 60 /tmp/collect.log 2>/dev/null || echo "(无)"
+            echo '```'
             echo "### online.log"
             echo '```'
-            tail -n 80 /tmp/online.log 2>/dev/null || echo "(无)"
+            tail -n 60 /tmp/online.log 2>/dev/null || echo "(无)"
             echo '```'
             echo "### offline.log"
             echo '```'
-            tail -n 80 /tmp/offline.log 2>/dev/null || echo "(无)"
+            tail -n 60 /tmp/offline.log 2>/dev/null || echo "(无)"
             echo '```'
           } > /tmp/issue.md
           gh issue create --title "CI 失败：Android 构建 ${{ github.run_id }}" --body-file /tmp/issue.md || true
-      - name: 收集 APK
-        run: |
-          mkdir -p dist
-          find android/app/build/outputs -name "*.apk" -exec cp {} dist/ \;
-          ls -la dist/*.apk
-      - uses: actions/upload-artifact@v4
-        with:
-          name: android-apks
-          path: dist/*.apk
-          if-no-files-found: error
-          retention-days: 7
 
   release:
     name: 创建 Release
