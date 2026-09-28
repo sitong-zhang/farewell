@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>软件界面设计规范 · ui-icons-hub 设计技能</title>
+<meta name="description" content="桌面软件、后台系统、Web App 与移动 App 通用的一套可执行规则：栅格、密度、颜色、图标、状态、无障碍与交付方式。" />
+<style>
+  :root{--bg:#0b0d17;--bg2:#121529;--card:rgba(255,255,255,.045);--line:rgba(255,255,255,.10);
+    --line2:rgba(255,255,255,.06);--ink:#e8ebff;--muted:#98a0c8;--dim:#6f77a0;--acc:#7dd3fc;--acc2:#a78bfa;--gold:#ffd479}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:radial-gradient(1100px 520px at 15% -8%,rgba(125,211,252,.14),transparent 62%),
+      radial-gradient(900px 480px at 85% 0%,rgba(167,139,250,.13),transparent 60%),linear-gradient(180deg,var(--bg),var(--bg2));
+    color:var(--ink);min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.75;-webkit-font-smoothing:antialiased}
+  a{color:var(--acc);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:920px;margin:0 auto;padding:0 22px}
+  header.hero{padding:34px 0 10px}
+  .badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--acc);border:1px solid rgba(125,211,252,.32);background:rgba(125,211,252,.08);padding:5px 14px;border-radius:999px;margin-bottom:16px}
+  h1{font-size:clamp(24px,4.2vw,36px);font-weight:800;line-height:1.3}
+  h1 span{background:linear-gradient(92deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{margin-top:12px;color:var(--muted);font-size:14.5px}
+  .meta{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}
+  .pill{font-size:11.5px;color:var(--dim);border:1px solid var(--line2);background:var(--card);padding:4px 11px;border-radius:999px}
+  nav.toc{margin:22px 0 8px;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:14px 18px}
+  nav.toc b{font-size:13px;color:var(--muted)}
+  nav.toc ol{margin:8px 0 0 18px;font-size:13px;color:var(--muted);display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:2px 18px}
+  main{padding:8px 0 60px}
+  section{border:1px solid var(--line2);background:var(--card);border-radius:14px;padding:18px 20px;margin:14px 0}
+  section h2{font-size:17px;font-weight:750;display:flex;align-items:center;gap:9px}
+  section h2 i{font-style:normal;font-size:11px;color:var(--acc);border:1px solid rgba(125,211,252,.3);background:rgba(125,211,252,.08);padding:2px 8px;border-radius:999px;font-weight:600}
+  section p{font-size:13.5px;color:var(--muted);margin:8px 0}
+  ul{margin:8px 0 0 20px;font-size:13.5px;color:var(--muted)}
+  ul li{margin:4px 0}
+  ul li b, p b{color:var(--ink)}
+  table{width:100%;border-collapse:collapse;margin:10px 0 2px;font-size:12.8px}
+  th,td{border:1px solid var(--line2);padding:7px 10px;text-align:left;color:var(--muted)}
+  th{color:var(--ink);background:rgba(255,255,255,.04);font-weight:650}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  code{background:rgba(255,255,255,.08);padding:1px 6px;border-radius:4px;font-size:12.5px;color:#d7e2ff}
+  .chips{margin-top:10px;display:flex;flex-wrap:wrap;gap:7px}
+  .chips a{font-size:12px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--muted);padding:4px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:6px}
+  .chips a:hover{border-color:rgba(125,211,252,.55);color:var(--ink);text-decoration:none}
+  .chips a svg{width:14px;height:14px;color:var(--acc)}
+  .tips{margin-top:10px;border-left:2px solid rgba(255,212,121,.55);padding:2px 0 2px 14px;font-size:13px;color:var(--muted)}
+  .tips b{color:var(--gold)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:12px}
+  .res{border:1px solid var(--line2);background:rgba(255,255,255,.035);border-radius:11px;padding:12px 14px}
+  .res b{font-size:13.5px;display:block}
+  .res span{font-size:12px;color:var(--dim);display:block;margin-top:3px}
+  .res em{font-style:normal;font-size:12px;color:var(--muted);display:block;margin-top:6px}
+  .ck{margin-top:8px}
+  .ck label{display:flex;gap:9px;align-items:flex-start;font-size:13.5px;color:var(--muted);padding:4px 0;cursor:pointer}
+  .ck input{margin-top:5px;accent-color:var(--acc)}
+  footer{border-top:1px solid var(--line2);padding:20px 0 46px;font-size:12px;color:var(--dim);text-align:center}
+  .top{position:fixed;right:18px;bottom:18px;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:rgba(18,21,41,.92);color:var(--muted);display:grid;place-items:center;font-size:16px;opacity:0;pointer-events:none;transition:.2s}
+  .top.on{opacity:1;pointer-events:auto}
+  .navprev{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 0}
+  .navprev a{flex:1;min-width:200px;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:12px 16px;font-size:13px;color:var(--muted)}
+  .navprev a b{display:block;color:var(--ink);font-size:14px}
+  .navprev a:hover{border-color:rgba(125,211,252,.5);text-decoration:none}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <a class="badge" href="../../index.html">&#8592; 返回 ui-icons-hub 图标库</a>
+    <h1>软件界面设计规范</h1>
+    <p class="sub">桌面软件、后台系统、Web App 与移动 App 通用的一套可执行规则：栅格、密度、颜色、图标、状态、无障碍与交付方式。</p>
+    <div class="meta"><span class="pill">12 个章节</span><span class="pill">可直接抄用的参数</span><span class="pill">含上线前检查清单</span></div>
+  </div>
+</header>
+<div class="wrap">
+<main>
+<nav class="toc">
+  <b>目录</b>
+  <ol><li><a href="#s1">从栅格开始，而不是从按钮开始</a></li>
+<li><a href="#s2">密度：信息密度 ≠ 把字变小</a></li>
+<li><a href="#s3">颜色：语义 > 好看</a></li>
+<li><a href="#s4">排版：层级靠对立，不靠凑层次</a></li>
+<li><a href="#s5">图标：一套就够，别拼三种风格</a></li>
+<li><a href="#s6">状态与反馈：别让用户怀疑自己点没点上</a></li>
+<li><a href="#s7">表单与校验：让用户一次填对</a></li>
+<li><a href="#s8">无障碍不是选项，是质量线</a></li>
+<li><a href="#s9">交付：让开发拿到就能用</a></li>
+<li><a href="#s10">上线前检查清单</a></li></ol>
+</nav>
+<section id="s1">
+  <h2>从栅格开始，而不是从按钮开始 <i>布局</i></h2>
+  
+  <p>界面先定<b>网格与间距刻度</b>，再往里面塞内容：所有尺寸都落到刻度上，改版时才不会一改全崩。</p>
+  <table>
+    <tr><th>用途</th><th class="num">紧凑</th><th class="num">标准</th><th class="num">宽松 / 触屏</th></tr>
+    <tr><td>基础单位</td><td class="num">4px</td><td class="num">8px</td><td class="num">8px</td></tr>
+    <tr><td>控件高度</td><td class="num">28–32</td><td class="num">36–40</td><td class="num">44–48</td></tr>
+    <tr><td>元素间距</td><td class="num">8</td><td class="num">12–16</td><td class="num">16–24</td></tr>
+    <tr><td>区块间距</td><td class="num">16</td><td class="num">24</td><td class="num">32–40</td></tr>
+    <tr><td>内容最大宽度</td><td class="num">—</td><td class="num">1200–1280</td><td class="num">—</td></tr>
+  </table>
+  <ul>
+    <li>桌面 ≤1440 用 <b>12 列</b>，宽屏用 16 列；移动端用 <b>4 列</b>栅格。</li>
+    <li>间距只用有限几档（4/8/12/16/24/32/48），写成 token：<code>space.2 = 8px</code>。</li>
+    <li>同一份设计里，紧凑和宽松不要混用；工具型产品偏紧凑，内容与消费型偏宽松。</li>
+  </ul>
+  <div class="tips"><b>常见坑：</b>间距用「目测」而不是刻度，结果同一个页面出现 10 / 11 / 13 / 14px 四种间距。</div>
+  <div class="chips">
+  <a href="../index.html?q=grid"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>grid 布局图标</a>
+  <a href="../index.html?q=layout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>layout</a>
+  <a href="../index.html?q=columns"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>columns</a>
+  </div>
+</section>
+<section id="s2">
+  <h2>密度：信息密度 ≠ 把字变小 <i>密度</i></h2>
+  
+  <p>密度是<b>每屏能承担的决策量</b>，不是字号。表格类后台追求「一屏看清」，移动端追求「一屏一件事」。</p>
+  <ul>
+    <li>行高：紧凑 28–32px / 标准 40px / 触屏 48px；表格行内留够 ≥ 6px 的上下留白。</li>
+    <li>触摸目标 ≥ <b>44×44 px</b>（iOS 44pt、Android 48dp），即使视觉上的按钮只有 24px，也要把热区撑到 44。</li>
+    <li>密集界面里，用分隔线不如用<b>分组留白</b>；留白是最省代码的分隔符。</li>
+    <li>多列数据优先 <b>tabular-nums</b>（等宽数字），否则滚动时数字会左右跳。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=rows"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>rows 行布局</a>
+  <a href="../index.html?q=table"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>table 表格</a>
+  <a href="../index.html?q=list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>list 列表</a>
+  </div>
+</section>
+<section id="s3">
+  <h2>颜色：语义 > 好看 <i>颜色</i></h2>
+  
+  <p>颜色不是装饰，是<b>语义信号</b>：危险、成功、警告、不可用，必须一眼区分。</p>
+  <ul>
+    <li>实用比例：背景/中性 60%、次级 30%、强调 10%。强调色只给「你希望用户点的那个」。</li>
+    <li>对比度门槛：正文 <b>4.5:1</b>，大字号（≥18.66px 粗体或 ≥24px）与 UI 组件边界 <b>3:1</b>。</li>
+    <li>状态色必须配<b>形状或文案</b>，不能只靠颜色区分——约 8% 男性有色觉障碍（红绿最常见）。</li>
+    <li>深色模式：背景用 #0B0D17 这类<b>带一点蓝的深灰</b>而非纯黑；文字别用纯白 #FFF，用 #E8EBFF 更耐看。</li>
+    <li>本仓库单色图标已统一 <code>fill="currentColor"</code>，一句 <code>color:</code> 就能随主题变色。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=palette"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>palette 调色</a>
+  <a href="../index.html?q=contrast"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>contrast 对比度</a>
+  <a href="../index.html?q=moon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>moon 深色模式</a>
+  <a href="../index.html?q=alert-triangle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>alert 警告</a>
+  </div>
+</section>
+<section id="s4">
+  <h2>排版：层级靠对立，不靠凑层次 <i>排版</i></h2>
+  
+  <p>字阶（type scale）控制在 5–7 档：太多等于没有层级。</p>
+  <table>
+    <tr><th>层级</th><th class="num">字号</th><th class="num">行高</th><th>用途</th></tr>
+    <tr><td>Caption</td><td class="num">12</td><td class="num">1.5</td><td>辅助说明、错误提示</td></tr>
+    <tr><td>Body</td><td class="num">14</td><td class="num">1.6</td><td>表单、表格、正文</td></tr>
+    <tr><td>Subtitle</td><td class="num">16</td><td class="num">1.5</td><td>卡片标题、段落小标题</td></tr>
+    <tr><td>H3</td><td class="num">20</td><td class="num">1.4</td><td>区块标题</td></tr>
+    <tr><td>H1</td><td class="num">28–32</td><td class="num">1.3</td><td>页面主标题</td></tr>
+  </table>
+  <ul>
+    <li>正文行宽控制在 <b>45–75 个字符</b>（中文约 30–40 字一行），超了阅读会丢行。</li>
+    <li>中文正文用系统字（PingFang / 微软雅黑 / Noto Sans SC），别用 webfont 塞 8MB 中文全集。</li>
+    <li>数字、金额、百分比统一 <code>font-variant-numeric: tabular-nums</code>。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=text"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>text 排版</a>
+  <a href="../index.html?q=type"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>type 字体</a>
+  <a href="../index.html?q=bold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>bold 加粗</a>
+  <a href="../index.html?q=align-left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>align 对齐</a>
+  </div>
+</section>
+<section id="s5">
+  <h2>图标：一套就够，别拼三种风格 <i>图标</i></h2>
+  
+  <p>图标混风是廉价感的头号来源。选一套（本仓库 215 套任挑），全部从它取。</p>
+  <ul>
+    <li>同一视觉重量：24px 网格里，<b>方形图标边长 20px、圆形直径 22px</b> 才看起来一样大（圆形天性显小）。</li>
+    <li>描边统一：一套图标只能有 <b>一种</b> stroke-width（常见 1.5 或 2），别把别人的 1.25 混进来。</li>
+    <li>尺寸只留三档：<b>16 / 20 / 24</b>，不要 17px 这种「再大一点点」。</li>
+    <li>图标 + 文字间距 8px；图标按钮热区 ≥ 40×40。</li>
+    <li>有意义的功能必须有 <code>aria-label</code>；纯装饰图标用 <code>aria-hidden="true"</code>，避免读屏重复朗读。</li>
+  </ul>
+  <div class="tips"><b>可直接抄：</b>在本仓库搜到图标 → 复制 SVG 源码 → 粘贴即用（单色图标已用 currentColor，<code>color</code> 即可改色）。</div>
+  <div class="chips">
+  <a href="../index.html?q=settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>settings 设置</a>
+  <a href="../index.html?q=search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>search 搜索</a>
+  <a href="../index.html?q=trash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>trash 删除</a>
+  <a href="../index.html?q=download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>download 下载</a>
+  <a href="../index.html?q=check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>check 完成</a>
+  </div>
+</section>
+<section id="s6">
+  <h2>状态与反馈：别让用户怀疑自己点没点上 <i>状态</i></h2>
+  
+  <p>任何可交互元素至少要有：<b>默认 / 悬停 / 按下 / 焦点 / 禁用 / 加载中</b> 六种状态。</p>
+  <ul>
+    <li>焦点环（focus ring）对比度 ≥ 3:1，且不能被 <code>overflow:hidden</code> 裁掉；只做 <code>:focus-visible</code>，鼠标点击不出现。</li>
+    <li><b>&lt; 300ms</b> 的操作不要 loading；<b>&gt; 1s</b> 才用转圈；列表首次加载用<b>骨架屏</b>比转圈体验好得多。</li>
+    <li>Toast 3–5 秒自消失，位置统一；成功类 3 秒足够，错误类要留够阅读时间或让用户手动关。</li>
+    <li>空状态三件套：<b>发生了什么 / 为什么 / 下一步怎么做</b>。只写「暂无数据」的都属于偷懒。</li>
+    <li>破坏性操作（删除、清空）二次确认，并把危险动词写在按钮上：「永久删除」而不是「确定」。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=loader"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>loader 加载</a>
+  <a href="../index.html?q=bell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>bell 通知</a>
+  <a href="../index.html?q=ban"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>ban 禁用</a>
+  <a href="../index.html?q=shield-alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>shield 危险</a>
+  </div>
+</section>
+<section id="s7">
+  <h2>表单与校验：让用户一次填对 <i>表单</i></h2>
+  
+  <ul>
+    <li>标签不要做成 placeholder——填了就看不清写的是什么。<b>标签在上方</b>最稳（超窄容器再考虑左对齐）。</li>
+    <li>校验时机：<b>失焦即校验</b>，不要在输入到第 2 个字就报「格式错误」。</li>
+    <li>错误文案说人话并给出路：「邮箱格式不对」→「少了一个 @，例如 name@example.com」。</li>
+    <li>必填用星号 + <code>aria-required</code>；整个表单错误汇总在顶部，字段错误贴着字段。</li>
+    <li>键盘流：<code>Tab</code> 可达、<code>Enter</code> 提交、<code>Esc</code> 关闭浮层。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>mail 邮箱</a>
+  <a href="../index.html?q=key"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>key 密码</a>
+  <a href="../index.html?q=user"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>user 用户</a>
+  <a href="../index.html?q=check-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>check 校验</a>
+  </div>
+</section>
+<section id="s8">
+  <h2>无障碍不是选项，是质量线 <i>a11y</i></h2>
+  
+  <ul>
+    <li>语义优先：按钮就是 <code>&lt;button&gt;</code>，不要 <code>div + onclick</code> 然后忘了键盘。</li>
+    <li>纯色 Check 之外的信息一定要有第二通道（文案、形状、动效之一）。</li>
+    <li>尊重 <code>prefers-reduced-motion</code>：动画、滚动视差、自动轮播在减弱动效时降级。</li>
+    <li>支持 200% 缩放不丢内容；不要把关键按钮放在 <code>position:fixed</code> 里随视图消失。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=accessibility"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>accessibility 无障碍</a>
+  <a href="../index.html?q=eye"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>eye 可见性</a>
+  <a href="../index.html?q=universe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>universe 通用</a>
+  </div>
+</section>
+<section id="s9">
+  <h2>交付：让开发拿到就能用 <i>交付</i></h2>
+  
+  <ul>
+    <li>图标导出为 <b>SVG</b>（去 title/meta/注释、<code>fill="currentColor"</code>、保留 viewBox 不要写死 width/height）。</li>
+    <li>命名用 kebab-case + 语义：<code>arrow-left</code> 而不是 <code>icon_12</code>。</li>
+    <li>设计 token 与代码变量同名（<code>color.bg.subtle</code>），别在设计稿里叫「浅灰 3」。</li>
+    <li>九种状态、三档尺寸、明暗两套主题一次性给全，比事后补一半靠谱。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=code"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>code 代码</a>
+  <a href="../index.html?q=package"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>package 打包</a>
+  <a href="../index.html?q=git-branch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>git 版本</a>
+  </div>
+</section>
+<section id="s10">
+  <h2>上线前检查清单 <i>清单</i></h2>
+  <div class="ck">
+    <label><input type="checkbox" value="sw-84083" /> 所有间距落在 4/8 刻度上，没有出现 13px、17px 这类孤值</label>
+    <label><input type="checkbox" value="sw-86060" /> 可交互元素都有默认/悬停/按下/焦点/禁用/加载六种状态</label>
+    <label><input type="checkbox" value="sw-80473" /> 正文对比度 ≥ 4.5:1，图标与控件边界 ≥ 3:1（含深色模式）</label>
+    <label><input type="checkbox" value="sw-75492" /> 每个纯图标按钮都有 aria-label，装饰性图标 aria-hidden</label>
+    <label><input type="checkbox" value="sw-87654" /> Tab 键能走完全流程，焦点环可见且未被裁切</label>
+    <label><input type="checkbox" value="sw-61258" /> 空状态 / 加载态 / 错误态都有对应设计</label>
+    <label><input type="checkbox" value="sw-58911" /> 表单在失焦时校验，错误文案给出修改办法</label>
+    <label><input type="checkbox" value="sw-55293" /> 触摸目标 ≥ 44×44px，密集列表至少 ≥ 40</label>
+    <label><input type="checkbox" value="sw-24114" /> 全部图标来自同一套，视觉重量与描边宽度统一</label>
+    <label><input type="checkbox" value="sw-5736" /> 200% 缩放、减弱动效模式下主要功能仍可用</label>
+  </div>
+</section>
+<section>
+  <h2>更多可抄用的资源</h2>
+  <div class="cards">
+  <div class="res"><b>Material Design 3</b><span>Google · Apache-2.0</span><em>最完整的软件 UI 体系：色彩角色、组件规格、触控目标。</em><br/><a href="https://m3.material.io/" target="_blank" rel="noopener">官网</a></div>
+  <div class="res"><b>Human Interface Guidelines</b><span>Apple</span><em>macOS / iOS 的平台约定，做桌面和移动必读。</em><br/><a href="https://developer.apple.com/design/human-interface-guidelines/" target="_blank" rel="noopener">官网</a></div>
+  <div class="res"><b>Fluent 2 Design</b><span>Microsoft · MIT</span><em>Windows 与 Web 的统一语言，含成套官方图标。</em><br/><a href="https://fluent2.microsoft.design/" target="_blank" rel="noopener">官网</a></div>
+  <div class="res"><b>Ant Design</b><span>蚂蚁集团 · MIT</span><em>中文场景最实用的组件规范与动效约定。</em><br/><a href="https://ant.design/" target="_blank" rel="noopener">官网</a></div>
+  <div class="res"><b>WCAG 2.2</b><span>W3C</span><em>对比度、键盘可达、焦点可见等无障碍底线。</em><br/><a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener">规范</a></div>
+  <div class="res"><b>TDesign / Semi Design / Arco</b><span>腾讯 / 字节 · MIT</span><em>国内大厂设计系统，中文排版与表单场景更贴近。</em></div>
+</div>
+</section>
+<div class="navprev">
+<a href="website/index.html"><b>网站设计方法论</b>营销站 / 内容站 / 落地页</a>
+<a href="game/index.html"><b>游戏 UI 设计要点</b>HUD / 菜单 / 触屏与多端适配</a>
+<a href="../../index.html"><b>回到图标库</b>215 套 / 352,371 个 SVG 图标检索</a>
+</div>
+</main>
+<footer>本页内容为设计实践总结，配图所用图标均来自本仓库收录的开源图标集（各以其上游许可证为准）· ui-icons-hub</footer>
+</div>
+<div class="top" id="totop">&#8593;</div>
+<script>
+  var t = document.getElementById("totop");
+  addEventListener("scroll", function(){ t.classList.toggle("on", scrollY > 500); });
+  t.onclick = function(){ scrollTo({top:0, behavior:"smooth"}); };
+  try{
+    document.querySelectorAll(".ck input").forEach(function(el){
+      var k = location.pathname + "#" + el.value;
+      el.checked = localStorage.getItem(k) === "1";
+      el.addEventListener("change", function(){ localStorage.setItem(k, el.checked ? "1" : "0"); });
+    });
+  }catch(e){}
+</script>
+</body>
+</html>

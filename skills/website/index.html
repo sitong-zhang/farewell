@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>网站设计方法论 · ui-icons-hub 设计技能</title>
+<meta name="description" content="官网 / 落地页 / 内容站从定位到上线：首屏结构、响应式断点、排版节奏、CTA、性能预算、SEO 与合规。" />
+<style>
+  :root{--bg:#0b0d17;--bg2:#121529;--card:rgba(255,255,255,.045);--line:rgba(255,255,255,.10);
+    --line2:rgba(255,255,255,.06);--ink:#e8ebff;--muted:#98a0c8;--dim:#6f77a0;--acc:#7dd3fc;--acc2:#a78bfa;--gold:#ffd479}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:radial-gradient(1100px 520px at 15% -8%,rgba(125,211,252,.14),transparent 62%),
+      radial-gradient(900px 480px at 85% 0%,rgba(167,139,250,.13),transparent 60%),linear-gradient(180deg,var(--bg),var(--bg2));
+    color:var(--ink);min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.75;-webkit-font-smoothing:antialiased}
+  a{color:var(--acc);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:920px;margin:0 auto;padding:0 22px}
+  header.hero{padding:34px 0 10px}
+  .badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--acc);border:1px solid rgba(125,211,252,.32);background:rgba(125,211,252,.08);padding:5px 14px;border-radius:999px;margin-bottom:16px}
+  h1{font-size:clamp(24px,4.2vw,36px);font-weight:800;line-height:1.3}
+  h1 span{background:linear-gradient(92deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{margin-top:12px;color:var(--muted);font-size:14.5px}
+  .meta{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}
+  .pill{font-size:11.5px;color:var(--dim);border:1px solid var(--line2);background:var(--card);padding:4px 11px;border-radius:999px}
+  nav.toc{margin:22px 0 8px;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:14px 18px}
+  nav.toc b{font-size:13px;color:var(--muted)}
+  nav.toc ol{margin:8px 0 0 18px;font-size:13px;color:var(--muted);display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:2px 18px}
+  main{padding:8px 0 60px}
+  section{border:1px solid var(--line2);background:var(--card);border-radius:14px;padding:18px 20px;margin:14px 0}
+  section h2{font-size:17px;font-weight:750;display:flex;align-items:center;gap:9px}
+  section h2 i{font-style:normal;font-size:11px;color:var(--acc);border:1px solid rgba(125,211,252,.3);background:rgba(125,211,252,.08);padding:2px 8px;border-radius:999px;font-weight:600}
+  section p{font-size:13.5px;color:var(--muted);margin:8px 0}
+  ul{margin:8px 0 0 20px;font-size:13.5px;color:var(--muted)}
+  ul li{margin:4px 0}
+  ul li b, p b{color:var(--ink)}
+  table{width:100%;border-collapse:collapse;margin:10px 0 2px;font-size:12.8px}
+  th,td{border:1px solid var(--line2);padding:7px 10px;text-align:left;color:var(--muted)}
+  th{color:var(--ink);background:rgba(255,255,255,.04);font-weight:650}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  code{background:rgba(255,255,255,.08);padding:1px 6px;border-radius:4px;font-size:12.5px;color:#d7e2ff}
+  .chips{margin-top:10px;display:flex;flex-wrap:wrap;gap:7px}
+  .chips a{font-size:12px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--muted);padding:4px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:6px}
+  .chips a:hover{border-color:rgba(125,211,252,.55);color:var(--ink);text-decoration:none}
+  .chips a svg{width:14px;height:14px;color:var(--acc)}
+  .tips{margin-top:10px;border-left:2px solid rgba(255,212,121,.55);padding:2px 0 2px 14px;font-size:13px;color:var(--muted)}
+  .tips b{color:var(--gold)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:12px}
+  .res{border:1px solid var(--line2);background:rgba(255,255,255,.035);border-radius:11px;padding:12px 14px}
+  .res b{font-size:13.5px;display:block}
+  .res span{font-size:12px;color:var(--dim);display:block;margin-top:3px}
+  .res em{font-style:normal;font-size:12px;color:var(--muted);display:block;margin-top:6px}
+  .ck{margin-top:8px}
+  .ck label{display:flex;gap:9px;align-items:flex-start;font-size:13.5px;color:var(--muted);padding:4px 0;cursor:pointer}
+  .ck input{margin-top:5px;accent-color:var(--acc)}
+  footer{border-top:1px solid var(--line2);padding:20px 0 46px;font-size:12px;color:var(--dim);text-align:center}
+  .top{position:fixed;right:18px;bottom:18px;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:rgba(18,21,41,.92);color:var(--muted);display:grid;place-items:center;font-size:16px;opacity:0;pointer-events:none;transition:.2s}
+  .top.on{opacity:1;pointer-events:auto}
+  .navprev{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 0}
+  .navprev a{flex:1;min-width:200px;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:12px 16px;font-size:13px;color:var(--muted)}
+  .navprev a b{display:block;color:var(--ink);font-size:14px}
+  .navprev a:hover{border-color:rgba(125,211,252,.5);text-decoration:none}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <a class="badge" href="../../index.html">&#8592; 返回 ui-icons-hub 图标库</a>
+    <h1>网站设计方法论</h1>
+    <p class="sub">官网 / 落地页 / 内容站从定位到上线：首屏结构、响应式断点、排版节奏、CTA、性能预算、SEO 与合规。</p>
+    <div class="meta"><span class="pill">11 个章节</span><span class="pill">核心性能指标表</span><span class="pill">含上线前检查清单</span></div>
+  </div>
+</header>
+<div class="wrap">
+<main>
+<nav class="toc">
+  <b>目录</b>
+  <ol><li><a href="#s1">一句话说清「这站是干嘛的」</a></li>
+<li><a href="#s2">首屏：折叠线以上的信息密度最高</a></li>
+<li><a href="#s3">响应式：断点跟着内容走</a></li>
+<li><a href="#s4">排版：读得下去才是好设计</a></li>
+<li><a href="#s5">CTA 与转化按钮</a></li>
+<li><a href="#s6">导航结构：别让用户找路</a></li>
+<li><a href="#s7">图片、插画与视频</a></li>
+<li><a href="#s8">动效：200–300ms 就够</a></li>
+<li><a href="#s9">性能预算：卡的本质是字节</a></li>
+<li><a href="#s10">SEO 与分享</a></li>
+<li><a href="#s11">合规与可信</a></li>
+<li><a href="#s12">上线前检查清单</a></li></ol>
+</nav>
+<section id="s1">
+  <h2>一句话说清「这站是干嘛的」 <i>定位</i></h2>
+  
+  <p>网站（区别于 Web App）的核心任务是<b>说服 + 引导</b>：让用户 5 秒内知道你是谁、能帮他什么、然后点那个按钮。</p>
+  <ul>
+    <li>主标题写<b>结果</b>而不是能力：「3 分钟做出数据看板」优于「专业的 BI 平台」。</li>
+    <li>首屏三件事：<b>价值主张 / 社会证明 / 一个主 CTA</b>。</li>
+    <li>导航项控制在 <b>5–7 个</b>；超过就把次要项收进「更多」或页脚。</li>
+    <li>每个页面解决一个任务：首页说服、定价页转化、文档页降低门槛、博客留搜索流量。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=rocket"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>rocket 启动</a>
+  <a href="../index.html?q=target"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>target 目标</a>
+  <a href="../index.html?q=users"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>users 用户</a>
+  </div>
+</section>
+<section id="s2">
+  <h2>首屏：折叠线以上的信息密度最高 <i>首屏</i></h2>
+  
+  <ul>
+    <li>关键信息必须在<b>不滚动</b>就能看到的位置：标题、副标题、CTA、可信证据。</li>
+    <li>LCP（最大内容绘制）目标 <b>&lt; 2.5s</b>；首屏不要放自动播放的大视频。</li>
+    <li>CTA 用实心高对比按钮，页面上<b>只有一个主 CTA</b>；次要用幽灵按钮。</li>
+    <li>导航栏吸顶时高度压到 56–64px，避免吃掉过多视口。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=monitor"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>monitor 首屏</a>
+  <a href="../index.html?q=mouse-pointer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>mouse 点击</a>
+  <a href="../index.html?q=star"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>star 亮点</a>
+  </div>
+</section>
+<section id="s3">
+  <h2>响应式：断点跟着内容走 <i>响应式</i></h2>
+  
+  <table>
+    <tr><th>断点</th><th class="num">宽度</th><th>典型处理</th></tr>
+    <tr><td>手机</td><td class="num">360–767</td><td>单列、导航收汉堡菜单、字号不缩</td></tr>
+    <tr><td>平板</td><td class="num">768–1023</td><td>两列卡片，导航可保留部分项</td></tr>
+    <tr><td>笔电</td><td class="num">1024–1439</td><td>容器宽 1200，三列</td></tr>
+    <tr><td>大屏</td><td class="num">≥1440</td><td>容器封顶 1280，避免拉长行宽</td></tr>
+  </table>
+  <ul>
+    <li>优先写<b>移动端样式</b>，再用 media query 向上增强。</li>
+    <li>图片必用 <code>srcset</code> + <code>sizes</code> + <code>loading="lazy"</code>，格式 AVIF/WebP。</li>
+    <li>地图、第三方 iframe 在移动端要有最小高度，避免挤压布局。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=smartphone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>smartphone 手机</a>
+  <a href="../index.html?q=tablet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>tablet 平板</a>
+  <a href="../index.html?q=monitor"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>monitor 桌面</a>
+  </div>
+</section>
+<section id="s4">
+  <h2>排版：读得下去才是好设计 <i>排版</i></h2>
+  
+  <ul>
+    <li>正文行宽 <b>60–75 字符</b>（中文 30–40 字），段落间距 ≥ 1.5 倍字号。</li>
+    <li>标题层级压差要明显：H1 32–48 / H2 24–32 / H3 20–24，相邻两级差距至少 1.25 倍。</li>
+    <li>正文颜色别用纯黑 #000，用 #1F2430 之类；行高 1.6–1.75。</li>
+    <li>中英混排在英文两侧加空格，标点用全角；重要数字用 tabular-nums 对齐。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=text"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>text 文本</a>
+  <a href="../index.html?q=heading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>heading 标题</a>
+  <a href="../index.html?q=quote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>quote 引用</a>
+  </div>
+</section>
+<section id="s5">
+  <h2>CTA 与转化按钮 <i>转化</i></h2>
+  
+  <ul>
+    <li>动词 + 收益：「免费生成图标」比「提交」点击率高得多。</li>
+    <li>按钮高度 ≥ 44px（移动端 48），左右内边距 ≥ 24px。</li>
+    <li>同屏不出现两个同权重按钮；重复 CTA 至少间隔一屏以上。</li>
+    <li>表单字段只问必需的：每多一栏都掉一层转化。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=cursor"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>cursor 点击</a>
+  <a href="../index.html?q=shopping-cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>cart 下单</a>
+  <a href="../index.html?q=credit-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>card 支付</a>
+  </div>
+</section>
+<section id="s6">
+  <h2>导航结构：别让用户找路 <i>导航</i></h2>
+  
+  <ul>
+    <li>顶栏用于「全局」，侧边用于「当下上下文」，面包屑用于「层级」。</li>
+    <li>长页面加<b>锚点目录</b>（本页顶部就有），并高亮当前所在章节。</li>
+    <li>页脚不是垃圾桶：分 3–5 组列出产品/资源/公司/法律，并放版权与备案。</li>
+    <li>移动端菜单里的 CTA 要保留，别折叠掉转化入口。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>menu 菜单</a>
+  <a href="../index.html?q=chevrons-right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>chevron 层级</a>
+  <a href="../index.html?q=anchor"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>anchor 锚点</a>
+  </div>
+</section>
+<section id="s7">
+  <h2>图片、插画与视频 <i>媒体</i></h2>
+  
+  <ul>
+    <li>统一比例：卡片图 16:9 或 4:3，头像 1:1，插图留够边距。</li>
+    <li>永远设置 <code>width/height</code> 或 <code>aspect-ratio</code>，否则图片加载会抖版面（CLS）。</li>
+    <li>不要<b>把文字烧进图片</b>——SEO、翻译、无障碍三输。</li>
+    <li>视频直播给海报帧 + 静音自动播放 + 明确播放控件。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>image 图片</a>
+  <a href="../index.html?q=play"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>play 视频</a>
+  <a href="../index.html?q=camera"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>camera 摄影</a>
+  </div>
+</section>
+<section id="s8">
+  <h2>动效：200–300ms 就够 <i>动效</i></h2>
+  
+  <ul>
+    <li>界面动效 <b>150–300ms</b>；超过 400ms 会明显感觉「卡」。</li>
+    <li>缓动用 <code>cubic-bezier(.2,.8,.2,1)</code> 或 <code>ease-out</code>，别用 linear。</li>
+    <li>入场动效要有<b>位移 + 淡入</b>，纯淡入会显得没重点；列表错开 30–50ms。</li>
+    <li>支持 <code>@media (prefers-reduced-motion: reduce)</code> 关闭动画。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=loader"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>loader 动效</a>
+  <a href="../index.html?q=zap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>zap 快速</a>
+  <a href="../index.html?q=activity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>activity 反馈</a>
+  </div>
+</section>
+<section id="s9">
+  <h2>性能预算：卡的本质是字节 <i>性能</i></h2>
+  
+  <table>
+    <tr><th>指标</th><th class="num">及格</th><th class="num">优秀</th></tr>
+    <tr><td>LCP 最大内容绘制</td><td class="num">&lt; 2.5s</td><td class="num">&lt; 1.8s</td></tr>
+    <tr><td>CLS 布局偏移</td><td class="num">&lt; 0.1</td><td class="num">&lt; 0.05</td></tr>
+    <tr><td>INP 交互响应</td><td class="num">&lt; 200ms</td><td class="num">&lt; 100ms</td></tr>
+    <tr><td>首屏 JS</td><td class="num">&lt; 300KB</td><td class="num">&lt; 150KB</td></tr>
+  </table>
+  <ul>
+    <li>字体做子集 + <code>woff2</code> + <code>font-display:swap</code>；图标用 SVG 或图标字体子集。</li>
+    <li>首屏 hero 图控制在 150–250KB；整页图片总预算尽量 &lt; 1MB。</li>
+    <li>第三方脚本（统计、聊天）延后加载或直接异步，别阻塞首屏。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=gauge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>gauge 性能</a>
+  <a href="../index.html?q=activity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>activity 指标</a>
+  <a href="../index.html?q=clock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>clock 时间</a>
+  </div>
+</section>
+<section id="s10">
+  <h2>SEO 与分享 <i>SEO</i></h2>
+  
+  <ul>
+    <li>每个页面唯一的 <code>&lt;title&gt;</code>（≤ 60 字符）和 description（≤ 160 字符）。</li>
+    <li>Open Graph / Twitter Card 预览图 1200×630，否则分享出去是灰块。</li>
+    <li><code>canonical</code> 去重、<code>sitemap.xml</code>、<code>robots.txt</code>、结构化数据（Product / Article / FAQ）。</li>
+    <li>H1 每页只有一个，标题层级不跳级（H2 直接到 H4 是错误）。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>search 搜索</a>
+  <a href="../index.html?q=globe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>globe 网站</a>
+  <a href="../index.html?q=link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>link 链接</a>
+  </div>
+</section>
+<section id="s11">
+  <h2>合规与可信 <i>合规</i></h2>
+  
+  <ul>
+    <li>全站 HTTPS；外部链接加 <code>rel="noopener"</code>（本仓库所有外链已如此）。</li>
+    <li>Cookie / 埋点提示：拒绝和接受按钮权重相同，别只有「同意」。</li>
+    <li>隐私政策、条款、联系方式必须可达；国内站点注意<b>ICP 备案</b>与等保要求。</li>
+    <li>展示 Logo 时注意<b>商标</b>属性：品牌素材多为 CC0/CC-BY 许可，但商标权不随许可转让。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=shield-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>shield 合规</a>
+  <a href="../index.html?q=lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>lock 安全</a>
+  <a href="../index.html?q=file-text"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>file 条款</a>
+  </div>
+</section>
+<section id="s12">
+  <h2>上线前检查清单 <i>清单</i></h2>
+  <div class="ck">
+    <label><input type="checkbox" value="web-409" /> 首屏不滚动就能看懂「你是谁 + 能干嘛 + 点哪里」</label>
+    <label><input type="checkbox" value="web-57225" /> 移动端（360px）到桌面（1440px）都跑过一遍，没有横向滚动</label>
+    <label><input type="checkbox" value="web-94904" /> 全部图片有宽高属性 / aspect-ratio，开了 lazy-load</label>
+    <label><input type="checkbox" value="web-79503" /> 每个页面 title / description / OG 图齐全且不重复</label>
+    <label><input type="checkbox" value="web-53458" /> LCP < 2.5s、CLS < 0.1、INP < 200ms（真机测过）</label>
+    <label><input type="checkbox" value="web-7622" /> 所有可点击区域 ≥ 44px，表单字段只留必需的</label>
+    <label><input type="checkbox" value="web-76336" /> 减弱动效 / 禁用 JS 的主要降级路径确认过</label>
+    <label><input type="checkbox" value="web-65577" /> HTTPS、隐私政策、备案或资质信息到位</label>
+    <label><input type="checkbox" value="web-66056" /> 外链 rel="noopener"，跳转新标签</label>
+    <label><input type="checkbox" value="web-39047" /> CTA 文案是「动词 + 收益」，不是「提交 / 确定」</label>
+  </div>
+</section>
+<section>
+  <h2>更多可抄用的资源</h2>
+  <div class="cards">
+  <div class="res"><b>web.dev</b><span>Google</span><em>LCP / CLS / INP 三大核心指标与优化手段。</em><br/><a href="https://web.dev/" target="_blank" rel="noopener">官网</a></div>
+  <div class="res"><b>Refactoring UI</b><span>Adam Wathan &amp; Steve Schoger</span><em>把「看起来高级」拆成可执行的具体动作。</em></div>
+  <div class="res"><b>Laws of UX</b><span>Jon Yablonski</span><em>把心理学定律翻译成界面决策。</em><br/><a href="https://lawsofux.com/" target="_blank" rel="noopener">官网</a></div>
+  <div class="res"><b>Tailwind CSS / daisyUI</b><span>MIT</span><em>用现成刻度约束自己：间距、字阶、颜色都有限集。</em></div>
+  <div class="res"><b>PageSpeed Insights</b><span>Google</span><em>上线前跑一遍，比主观感觉靠谱得多。</em><br/><a href="https://pagespeed.web.dev/" target="_blank" rel="noopener">工具</a></div>
+  <div class="res"><b>The Web Design Checklist</b><span>社区</span><em>改版/上线前的逐项自查清单。</em></div>
+</div>
+</section>
+<div class="navprev">
+<a href="software/index.html"><b>软件界面设计规范</b>桌面 / Web App / 移动 App 的通用 UI 规则</a>
+<a href="game/index.html"><b>游戏 UI 设计要点</b>HUD / 菜单 / 触屏与多端适配</a>
+<a href="../../index.html"><b>回到图标库</b>215 套 / 352,371 个 SVG 图标检索</a>
+</div>
+</main>
+<footer>本页内容为设计实践总结，配图所用图标均来自本仓库收录的开源图标集（各以其上游许可证为准）· ui-icons-hub</footer>
+</div>
+<div class="top" id="totop">&#8593;</div>
+<script>
+  var t = document.getElementById("totop");
+  addEventListener("scroll", function(){ t.classList.toggle("on", scrollY > 500); });
+  t.onclick = function(){ scrollTo({top:0, behavior:"smooth"}); };
+  try{
+    document.querySelectorAll(".ck input").forEach(function(el){
+      var k = location.pathname + "#" + el.value;
+      el.checked = localStorage.getItem(k) === "1";
+      el.addEventListener("change", function(){ localStorage.setItem(k, el.checked ? "1" : "0"); });
+    });
+  }catch(e){}
+</script>
+</body>
+</html>
