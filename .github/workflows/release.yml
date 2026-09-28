@@ -13,6 +13,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 jobs:
   desktop:
@@ -49,23 +50,46 @@ jobs:
         with:
           distribution: temurin
           java-version: "17"
-      - name: 准备 Gradle
+      - name: 准备 Gradle 8.2（与 AGP 8.2.2 匹配）
         run: |
-          if command -v gradle >/dev/null 2>&1; then
-            echo "使用系统 Gradle $(gradle -v | head -1)"
-          else
-            curl -sL -o /tmp/gradle.zip https://services.gradle.org/distributions/gradle-8.2-bin.zip
-            sudo unzip -q /tmp/gradle.zip -d /opt
-            sudo ln -sf /opt/gradle-8.2/bin/gradle /usr/local/bin/gradle
-          fi
+          curl -sSL -o /tmp/gradle.zip https://services.gradle.org/distributions/gradle-8.2-bin.zip
+          sudo unzip -q -o /tmp/gradle.zip -d /opt
+          sudo ln -sf /opt/gradle-8.2/bin/gradle /usr/local/bin/gradle
+          gradle -v | head -3
       - name: 把全量站点放进离线版 assets
         run: |
           mkdir -p android/app/src/offline/assets
           rsync -a --exclude .git --exclude android --exclude dist ./ android/app/src/offline/assets/site/
           du -sh android/app/src/offline/assets/site
-      - name: 构建两个 APK
+          find android/app/src/offline/assets/site -type f | wc -l
+      - name: 构建联网版 APK
         working-directory: android
-        run: gradle assembleOnlineDebug assembleOfflineDebug --no-daemon -q
+        run: gradle assembleOnlineDebug --no-daemon --stacktrace 2>&1 | tee /tmp/online.log
+      - name: 构建离线版 APK
+        id: offline_apk
+        continue-on-error: true
+        working-directory: android
+        run: gradle assembleOfflineDebug --no-daemon --stacktrace 2>&1 | tee /tmp/offline.log
+      - name: 回传构建日志（仅在失败时）
+        if: failure() || steps.offline_apk.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          {
+            echo "## CI 日志回传（Android 构建失败）"
+            echo ""
+            echo "Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            echo ""
+            echo "### online.log"
+            echo '```'
+            tail -n 80 /tmp/online.log 2>/dev/null || echo "(无)"
+            echo '```'
+            echo "### offline.log"
+            echo '```'
+            tail -n 80 /tmp/offline.log 2>/dev/null || echo "(无)"
+            echo '```'
+          } > /tmp/issue.md
+          gh issue create --title "CI 失败：Android 构建 ${{ github.run_id }}" --body-file /tmp/issue.md || true
       - name: 收集 APK
         run: |
           mkdir -p dist
@@ -81,13 +105,20 @@ jobs:
   release:
     name: 创建 Release
     needs: [desktop, android]
-    if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch'
+    # 桌面端成功就发版；Android 失败不阻塞（APK 可在后续版本补上）
+    if: always() && needs.desktop.result == 'success' && (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
-          path: artifacts
+          name: desktop-packages
+          path: artifacts/desktop
+      - uses: actions/download-artifact@v4
+        with:
+          name: android-apks
+          path: artifacts/android
+        continue-on-error: true
       - name: 汇总产物
         run: |
           mkdir -p release
@@ -98,6 +129,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tag || github.ref_name }}
         run: |
-          gh release create "$TAG" --title "ui-icons-hub $TAG" --generate-notes \
+          gh release create "$TAG" --title "ui-icons-hub $TAG" \
             --notes "215 套图标库 / 352,371 个 SVG 图标 · 三端安装包（联网版 / 离线版）由 CI 自动构建" \
-            release/*
+            release/* \
+          || gh release upload "$TAG" release/* --clobber
