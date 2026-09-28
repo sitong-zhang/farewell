@@ -28,6 +28,13 @@ self.addEventListener("activate", function (e) {
 
 function isData(u) { return /\/data\/.+\.js$/.test(u.pathname) || /\/app-icons\/png\//.test(u.pathname); }
 
+/* 桌面 / 移动端的「联网版」安装包只带外壳，不带 300 多 MB 的图标数据。
+ * 这种情况下本地请求会 404，需要回源到 GitHub Pages 取分片，取到后写进本机缓存，
+ * 于是「我的 → 已下载」里就会一点点累积起来，之后再断网也能看。
+ * 在线上（origin 本身就是 Pages）不会触发这条回源分支。 */
+var REMOTE = "https://sitong-zhang.github.io/ui-icons-hub";
+function isSelfHosted() { return self.location.origin !== REMOTE; }
+
 self.addEventListener("fetch", function (e) {
   var req = e.request;
   if (req.method !== "GET") return;
@@ -40,9 +47,19 @@ self.addEventListener("fetch", function (e) {
       return c.match(req).then(function (hit) {
         if (hit) return hit;
         return fetch(req).then(function (res) {
-          if (res && res.status === 200 && res.type === "basic") c.put(req, res.clone());
-          return res;
-        }).catch(function () { return new Response("", { status: 504 }); });
+          if (res && res.status === 200 && res.type === "basic") { c.put(req, res.clone()); return res; }
+          if (url.origin === REMOTE || !isSelfHosted()) return res;
+          // 本地外壳没有这块数据 → 回源到线上仓库取
+          return fetch(REMOTE + url.pathname, { mode: "cors" }).then(function (r2) {
+            if (r2 && r2.status === 200) c.put(req, r2.clone());
+            return r2;
+          });
+        }).catch(function () {
+          if (url.origin === REMOTE || !isSelfHosted()) return new Response("", { status: 504 });
+          return fetch(REMOTE + url.pathname, { mode: "cors" }).catch(function () {
+            return new Response("", { status: 504 });
+          });
+        });
       });
     }));
     return;
