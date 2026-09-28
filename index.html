@@ -148,6 +148,8 @@
 </div>
 <div class="toast" id="toast"></div>
 
+<script src="vendor/flexsearch.min.js"></script>
+<script src="search.js"></script>
 <script src="icons.js"></script>
 <script src="kits.js"></script>
 <script>
@@ -321,54 +323,81 @@
     document.getElementById("kitSecs").style.display = "none";
     resSec.style.display = "";
     resGrid.innerHTML = "";
-    var jobs = [], totalChunks = 0;
-    SETS.forEach(function(s){ totalChunks += s.chunks; for(var i=0;i<s.chunks;i++) jobs.push([s.repo,i]); });
-    var done = 0, matched = 0, ptr = 0;
-    scanInfo.innerHTML = "正在扫描全部 <b>"+totalChunks+"</b> 个数据块…";
+    document.getElementById("noRes").style.display = "none";
+    scanInfo.innerHTML = "正在准备检索索引…";
 
-    function pump(){
+    window.__SEARCH.init(function(err){
       if(token !== scanToken) return;
-      var active = 0;
-      while(ptr < jobs.length && active < 3){
-        var job = jobs[ptr++]; active++;
-        (function(repo, idx){
-          var s = byRepo(repo);
-          GOT[repo] = GOT[repo] || [];
-          if(GOT[repo].indexOf(idx) >= 0){ handle(repo, idx); return; }
-          var el = document.createElement("script");
-          el.src = "data/" + s.slug + "__" + idx + ".js";
-          el.async = true;
-          el.onload = function(){ if(token===scanToken) handle(repo, idx); };
-          el.onerror = function(){ if(token===scanToken){ done++; tick(); } };
-          document.head.appendChild(el);
-        })(job[0], job[1]);
+      if(err){ scanInfo.innerHTML = "检索索引加载失败，请刷新重试"; return; }
+      var hits = window.__SEARCH.search(v, Math.max(RES_CAP * 2, 200));
+      if(!hits.length){
+        scanInfo.innerHTML = "没有匹配的图标，换个说法试试（支持中文意图，如「购物车」「齿轮」「游戏手柄」）";
+        document.getElementById("noRes").style.display = "";
+        return;
       }
-    }
-    function handle(repo, idx){
-      if(token !== scanToken) return;
-      var arr = DATA[repo] || [];
-      var s = byRepo(repo);
-      var out = "";
-      for(var i=0;i<arr.length;i++){
-        var it = arr[i];
-        if(it.n.toLowerCase().indexOf(v) >= 0 || repo.toLowerCase().indexOf(v) >= 0 || (s && s.name.toLowerCase().indexOf(v) >= 0)){
-          if(matched >= RES_CAP) break;
-          out += '<div class="ico'+(s&&s.mono?" mono":"")+'" title="'+esc(it.n)+'（'+(s?s.name:repo)+'）" data-set="'+esc(repo)+'" data-name="'+esc(it.n)+'">'+it.s+'</div>';
-          matched++;
+      var need = {}, r, cid;
+      for(var i=0;i<hits.length;i++){
+        var f = window.__SEARCH.info(hits[i]); if(!f) continue;
+        var st = byRepo(f.repo); if(!st) continue;
+        if(!need[f.repo]) need[f.repo] = {};
+        if(f.all){ for(var c=0;c<Math.min(st.chunks, 6);c++) need[f.repo][c] = 1; }
+        else { need[f.repo][hits[i].c] = 1; }
+      }
+      var jobs = [];
+      for(r in need){
+        for(cid in need[r]){
+          if(jobs.length >= 16) break;
+          jobs.push([r, +cid]);
         }
       }
-      if(out && matched <= RES_CAP) resGrid.insertAdjacentHTML("beforeend", out);
-      done++; tick();
-    }
-    function tick(){
-      if(token !== scanToken) return;
-      scanInfo.innerHTML = "已扫描 <b>"+done+"</b>/"+totalChunks+" 块 · 命中 <b>"+matched.toLocaleString()+"</b> 个图标"+
-        (done>=totalChunks ? "" : "（扫描中，结果持续增加…）") + (matched>=RES_CAP ? " · 已达展示上限 "+RES_CAP.toLocaleString() : "");
-      document.getElementById("noRes").style.display = (done>=totalChunks && matched===0) ? "" : "none";
-      if(done < totalChunks && ptr < jobs.length) pump();
-      else if(ptr < jobs.length) pump();
-    }
-    pump();
+      var remain = jobs.length;
+      scanInfo.innerHTML = "命中 <b>"+hits.length.toLocaleString()+"</b> 条，正在取回 <b>"+remain+"</b> 个数据块…";
+      if(!remain){ drawResults(); return; }
+      jobs.forEach(function(job){
+        loadChunkOnce(job[0], job[1], function(){
+          if(token === scanToken){ remain--; if(remain <= 0) drawResults(); }
+        });
+      });
+
+      function drawResults(){
+        if(token !== scanToken) return;
+        var out = "", matched = 0;
+        for(var i=0;i<hits.length && matched < RES_CAP;i++){
+          var f = window.__SEARCH.info(hits[i]); if(!f) continue;
+          var arr = DATA[f.repo] || [];
+          if(f.all){
+            var lim = Math.min(arr.length, 120);
+            for(var j=0;j<lim && matched<RES_CAP;j++, matched++) out += searchTile(arr[j], f);
+          } else {
+            for(var j2=0;j2<arr.length;j2++){
+              if(arr[j2].n === f.icon){ out += searchTile(arr[j2], f); matched++; break; }
+            }
+          }
+        }
+        resGrid.innerHTML = out;
+        scanInfo.innerHTML = "命中并展示 <b>"+matched.toLocaleString()+"</b> 个图标"+
+          (matched >= RES_CAP ? " · 已达展示上限 "+RES_CAP.toLocaleString() : "") +
+          " · 平均 "+ (window.__SEARCH_BUILD_MS || 0) +"ms 建索引";
+        document.getElementById("noRes").style.display = matched ? "none" : "";
+      }
+    });
+  }
+  function searchTile(it, f){
+    var nm = f && f.name ? f.name : "";
+    var rp = f && f.repo ? f.repo : "";
+    return '<div class="ico'+(f&&f.mono?" mono":"")+'" title="'+esc(it.n)+'（'+nm+'）" data-set="'+esc(rp)+'" data-name="'+esc(it.n)+'">'+it.s+'</div>';
+  }
+  function loadChunkOnce(repo, idx, cb){
+    var s = byRepo(repo); if(!s){ cb(); return; }
+    GOT[repo] = GOT[repo] || [];
+    if(GOT[repo].indexOf(idx) >= 0){ setTimeout(cb, 0); return; }
+    var el = document.createElement("script");
+    el.src = "data/" + s.slug + "__" + idx + ".js";
+    el.async = true;
+    var fin = false;
+    el.onload  = function(){ if(!fin){ fin = true; cb(); } };
+    el.onerror = function(){ if(!fin){ fin = true; cb(); } };
+    document.head.appendChild(el);
   }
 
   // ---------- 尺寸 / 颜色 ----------
