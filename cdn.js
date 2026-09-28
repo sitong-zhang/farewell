@@ -178,21 +178,29 @@
     };
   }
 
+  // 分片按序加载：__ADD2 的收集器是共享的，并发会互相覆盖，所以串行化
+  var chain = Promise.resolve();
+
   function loadChunk(slug, i) {
-    var key = slug + "__" + i;
-    if (CHUNK[key]) return Promise.resolve(CHUNK[key]);
-    return scriptOnce(base + "data/" + key + ".js").then(function () {
-      // 分片里的 repo 用的是 "owner/repo" 形式，和 slug 的 "owner__repo" 对应
-      var expect = slug.replace("__", "/");
-      var map = {};
-      if (pending && pending.repo === expect) {
-        var pairs = pending.pairs || [];
-        for (var k = 0; k < pairs.length; k++) map[pairs[k][0]] = pairs[k];
-      }
-      pending = null;
-      CHUNK[key] = map;
-      return map;
-    });
+    var run = function () {
+      var key = slug + "__" + i;
+      if (CHUNK[key]) return Promise.resolve(CHUNK[key]);
+      // 分片里 __ADD2 的第一个参数是图标库的原始 repo（保留大小写），以索引里的为准
+      var st = SET_INFO[slug] || {};
+      var expect = st.repo || slug.replace("__", "/");
+      return scriptOnce(base + "data/" + key + ".js").then(function () {
+        var map = {};
+        if (pending && pending.repo === expect) {
+          var pairs = pending.pairs || [];
+          for (var k = 0; k < pairs.length; k++) map[pairs[k][0]] = pairs[k];
+        }
+        pending = null;
+        CHUNK[key] = map;
+        return map;
+      });
+    };
+    chain = chain.then(run, run);
+    return chain;
   }
 
   function wrapSvg(slug, body, pair) {
