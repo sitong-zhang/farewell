@@ -8,7 +8,8 @@ var SHELL = [
   "./vendor/flexsearch.min.js", "./manifest.webmanifest",
   "./icons/app-icon-192.png", "./icons/app-icon-512.png",
   "./app-icons/index.html", "./app-icons/icons.js",
-  "./skills/software/index.html", "./skills/website/index.html", "./skills/game/index.html"
+  "./skills/software/index.html", "./skills/website/index.html", "./skills/game/index.html",
+  "./cdn.html", "./cdn.js"
 ];
 
 self.addEventListener("install", function (e) {

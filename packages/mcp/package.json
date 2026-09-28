@@ -1,0 +1,16 @@
+{
+  "name": "@ui-icons-hub/mcp",
+  "version": "1.0.0",
+  "description": "ui-icons-hub 的 MCP 服务器：让 AI 助手直接检索 215 套开源图标库 / 345,961 个 SVG 图标（支持中文意图），并拿到 SVG 源码。零依赖。",
+  "type": "module",
+  "bin": { "ui-icons-hub-mcp": "server.mjs" },
+  "main": "server.mjs",
+  "exports": { ".": "./server.mjs" },
+  "files": ["server.mjs", "README.md"],
+  "engines": { "node": ">=18" },
+  "keywords": ["mcp", "model-context-protocol", "icons", "svg", "ui-icons-hub"],
+  "license": "MIT",
+  "homepage": "https://sitong-zhang.github.io/ui-icons-hub/",
+  "repository": { "type": "git", "url": "git+https://github.com/sitong-zhang/ui-icons-hub.git" },
+  "dependencies": {}
+}
