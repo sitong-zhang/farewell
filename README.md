@@ -1,4 +1,4 @@
-# Farewell · UI 图标与设计资源库
+# ui-icons-hub · UI 图标与设计资源库
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
@@ -27,7 +27,7 @@
 
 ## 在线访问
 
-- 静态站点：https://sitong-zhang.github.io/farewell/
+- 静态站点：https://sitong-zhang.github.io/ui-icons-hub/
 
 ## 项目文件
 
