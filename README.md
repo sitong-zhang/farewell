@@ -6,8 +6,8 @@
 
 ## 资源规模
 
-- 🧩 **67 套** 开源 SVG 图标库
-- 📊 **80,492 个** 图标
+- 🧩 **44 套** 开源 SVG 图标库
+- 📊 **53,851 个** 图标
 - 🛠️ **189 个** 技术栈品牌（Simple Icons / Devicon / Skill Icons / VS Code Icons...）
 - 🤖 **38 个** AI 大厂图标 / Logo（OpenAI / Anthropic / Google / Meta...）
 - 🎨 **186 个** UI 设计项目（Ant Design / Element Plus / Naive UI / shadcn/ui / Tailwind CSS...）
