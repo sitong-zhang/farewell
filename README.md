@@ -22,7 +22,7 @@
 - 网站：<https://sitong-zhang.github.io/ui-icons-hub/>
 - 独立分区：[iOS26 苹果风格应用图标](app-icons/index.html)
 - 设计技能：[软件界面](skills/software/index.html) · [网站设计](skills/website/index.html) · [游戏 UI](skills/game/index.html)
-- 客户端下载：[download.html](download.html)（Android APK / Apple / PC 三件套，各分联网版与离线版）
+- 客户端下载：[download.html](download.html)（Windows / macOS / Linux 三件套，各分联网版与离线版）
 
 ## 怎么搜
 
@@ -392,19 +392,17 @@
 | `skills/` | 设计技能分区：软件 / 网站 / 游戏 |
 | `sw.js` + `manifest.webmanifest` | PWA：外壳预缓存 + 数据分片按需缓存，可安装到桌面 / 主屏 |
 | `download.html` | 三端客户端下载页 |
-| `android/` | Android 壳工程（WebView），`online` / `offline` 两个 flavor |
 | `tools/pack_desktop.py` + `tools/launcher/` | 打包脚本与启动器：Windows `.exe`、macOS `.app`、Linux `.tar.gz` |
-| `.github/workflows/release.yml` | 自动构建三件套 + 两个 APK 并创建 Release |
 
-### 客户端
+### 客户端（PC 三件套）
 
-| 版本 | Android | Apple | Windows | Linux | 体积 |
-| --- | --- | --- | --- | --- | --- |
-| 联网版 | APK | macOS `.app` / iPhone 添加到主屏 | `.exe` | `.tar.gz` | 约 2 MB |
-| 离线版 | APK | macOS `.app` | `.exe` | `.tar.gz` | 约 100 MB |
+| 版本 | Windows | macOS | Linux | 体积 |
+| --- | --- | --- | --- | --- |
+| 联网版 | `.exe` | `.app` | `.tar.gz` | 约 2 MB |
+| 离线版 | `.exe` | `.app` | `.tar.gz` | 约 100 MB |
 
 联网版只带外壳与检索索引，命中后按需从仓库拉数据并缓存到本机；离线版把 215 套图标全部内置，断网可用。
-两者内容一致，安装包由 GitHub Actions 每次发版自动构建。
+两者内容一致，`tools/pack_desktop.py` 一条命令即可全部产出。
 
 ## 许可证与署名
 
