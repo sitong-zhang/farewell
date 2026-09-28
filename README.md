@@ -31,6 +31,52 @@
 - 命中后才按需加载对应数据分片，**不会**为了搜索把你不需要的图标库全量下载到本地。
 - 结果按「完全同名 > 前缀命中 > 词边界 > 子串」排序，最想要的排在前面。
 
+## 四种接入方式（给人用的网站之外）
+
+同一个库，除了网页版，还能以四种方式接进你自己的工具链：
+
+### 1. CDN 一行引入（任意网页 / CodePen）
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/sitong-zhang/ui-icons-hub@v1.0.0/cdn.js"></script>
+<script>
+  UIH.searchSvg('购物车').then(r => console.log(r[0].svg));   // 完整 SVG 源码
+</script>
+```
+
+索引 gzip 约 1.4 MB 按需拉取，命中后才加载对应分片；[用法演示页](cdn.html)就是真实调用。
+
+### 2. MCP 服务器（Claude Desktop / Cursor 等 AI 客户端）
+
+```json
+{ "mcpServers": { "ui-icons-hub": { "command": "npx", "args": ["-y", "@ui-icons-hub/mcp"] } } }
+```
+
+五个工具：`search_icons`（中文意图）/ `get_icon` / `list_collections` / `collection_info` / `pick_set`。
+零依赖实现，详见 [mcp/README.md](mcp/README.md)。
+
+### 3. npm 包（浏览器 / Node）
+
+```bash
+npm i @ui-icons-hub/icons        # 检索 API
+npm i @ui-icons-hub/mcp          # MCP 服务器
+```
+
+```js
+import { searchSvg } from "@ui-icons-hub/icons";
+const hits = await searchSvg("购物车");   // [{ name, set, license, svg }]
+```
+
+`configure({ base })` 可指向离线包解压目录，实现完全离线。
+
+### 4. AI 技能（CodeBuddy / Claude 的 skills 目录）
+
+把仓库里的 `skill/` 目录拷进 `~/.codebuddy/skills/ui-icons-hub`（Claude Code 为 `~/.claude/skills/`），
+AI 写页面时就会自动用 `scripts/search.py` 检索真实图标并取 SVG 源码，而不是凭记忆编图标名。
+
+> 四种方式的检索结果一致：215 套 / 345,961 个图标、183 条中文意图词典、同名 > 前缀 > 词边界 > 子串的排序。
+> 图标素材以各上游许可证为准（返回字段里带 `license`）。
+
 ## 收录清单（215 套图标库）
 
 许可证一列即该集合上游的实际许可证。带 ★ 的是 GitHub 星标数。
@@ -393,6 +439,11 @@
 | `sw.js` + `manifest.webmanifest` | PWA：外壳预缓存 + 数据分片按需缓存，可安装到桌面 / 主屏 |
 | `download.html` | 三端客户端下载页 |
 | `tools/pack_desktop.py` + `tools/launcher/` | 打包脚本与启动器：Windows `.exe`、macOS `.app`、Linux `.tar.gz` |
+| `cdn.js` + `cdn.html` | CDN 一行引入脚本与用法演示页 |
+| `index.json` / `index-compact.json` | 供 MCP / npm / Skill 使用的检索索引（gzip 约 1.4 MB） |
+| `mcp/` | MCP 服务器（零依赖 stdio JSON-RPC） |
+| `packages/` | npm 包源码：`@ui-icons-hub/icons`、`@ui-icons-hub/mcp` |
+| `skill/` | AI 技能包：SKILL.md + 离线检索脚本 |
 
 ### 客户端（PC 三件套）
 

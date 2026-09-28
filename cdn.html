@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#0b0d17" />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="icon" href="icons/app-icon-192.png" />
+<title>CDN 用法预览 · UI 图标与设计资源库</title>
+<meta name="description" content="一行脚本引入，在任意网页里检索 ui-icons-hub 的 215 套图标库 / 345,961 个 SVG 图标，支持中文意图搜索。" />
+<style>
+  :root{--bg:#0b0d17;--bg2:#121529;--card:rgba(255,255,255,.045);--line:rgba(255,255,255,.10);--line2:rgba(255,255,255,.06);
+    --ink:#e8ebff;--muted:#98a0c8;--dim:#6f77a0;--acc:#7dd3fc;--acc2:#a78bfa;--gold:#ffd479;--ok:#8ee0b8;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:radial-gradient(1100px 520px at 15% -8%,rgba(125,211,252,.14),transparent 62%),
+      radial-gradient(900px 480px at 85% 0%,rgba(167,139,250,.13),transparent 60%),linear-gradient(180deg,var(--bg),var(--bg2));
+    color:var(--ink);min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 20px}
+  header{padding:36px 0 10px;text-align:center}
+  h1{font-size:clamp(22px,4vw,34px);font-weight:800}
+  h1 span{background:linear-gradient(92deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{margin-top:10px;color:var(--muted);font-size:14.5px}
+  .back{display:inline-flex;gap:6px;margin-top:12px;font-size:13px;color:var(--acc)}
+  main{padding:16px 0 70px}
+  h2{font-size:18px;font-weight:700;margin:26px 0 10px}
+  .note{font-size:13px;color:var(--dim);margin-bottom:12px}
+  .box{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+  pre{background:rgba(0,0,0,.34);border:1px solid var(--line2);border-radius:10px;padding:12px 14px;overflow:auto;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px;line-height:1.7;color:#cfe3ff}
+  code{background:rgba(255,255,255,.07);border:1px solid var(--line2);border-radius:5px;padding:1px 6px;font-size:12.5px;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  .tag{display:inline-block;font-size:11.5px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:2px 8px;margin-right:6px}
+  .tag.ok{color:var(--ok);border-color:rgba(142,224,184,.3)}
+  .demo{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .demo input{flex:1;min-width:220px;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--ink);font-size:14px;outline:none}
+  .demo input:focus{border-color:rgba(125,211,252,.55);box-shadow:0 0 0 3px rgba(125,211,252,.12)}
+  .btn{cursor:pointer;font-size:13px;padding:9px 18px;border-radius:10px;border:1px solid rgba(125,211,252,.5);
+    background:linear-gradient(92deg,rgba(125,211,252,.2),rgba(167,139,250,.2));color:#fff}
+  .btn.gray{border-color:var(--line);background:rgba(255,255,255,.05);color:var(--muted)}
+  .chips{margin:10px 0 0;display:flex;gap:6px;flex-wrap:wrap}
+  .chip{cursor:pointer;font-size:12.5px;padding:4px 12px;border-radius:999px;border:1px solid var(--line);color:var(--muted);background:rgba(255,255,255,.03)}
+  .chip:hover{color:var(--ink);border-color:rgba(125,211,252,.45)}
+  #stat{font-size:12.5px;color:var(--dim);margin:10px 0 0;min-height:18px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px;margin-top:12px}
+  .cell{border:1px solid var(--line2);background:rgba(255,255,255,.03);border-radius:12px;padding:10px 8px;text-align:center;cursor:pointer;transition:.15s}
+  .cell:hover{border-color:rgba(125,211,252,.5);background:rgba(125,211,252,.07)}
+  .cell svg{width:30px;height:30px;color:var(--ink);display:block;margin:0 auto 7px}
+  .cell .nm{font-size:11.5px;color:var(--muted);word-break:break-all;line-height:1.35}
+  .cell .st{font-size:10.5px;color:var(--dim);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line2);vertical-align:top}
+  th{color:var(--dim);font-weight:600;font-size:12.5px}
+  .alert{border:1px solid rgba(255,212,121,.3);background:rgba(255,212,121,.08);border-radius:12px;padding:12px 16px;font-size:13px;color:#ffe6b0;margin:14px 0}
+  .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(80px);opacity:0;background:#1a2040;border:1px solid var(--line);
+    padding:9px 20px;border-radius:999px;font-size:13px;transition:.25s;z-index:99}
+  .toast.on{transform:translateX(-50%);opacity:1}
+  footer{border-top:1px solid var(--line2);padding:20px 0 40px;font-size:12.5px;color:var(--dim);text-align:center}
+  footer a{color:var(--acc)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>把图标库<span>当 CDN 用</span></h1>
+  <div class="sub">一行脚本引入，在任意网页 / CodePen / 你自己的项目里检索 <b>215 套图标库 · 345,961 个 SVG 图标</b>，支持中文意图</div>
+  <a class="back" href="./index.html">← 回到图标库</a>
+</header>
+
+<main>
+
+  <div class="alert">本页就是 <code>cdn.js</code> 的真实调用示例，下面的搜索框和结果是<b>真的在跑</b>（不是截图）。打开控制台能看到它按需加载了哪些分片。</div>
+
+  <h2>1. 引入</h2>
+  <div class="box">
+    <pre>&lt;script src="https://cdn.jsdelivr.net/gh/sitong-zhang/ui-icons-hub@v1.0.0/cdn.js"&gt;&lt;/script&gt;</pre>
+    <div class="note" style="margin:10px 0 0">
+      <span class="tag ok">零依赖</span><span class="tag">约 10 KB</span><span class="tag">索引 gzip 后 1.4 MB，首次检索时才拉</span>
+      也可以锁版本：<code>@v1.0.0</code> 换成 <code>@main</code> 永远取最新。
+    </div>
+  </div>
+
+  <h2>2. 用</h2>
+  <div class="box">
+    <pre>// 只拿名字和归属（快，不下载任何图标数据）
+const list = await UIH.search('购物车');
+// → [{ name:'cart', slug:'ionic-team__ionicons', set:'Ionicons', license:'MIT', ... }]
+
+// 连 SVG 源码一起拿（会自动加载命中所在的分片，只加载那几个）
+const withSvg = await UIH.searchSvg('齿轮', { limit: 20 });
+// → [..., svg:'&lt;svg xmlns="..."&gt;&lt;path .../&gt;&lt;/svg&gt;']
+
+// 精确取一个
+const one = await UIH.icon('feathericons__feather', 'activity');
+
+// 看库里都有什么
+const sets = await UIH.list();          // 215 套
+const names = await UIH.names('tabler__tabler-icons');  // 某一套的全部图标名
+
+// 中文意图词典（183 条），可自己接
+const syn = await UIH.synonyms();       // { '购物车': ['cart','shopping-cart',...] }</pre>
+  </div>
+
+  <h2>3. 试试（真实运行）</h2>
+  <div class="box">
+    <div class="demo">
+      <input id="q" value="购物车" placeholder="中文或英文，如 购物车 / 齿轮 / 游戏手柄 / cart / arrow" />
+      <button class="btn" id="go">搜索</button>
+      <button class="btn gray" id="svgOn">取源码</button>
+    </div>
+    <div class="chips">
+      <span class="chip">购物车</span><span class="chip">齿轮</span><span class="chip">太阳</span>
+      <span class="chip">游戏手柄</span><span class="chip">曲线图</span><span class="chip">邮件</span>
+      <span class="chip">home</span><span class="chip">arrow-left</span><span class="chip">trash</span>
+    </div>
+    <div id="stat">正在加载索引…</div>
+    <div class="grid" id="grid"></div>
+  </div>
+
+  <h2>4. 返回的字段</h2>
+  <div class="box">
+    <table>
+      <tr><th>字段</th><th>说明</th></tr>
+      <tr><td><code>name</code></td><td>图标名，如 <code>shopping-cart</code></td></tr>
+      <tr><td><code>alias</code></td><td>若该结果是通过别名命中的，这里是别名（否则 <code>null</code>）</td></tr>
+      <tr><td><code>slug</code></td><td>图标库 id，如 <code>feathericons__feather</code>，可直接传给 <code>UIH.icon()</code></td></tr>
+      <tr><td><code>set</code> / <code>repo</code></td><td>图标库名称 / GitHub 仓库</td></tr>
+      <tr><td><code>license</code></td><td>该图标库的许可证（<code>MIT</code>、<code>CC0-1.0</code>、<code>Apache-2.0</code>…）</td></tr>
+      <tr><td><code>homepage</code></td><td>上游官网，便于署名与溯源</td></tr>
+      <tr><td><code>group</code></td><td><code>general</code> / <code>brand</code> / <code>emoji</code></td></tr>
+      <tr><td><code>mono</code></td><td>是否为单色（可用 CSS <code>color</code> 改色）</td></tr>
+      <tr><td><code>svg</code></td><td>仅 <code>searchSvg</code> / <code>icon</code> 返回，完整 SVG 源码</td></tr>
+    </table>
+  </div>
+
+  <h2>5. 说明与许可</h2>
+  <div class="box note" style="color:var(--muted);font-size:13.5px">
+    <p style="margin-bottom:8px"><b>为什么没有"单个 svg 文件的直链"？</b>　345,961 个图标是按分片打包的（一个文件里几千个），
+    要为每个图标生成一个独立文件会让仓库多出 35 万个文件、约 1.5 GB，托管方也会限流。
+    改成"一个脚本 + 按需加载"，用起来比逐个直链更方便，也省流量。</p>
+    <p><b>许可：</b>图标素材版权归各上游项目所有，<b>没有统一许可证</b>，以每个集合上游的实际许可证为准（
+    <code>UIH.search()</code> 返回的 <code>license</code> 字段就是它的许可证）。
+    完整清单见仓库 <a href="https://github.com/sitong-zhang/ui-icons-hub#readme" style="color:var(--acc)">README</a>。
+    本站代码与 <code>cdn.js</code> 为 MIT。</p>
+  </div>
+
+</main>
+<footer>
+  ui-icons-hub · <a href="./index.html">图标库</a> · <a href="./download.html">下载客户端</a> ·
+  <a href="https://github.com/sitong-zhang/ui-icons-hub">GitHub</a>
+</footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="cdn.js"></script>
+<script>
+(function(){
+  var q = document.getElementById('q'), grid = document.getElementById('grid'), stat = document.getElementById('stat');
+  var toastEl = document.getElementById('toast'), withSvg = false, t0 = 0;
+
+  function toast(s){ toastEl.textContent = s; toastEl.classList.add('on'); setTimeout(function(){ toastEl.classList.remove('on'); }, 1600); }
+  function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]; }); }
+
+  document.querySelectorAll('.chip').forEach(function(ch){
+    ch.onclick = function(){ q.value = ch.textContent; run(); };
+  });
+  document.getElementById('go').onclick = run;
+  document.getElementById('svgOn').onclick = function(){
+    withSvg = !withSvg;
+    this.textContent = withSvg ? '取源码：开' : '取源码';
+    run();
+  };
+  q.addEventListener('keydown', function(e){ if(e.key === 'Enter') run(); });
+
+  function run(){
+    var v = q.value.trim(); if(!v) return;
+    t0 = performance.now();
+    stat.textContent = '搜索中…';
+    grid.innerHTML = '';
+    var p = withSvg ? UIH.searchSvg(v, {limit: 48}) : UIH.search(v, {limit: 48});
+    p.then(function(list){
+      var ms = Math.round(performance.now() - t0);
+      stat.textContent = '命中 ' + list.length + ' 个（限 48）· ' + ms + ' ms' + (withSvg ? ' · 含 SVG 源码' : ' · 点「取源码」可连源码一起拿');
+      if(!list.length){ grid.innerHTML = '<div style="color:var(--dim);font-size:13px">没找到，换个词试试</div>'; return; }
+      list.forEach(function(it){
+        var d = document.createElement('div');
+        d.className = 'cell';
+        d.innerHTML = (it.svg || '')
+          ? '<div>' + it.svg.replace('<svg', '<svg style="width:30px;height:30px"') + '</div>'
+          : '<div style="height:37px;display:grid;place-items:center;color:var(--dim);font-size:11px">…</div>';
+        d.innerHTML += '<div class="nm">' + esc(it.name) + '</div><div class="st" title="' + esc(it.set) + '">' + esc(it.set) + '</div>';
+        d.onclick = function(){
+          var go = it.svg ? Promise.resolve(it) : UIH.icon(it.slug, it.name);
+          go.then(function(x){
+            var svg = x && x.svg;
+            if(svg && navigator.clipboard) navigator.clipboard.writeText(svg).then(function(){ toast('已复制 ' + it.name + ' 的 SVG'); });
+            else toast(svg ? it.name : '取源码失败');
+          });
+        };
+        grid.appendChild(d);
+      });
+    }).catch(function(e){
+      stat.textContent = '出错了：' + e.message;
+      console.error(e);
+    });
+  }
+
+  UIH.ready(function(){
+    stat.textContent = '就绪：' + (UIH.version) + ' · 索引已加载，开始搜索';
+    run();
+  });
+})();
+</script>
+</body>
+</html>
