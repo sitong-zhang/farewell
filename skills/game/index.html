@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>游戏 UI 设计要点 · ui-icons-hub 设计技能</title>
+<meta name="description" content="HUD 分层、数值可视化、技能/道具图标、触屏手势、多分辨率与本地化：一套面向实机的游戏 UI 实践。" />
+<style>
+  :root{--bg:#0b0d17;--bg2:#121529;--card:rgba(255,255,255,.045);--line:rgba(255,255,255,.10);
+    --line2:rgba(255,255,255,.06);--ink:#e8ebff;--muted:#98a0c8;--dim:#6f77a0;--acc:#7dd3fc;--acc2:#a78bfa;--gold:#ffd479}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:radial-gradient(1100px 520px at 15% -8%,rgba(125,211,252,.14),transparent 62%),
+      radial-gradient(900px 480px at 85% 0%,rgba(167,139,250,.13),transparent 60%),linear-gradient(180deg,var(--bg),var(--bg2));
+    color:var(--ink);min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.75;-webkit-font-smoothing:antialiased}
+  a{color:var(--acc);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:920px;margin:0 auto;padding:0 22px}
+  header.hero{padding:34px 0 10px}
+  .badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--acc);border:1px solid rgba(125,211,252,.32);background:rgba(125,211,252,.08);padding:5px 14px;border-radius:999px;margin-bottom:16px}
+  h1{font-size:clamp(24px,4.2vw,36px);font-weight:800;line-height:1.3}
+  h1 span{background:linear-gradient(92deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{margin-top:12px;color:var(--muted);font-size:14.5px}
+  .meta{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}
+  .pill{font-size:11.5px;color:var(--dim);border:1px solid var(--line2);background:var(--card);padding:4px 11px;border-radius:999px}
+  nav.toc{margin:22px 0 8px;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:14px 18px}
+  nav.toc b{font-size:13px;color:var(--muted)}
+  nav.toc ol{margin:8px 0 0 18px;font-size:13px;color:var(--muted);display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:2px 18px}
+  main{padding:8px 0 60px}
+  section{border:1px solid var(--line2);background:var(--card);border-radius:14px;padding:18px 20px;margin:14px 0}
+  section h2{font-size:17px;font-weight:750;display:flex;align-items:center;gap:9px}
+  section h2 i{font-style:normal;font-size:11px;color:var(--acc);border:1px solid rgba(125,211,252,.3);background:rgba(125,211,252,.08);padding:2px 8px;border-radius:999px;font-weight:600}
+  section p{font-size:13.5px;color:var(--muted);margin:8px 0}
+  ul{margin:8px 0 0 20px;font-size:13.5px;color:var(--muted)}
+  ul li{margin:4px 0}
+  ul li b, p b{color:var(--ink)}
+  table{width:100%;border-collapse:collapse;margin:10px 0 2px;font-size:12.8px}
+  th,td{border:1px solid var(--line2);padding:7px 10px;text-align:left;color:var(--muted)}
+  th{color:var(--ink);background:rgba(255,255,255,.04);font-weight:650}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  code{background:rgba(255,255,255,.08);padding:1px 6px;border-radius:4px;font-size:12.5px;color:#d7e2ff}
+  .chips{margin-top:10px;display:flex;flex-wrap:wrap;gap:7px}
+  .chips a{font-size:12px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--muted);padding:4px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:6px}
+  .chips a:hover{border-color:rgba(125,211,252,.55);color:var(--ink);text-decoration:none}
+  .chips a svg{width:14px;height:14px;color:var(--acc)}
+  .tips{margin-top:10px;border-left:2px solid rgba(255,212,121,.55);padding:2px 0 2px 14px;font-size:13px;color:var(--muted)}
+  .tips b{color:var(--gold)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:12px}
+  .res{border:1px solid var(--line2);background:rgba(255,255,255,.035);border-radius:11px;padding:12px 14px}
+  .res b{font-size:13.5px;display:block}
+  .res span{font-size:12px;color:var(--dim);display:block;margin-top:3px}
+  .res em{font-style:normal;font-size:12px;color:var(--muted);display:block;margin-top:6px}
+  .ck{margin-top:8px}
+  .ck label{display:flex;gap:9px;align-items:flex-start;font-size:13.5px;color:var(--muted);padding:4px 0;cursor:pointer}
+  .ck input{margin-top:5px;accent-color:var(--acc)}
+  footer{border-top:1px solid var(--line2);padding:20px 0 46px;font-size:12px;color:var(--dim);text-align:center}
+  .top{position:fixed;right:18px;bottom:18px;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:rgba(18,21,41,.92);color:var(--muted);display:grid;place-items:center;font-size:16px;opacity:0;pointer-events:none;transition:.2s}
+  .top.on{opacity:1;pointer-events:auto}
+  .navprev{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 0}
+  .navprev a{flex:1;min-width:200px;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:12px 16px;font-size:13px;color:var(--muted)}
+  .navprev a b{display:block;color:var(--ink);font-size:14px}
+  .navprev a:hover{border-color:rgba(125,211,252,.5);text-decoration:none}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <a class="badge" href="../../index.html">&#8592; 返回 ui-icons-hub 图标库</a>
+    <h1>游戏 UI 设计要点</h1>
+    <p class="sub">HUD 分层、数值可视化、技能/道具图标、触屏手势、多分辨率与本地化：一套面向实机的游戏 UI 实践。</p>
+    <div class="meta"><span class="pill">11 个章节</span><span class="pill">实机验收项</span><span class="pill">含上线前检查清单</span></div>
+  </div>
+</header>
+<div class="wrap">
+<main>
+<nav class="toc">
+  <b>目录</b>
+  <ol><li><a href="#s1">先搞清楚：游戏 UI 服务的是「信息」，不是排版</a></li>
+<li><a href="#s2">HUD 分层：先分类，再排位置</a></li>
+<li><a href="#s3">数值可视化：条、段、数字各有用法</a></li>
+<li><a href="#s4">图标语义：一眼可辨 > 好看</a></li>
+<li><a href="#s5">菜单：局内和局外是两套逻辑</a></li>
+<li><a href="#s6">触屏交互：手势要有兜底</a></li>
+<li><a href="#s7">颜色与反馈：把「爽感」系统化</a></li>
+<li><a href="#s8">字体：数值可读性是硬指标</a></li>
+<li><a href="#s9">新手引导：教会一件事再给下一件</a></li>
+<li><a href="#s10">多分辨率、多语言与本地化</a></li>
+<li><a href="#s11">上线前检查清单</a></li></ol>
+</nav>
+<section id="s1">
+  <h2>先搞清楚：游戏 UI 服务的是「信息」，不是排版 <i>定位</i></h2>
+  
+  <p>游戏 UI 的第一目标是<b>让玩家在 0.2 秒内读懂当前状态</b>，第二才是好看。任何遮挡视野、逼玩家在菜单里连翻三层才能操作的 UI 都是失败的。</p>
+  <ul>
+    <li><b>安全区</b>：留出刘海/挖孔（顶部 44–59dp）、圆角、底部手势条（34dp）区域，别把血条顶到边上。</li>
+    <li>核心操作区在拇指自然弧线内（左下 / 右下），而不是屏幕中间。</li>
+    <li>HUD 占用控制在视野的 <b>20–25%</b> 以内，其余留给游戏画面。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=gamepad-2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>gamepad 手柄</a>
+  <a href="../index.html?q=crosshair"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>crosshair 准星</a>
+  <a href="../index.html?q=layout-dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>dashboard HUD</a>
+  </div>
+</section>
+<section id="s2">
+  <h2>HUD 分层：先分类，再排位置 <i>分层</i></h2>
+  
+  <table>
+    <tr><th>层</th><th>内容</th><th>要点</th></tr>
+    <tr><td>背景层</td><td>半透面板、渐变遮罩</td><td>明 drawn 度 ≤ 30%，不要抢画面</td></tr>
+    <tr><td>信息层</td><td>血量、弹药、计时、资源</td><td>固定位置、永远可见、对比足够</td></tr>
+    <tr><td>操作层</td><td>技能键、攻击、跳跃</td><td>拇指可达、热区大、可自定义</td></tr>
+    <tr><td>反馈层</td><td>伤害数字、拾取提示、大字串覆盖率</td><td>短停留（&lt; 800ms）、不挡关键区</td></tr>
+  </table>
+  <ul>
+    <li>信息层的位置<b>永远固定</b>：血量在左上就是一直左上，别让它跟着场景动。</li>
+    <li>反馈层遵循「快进快出」原则：出现快、消失快、互不重叠。</li>
+    <li>重要数字下方压一层 1–2px 描边或深色渐变，保证任何背景上都读得清。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=layers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>layers 图层</a>
+  <a href="../index.html?q=heart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>heart 血量</a>
+  <a href="../index.html?q=timer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>timer 计时</a>
+  </div>
+</section>
+<section id="s3">
+  <h2>数值可视化：条、段、数字各有用法 <i>数值</i></h2>
+  
+  <ul>
+    <li><b>长条</b>：血量、能量这类连续且需要「还剩多少」直觉的数值。</li>
+    <li><b>分段</b>：弹药、充能、回合数——离散可读比精确重要。</li>
+    <li><b>数字</b>：伤害、金币、分数；务必 tabular-nums 并加描边。</li>
+    <li>长条掉血用「延迟白条」表现损失量，能显著提升感知清晰度。</li>
+    <li>颜色之外加<b>形状/图标</b>辅助：红绿色盲玩家读不出「毒 vs 治疗」。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=battery-charging"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>battery 能量</a>
+  <a href="../index.html?q=shield"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>shield 护盾</a>
+  <a href="../index.html?q=coins"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>coins 金币</a>
+  </div>
+</section>
+<section id="s4">
+  <h2>图标语义：一眼可辨 > 好看 <i>图标</i></h2>
+  
+  <ul>
+    <li>技能/道具图标<b>轮廓优先</b>：48×48 缩略到 40px 仍能辨认才算合格（尝试灰度化检查）。</li>
+    <li>三态必须区分：<b>可用 / 冷却中 / 不可用</b>——用去饱和 + 半透明遮罩 + 倒计时数字。</li>
+    <li>同一功能在不同界面用同一图标，「返回」别一会儿箭头一会儿叉。</li>
+    <li>状态图标（中毒、燃烧、减速）风格要和道具图标区开，避免混淆。</li>
+    <li>本仓库的 <b>Game Icons（4,134 个，CC BY 3.0）</b> 与各类 UI 套均可直接复用。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=swords"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>swords 战斗</a>
+  <a href="../index.html?q=flask-conical"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>flask 道具</a>
+  <a href="../index.html?q=dices"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>dice 随机</a>
+  <a href="../index.html?q=skull"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>skull 危险</a>
+  </div>
+</section>
+<section id="s5">
+  <h2>菜单：局内和局外是两套逻辑 <i>菜单</i></h2>
+  
+  <ul>
+    <li><b>局内菜单</b>（背包、技能树）：不超过 2 次点击到达目标，支持暂停/ rayas 半暂停。</li>
+    <li><b>局外菜单</b>（主城、设置、商店）：信息密度可以高，但要稳定的层级和一致的返回路径。</li>
+    <li>背包网格推荐正交网格 + 稀有度描边 + 数量角标 + tooltip 详情（悬停 / 长按）。</li>
+    <li>每屏至少有明确退出路径；手柄/键盘/触屏三者的「返回」键位要各自正确。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=backpack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>backpack 背包</a>
+  <a href="../index.html?q=library"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>library 图鉴</a>
+  <a href="../index.html?q=sliders"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>sliders 设置</a>
+  </div>
+</section>
+<section id="s6">
+  <h2>触屏交互：手势要有兜底 <i>触屏</i></h2>
+  
+  <ul>
+    <li>虚拟摇杆<b>跟随触发</b>（碰到屏幕任意位置生成）比固定位置更友好；死区 8–12%。</li>
+    <li>按钮 ≥ <b>48dp</b>，相邻按钮间距 ≥ 8dp；视觉小图标也要有大热区。</li>
+    <li>多指并发要处理（移动 + 射击同时）；手指数量限制写在说明里。</li>
+    <li>长按 / 拖拽 / 双击都要有<b>等效的显式按钮</b>，别让手势成为唯一入口。</li>
+    <li>边缘防误触：底部托盘、系统手势边缘区的滑入要有确认或 ≥ 12dp 的触发阈值。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=hand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>hand 手势</a>
+  <a href="../index.html?q=move"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>move 移动</a>
+  <a href="../index.html?q=rotate-ccw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>rotate 摇杆</a>
+  </div>
+</section>
+<section id="s7">
+  <h2>颜色与反馈：把「爽感」系统化 <i>反馈</i></h2>
+  
+  <ul>
+    <li>稀有度配色约定俗成：灰 → 绿 → 蓝 → 紫 → 橙/红，不要自创六色体系。</li>
+    <li>增益用暖亮色 + 上浮动效，减益用冷暗色 + 抖动/闪烁。</li>
+    <li>命中反馈三件套：<b>闪白 + 数字飘字 + 命中停顿（hitstop 30–80ms）</b>。</li>
+    <li>屏幕震动要给开关和强度滑条（晕动症玩家必须能关）。</li>
+    <li>所有反馈 ≤ 300ms 收尾，持续 GIF 式的光污染会让人疲劳。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=sparkles"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>sparkles 特效</a>
+  <a href="../index.html?q=flame"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>flame 燃烧</a>
+  <a href="../index.html?q=zap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>zap 电击</a>
+  </div>
+</section>
+<section id="s8">
+  <h2>字体：数值可读性是硬指标 <i>字体</i></h2>
+  
+  <ul>
+    <li>数值（伤害、金币）用<b>等宽/ tabular 数字</b>，否则跳字；像素风格要有 8/16px 对齐。</li>
+    <li>中文叙事文本用黑体系（圆体会削弱严肃感），按钮短标签可用圆体。</li>
+    <li>字体预算：中文常用字集子集化通常 1.5–3MB，超大字库考虑位图字或用系统字。</li>
+    <li>小字号（≤ 14px）避免细体 + 高笔画密度；必要时用描边提升可读性。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=type"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>type 字体</a>
+  <a href="../index.html?q=hash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>hash 编号</a>
+  <a href="../index.html?q=bold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>bold 强调</a>
+  </div>
+</section>
+<section id="s9">
+  <h2>新手引导：教会一件事再给下一件 <i>引导</i></h2>
+  
+  <ul>
+    <li>渐进式：核心操作用<b>强制小步骤</b>，次要功能用被动提示（小红点 / 侧边 tips）。</li>
+    <li>蒙层引导必须能<b>跳过</b>，且跳过后在帮助中心能重新找回。</li>
+    <li>手势引导用动画演示而非大段文字；一次只教一个手势。</li>
+    <li>避免一次性弹出五个红点：主线只留一个，其余收进「任务」列表。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=graduation-cap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>graduation 教学</a>
+  <a href="../index.html?q=lightbulb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>lightbulb 提示</a>
+  <a href="../index.html?q=map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>map 路径</a>
+  </div>
+</section>
+<section id="s10">
+  <h2>多分辨率、多语言与本地化 <i>适配</i></h2>
+  
+  <ul>
+    <li><b>9-slice / 矢量优先</b>：面板用九宫格拉伸，图标优先矢量，避免为每个分辨率切一版 PNG。</li>
+    <li>宽高比从 16:9 到 21:9（甚至 4:3 平板）都要测：用<b>锚点 + 安全区</b>而不是写死坐标。</li>
+    <li>文本膨胀预留 <b>30–40%</b> 空间（英文译俄语/德语）；RTL 语言要做镜像布局。</li>
+    <li>UI 资源分档 @1x/@2x/@3x，低端机走低档，别一律塞最高清。</li>
+    <li>深色底配高饱和图标在户外强光下会糊成一团，记得实机到阳光下验一遍。</li>
+  </ul>
+  <div class="chips">
+  <a href="../index.html?q=smartphone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>smartphone 手机</a>
+  <a href="../index.html?q=monitor"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>monitor 大屏</a>
+  <a href="../index.html?q=languages"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>languages 多语言</a>
+  </div>
+</section>
+<section id="s11">
+  <h2>上线前检查清单 <i>清单</i></h2>
+  <div class="ck">
+    <label><input type="checkbox" value="game-41764" /> 安全区内没有任何关键 UI（刘海、挖孔、圆角、手势条都避开）</label>
+    <label><input type="checkbox" value="game-53778" /> HUD 占屏 ≤ 25%，关键数值位置全程固定</label>
+    <label><input type="checkbox" value="game-98639" /> 所有数值可读：有描边/渐变衬底，any 背景下都能看清</label>
+    <label><input type="checkbox" value="game-31491" /> 色盲模拟下「增益/减益/危险」仍能区分（不只靠红绿）</label>
+    <label><input type="checkbox" value="game-350" /> 触屏按钮 ≥ 48dp、间距 ≥ 8dp，多指并发无冲突</label>
+    <label><input type="checkbox" value="game-94216" /> 所有手势都有等效显式按钮，长按/拖拽可兜底</label>
+    <label><input type="checkbox" value="game-19644" /> 9-slice 或矢量资源，16:9 → 21:9 → 4:3 全部通过视觉验收</label>
+    <label><input type="checkbox" value="game-59392" /> 文本膨胀 35% 后不溢出不留截断，RTL 布局已镜像</label>
+    <label><input type="checkbox" value="game-27411" /> 新手引导可跳过且有二次入口；屏幕震动可关闭</label>
+    <label><input type="checkbox" value="game-512" /> 图标风格统一，缩到 40px 灰度化后仍可辨认</label>
+  </div>
+</section>
+<section>
+  <h2>更多可抄用的资源</h2>
+  <div class="cards">
+  <div class="res"><b>Game UI Database</b><span>社区收录</span><em>按游戏类型翻 HUD / 菜单参考图，找方向最快的办法。</em><br/><a href="https://www.gameuidatabase.com/" target="_blank" rel="noopener">官网</a></div>
+  <div class="res"><b>Game-icons.net</b><span>CC BY 3.0</span><em>4,000+ 游戏图标，本仓库已全量收录。</em></div>
+  <div class="res"><b>Xbox / PlayStation / Switch 规范</b><span>平台方</span><em>做主机移植时的硬性：安全区、字号、按键提示。</em></div>
+  <div class="res"><b>Unity / Unreal UI 文档</b><span>引擎方</span><em>Canvas Scaler、UMG、多分辨率适配的实操细节。</em></div>
+  <div class="res"><b>9-slice / Scale Form / DPI 缩放</b><span>—</span><em>九宫格与矢量优先，避免把 UI 切成一堆 PNG。</em></div>
+  <div class="res"><b>Localization 指南</b><span>—</span><em>文本膨胀、RTL、字体子集的成本控制。</em></div>
+</div>
+</section>
+<div class="navprev">
+<a href="software/index.html"><b>软件界面设计规范</b>桌面 / Web App / 移动 App 的通用 UI 规则</a>
+<a href="website/index.html"><b>网站设计方法论</b>营销站 / 内容站 / 落地页</a>
+<a href="../../index.html"><b>回到图标库</b>215 套 / 352,371 个 SVG 图标检索</a>
+</div>
+</main>
+<footer>本页内容为设计实践总结，配图所用图标均来自本仓库收录的开源图标集（各以其上游许可证为准）· ui-icons-hub</footer>
+</div>
+<div class="top" id="totop">&#8593;</div>
+<script>
+  var t = document.getElementById("totop");
+  addEventListener("scroll", function(){ t.classList.toggle("on", scrollY > 500); });
+  t.onclick = function(){ scrollTo({top:0, behavior:"smooth"}); };
+  try{
+    document.querySelectorAll(".ck input").forEach(function(el){
+      var k = location.pathname + "#" + el.value;
+      el.checked = localStorage.getItem(k) === "1";
+      el.addEventListener("change", function(){ localStorage.setItem(k, el.checked ? "1" : "0"); });
+    });
+  }catch(e){}
+</script>
+</body>
+</html>
