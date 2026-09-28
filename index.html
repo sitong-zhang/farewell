@@ -83,6 +83,12 @@
   .hint{font-size:12px;color:var(--dim);margin-top:10px}
   code{background:rgba(255,255,255,.08);padding:1px 5px;border-radius:4px}
   .empty{padding:20px 18px;color:var(--dim);font-size:13px}
+  .skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(228px,1fr));gap:10px;margin:12px auto 0;max-width:760px}
+  .skills a{border:1px solid rgba(167,139,250,.28);background:rgba(167,139,250,.07);border-radius:12px;padding:12px 15px;display:flex;gap:11px;align-items:flex-start;transition:.18s}
+  .skills a:hover{border-color:rgba(167,139,250,.6);background:rgba(167,139,250,.13);transform:translateY(-2px)}
+  .skills .ic{width:30px;height:30px;flex:none;color:var(--acc2)}
+  .skills b{display:block;font-size:13.5px}
+  .skills i{display:block;font-style:normal;font-size:11.5px;color:var(--dim);margin-top:2px;line-height:1.5}
 </style>
 </head>
 <body>
@@ -99,6 +105,20 @@
   </div>
   <a href="app-icons/index.html" style="white-space:nowrap;font-size:13px;padding:8px 18px;border-radius:999px;background:linear-gradient(92deg,rgba(125,211,252,.25),rgba(167,139,250,.25));border:1px solid rgba(125,211,252,.55);color:#fff">进入分区 &#8594;</a>
 </div>
+<div class="skills">
+  <a href="skills/software/index.html">
+    <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M9 21h6M8 8h4M8 12h8"/></svg>
+    <span><b>软件界面设计规范</b><i>栅格 / 密度 / 状态 / 深色模式 / 无障碍，配可直接抄用的图标实践</i></span>
+  </a>
+  <a href="skills/website/index.html">
+    <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"/></svg>
+    <span><b>网站设计方法论</b><i>首屏 / 响应式 / 排版节奏 / 性能预算 / SEO 与合规</i></span>
+  </a>
+  <a href="skills/game/index.html">
+    <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="8" width="20" height="10" rx="5"/><path d="M7 13h4M9 11v4M16 12h.01M18 14h.01"/></svg>
+    <span><b>游戏 UI 设计要点</b><i>HUD 分层 / 技能栏 / 状态配色 / 触屏手势 / 9-slice 与自适应</i></span>
+  </a>
+</div>
   </div>
 </header>
 
@@ -106,7 +126,7 @@
   <div class="wrap">
     <div class="search">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-      <input id="q" type="search" placeholder="全库搜索：输入 arrow / home / github / cart …（会扫描全部图标）" autocomplete="off" />
+      <input id="q" type="search" placeholder="全库搜索：arrow / home / cart，或直接打中文「购物车」「齿轮」「游戏手柄」" autocomplete="off" />
     </div>
     <div class="ctrl">
       <span>尺寸</span><input id="szR" type="range" min="16" max="56" value="26" />
@@ -237,6 +257,21 @@
     updateMore(repo);
     if(PENDING[repo]){ delete PENDING[repo]; }
   };
+  /* v2 数据：分片只存 body + 每套一份 svg 外框，浏览器端拼装完整 SVG（省约 10% 体积） */
+  var DEF_WRAP = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">';
+  function wrapFor(s, p){
+    if(p.length > 2) return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+p[2]+' '+p[3]+'">';
+    return (s && s.wrap && s.wrap[0]) ? s.wrap[0] : DEF_WRAP;
+  }
+  window.__ADD2 = function(repo, pairs, idx){
+    var s = byRepo(repo); if(!s) return;
+    var arr = new Array(pairs.length), close = '</svg>';
+    for(var i=0;i<pairs.length;i++){
+      var p = pairs[i];
+      arr[i] = { n: p[0], s: wrapFor(s, p) + p[1] + close };
+    }
+    window.__ADD(repo, arr, idx);
+  };
   function loadChunk(repo, idx){
     var s = byRepo(repo); if(!s) return;
     GOT[repo] = GOT[repo] || [];
@@ -303,6 +338,11 @@
   var q = document.getElementById("q"), resSec = document.getElementById("resSec"),
       resGrid = document.getElementById("resGrid"), scanInfo = document.getElementById("scanInfo");
   var timer = null;
+  function runQuery(v){ q.value = v; startScan(v.trim().toLowerCase()); }
+  try {
+    var _u = new URLSearchParams(location.search).get("q");
+    if(_u) setTimeout(function(){ runQuery(_u); }, 80);
+  } catch(e){}
   q.addEventListener("input", function(){
     clearTimeout(timer);
     timer = setTimeout(function(){
@@ -326,7 +366,13 @@
     document.getElementById("noRes").style.display = "none";
     scanInfo.innerHTML = "正在准备检索索引…";
 
+    var pg = setInterval(function(){
+      if(token !== scanToken){ clearInterval(pg); return; }
+      var pr = window.__SEARCH.progress();
+      if(pr < 1) scanInfo.innerHTML = "正在建立检索索引… <b>"+Math.round(pr*100)+"%</b>（首次约 2-3 秒，之后一直复用）";
+    }, 220);
     window.__SEARCH.init(function(err){
+      clearInterval(pg);
       if(token !== scanToken) return;
       if(err){ scanInfo.innerHTML = "检索索引加载失败，请刷新重试"; return; }
       var hits = window.__SEARCH.search(v, Math.max(RES_CAP * 2, 200));
