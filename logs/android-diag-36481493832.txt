@@ -1,0 +1,7 @@
+工作目录：/home/runner/work/ui-icons-hub/ui-icons-hub
+== 全盘找 apk（android/ 下） ==
+== build 目录树（深度 5） ==
+== outputs 下所有文件 ==
+== 磁盘 ==
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root       145G   60G   86G  42% /
