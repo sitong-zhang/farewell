@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   issues: write
 
 jobs:
@@ -38,19 +38,15 @@ jobs:
             echo "== 磁盘 =="
             df -h . | tail -2
           } | tee /tmp/diag.log
-      - name: 回传诊断
+      - name: 回传诊断（提交到 ci-logs 分支）
         if: always()
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          {
-            echo "## Android 诊断 ${{ github.run_id }}"
-            echo '```'
-            cat /tmp/diag.log
-            echo '```'
-            echo "### online.log 尾部"
-            echo '```'
-            tail -n 40 /tmp/online.log
-            echo '```'
-          } > /tmp/issue.md
-          gh issue create --title "Android 诊断 ${{ github.run_id }}" --body-file /tmp/issue.md || true
+          git config user.name "ci-bot"
+          git config user.email "ci-bot@users.noreply.github.com"
+          git checkout -B ci-logs
+          mkdir -p logs
+          cp /tmp/diag.log "logs/android-diag-${{ github.run_id }}.txt"
+          tail -n 60 /tmp/online.log > "logs/online-tail-${{ github.run_id }}.txt"
+          git add logs
+          git commit -m "ci: android 诊断日志 ${{ github.run_id }}" || echo "无改动"
+          git push -f origin ci-logs
