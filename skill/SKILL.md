@@ -1,79 +1,101 @@
 ---
 name: ui-icons-hub
-description: 从 215 套开源图标库（345,961 个 SVG 图标）里检索并取用图标，支持中文意图（购物车/齿轮/游戏手柄）。当任务涉及找图标、给界面配图标、写 SVG、挑图标库、确认图标许可证时使用本技能，避免凭记忆编造图标名。
+description: Search and fetch icons from 215 open-source icon libraries (345,961 SVG icons), with Chinese-intent support (cart/gear/gamepad). Use this skill whenever a task involves finding icons, matching icons to a UI, writing SVG, choosing an icon library, or checking an icon's license — instead of inventing icon names from memory.
 ---
 
-# ui-icons-hub · 图标检索与取用
+# ui-icons-hub · Icon Search & Fetch
 
-## 什么时候用
+## When to use
 
-- 用户要给页面 / 应用 / PPT / 文档配图标，但没指定用哪个图标库
-- 需要某个语义的图标：**购物车、齿轮（设置）、太阳（主题）、曲线图、邮件、游戏手柄、扫码、客服…**
-- 需要图标库的 SVG 源码（想直接贴进代码或 SVG 文件）
-- 要确认某个图标的**许可证**能不能商用
-- 要挑一套风格统一的图标库（线性 / 实心 / 像素 / 品牌 / emoji）
+- The user wants icons for a page / app / slide deck / document but hasn't
+  picked a library
+- An icon with a specific meaning is needed: **cart, gear (settings), sun
+  (theme), chart, mail, gamepad, QR scan, support…**
+- Actual SVG source is needed (to paste into code or an `.svg` file)
+- You need to confirm whether an icon's **license** allows commercial use
+- You need to pick one stylistically consistent library (outline / solid /
+  pixel / brand / emoji)
 
-**核心原则：不要凭记忆编图标名。** 先在本库里搜真实存在的名字，拿到真实 SVG 再用。
+**Core rule: never invent icon names from memory.** Search this library for
+real names and take real SVGs first.
 
-## 怎么用
+## How to use
 
-技能自带一个零依赖检索脚本（只要系统有 Python 3，无需联网也能用离线数据）：
+The skill ships a zero-dependency search CLI (any Python 3; works offline with
+bundled data, falls back to the CDN automatically):
 
 ```bash
-# 中文意图检索（推荐第一步）
+# Chinese-intent search (recommended first step)
 python3 scripts/search.py "购物车" --limit 10
 
-# 连 SVG 源码一起拿到
+# Include SVG source in the output
 python3 scripts/search.py "齿轮" --limit 3 --svg
 
-# 限定在某套库里找（风格更统一）
+# Restrict to one library (consistent style)
 python3 scripts/search.py "arrow" --set lucide-icons__lucide --limit 10
 
-# 输出 JSON，便于程序化处理
+# JSON output for programmatic use
 python3 scripts/search.py "游戏手柄" --json --limit 5
 
-# 有哪些库可选
+# Which libraries are available
 python3 scripts/search.py --collections
 
-# 某套库的详情（许可、官网、图标名样例）
+# Details of one set (license, homepage, sample names)
 python3 scripts/search.py --info tabler__tabler-icons
 
-# 按需求推荐图标库
-python3 scripts/search.py --pick "极简线性，做后台管理界面"
+# Recommend a library for a need
+python3 scripts/search.py --pick "minimal outline, admin dashboard"
 ```
 
-脚本路径是相对**技能目录**的：`scripts/search.py`。数据源优先级：`UIH_BASE` 环境变量 → 技能内 `assets/` → jsDelivr CDN。
+`scripts/search.py` is relative to the **skill directory**. Data source
+priority: `UIH_BASE` env var → bundled `assets/` → jsDelivr CDN (per-chunk
+fallback when local chunks are absent).
 
-## 检索能力的边界
+## Search capabilities & limits
 
-- **中文意图靠词典**（183 条），覆盖常见 UI 语义：购物车、齿轮、太阳、月亮、箭头、返回、首页、用户、设置、搜索、删除、编辑、上传、下载、通知、邮件、电话、地图、钱包、货币、图表、日历、时钟、锁、钥匙、播放、暂停、音量、WiFi、云、文件夹、标签、购物、支付、客服、扫码、游戏手柄…
-- 词典没有的中文词，**拆成单个字或改用英文关键词**往往更有效（如「物流」→ `truck` / `shipping`）
-- 英文支持**多词 OR**：`feather home` 会匹配含 feather 或含 home 的名字
-- 结果排序：完全同名 > 前缀命中 > 词边界命中 > 子串命中
+- **Chinese intent runs on a dictionary** (183 entries) covering common UI
+  semantics: cart, gear, sun, moon, arrow, back, home, user, settings, search,
+  delete, edit, upload, download, notification, mail, phone, map, wallet,
+  currency, chart, calendar, clock, lock, key, play, pause, volume, WiFi,
+  cloud, folder, tag, shopping, payment, support, QR scan, gamepad…
+- For Chinese words missing from the dictionary, **splitting into characters
+  or switching to English keywords** usually works better
+  (e.g. 物流 → `truck` / `shipping`)
+- English supports **multi-word OR**: `feather home` matches names containing
+  feather OR home
+- Ranking: exact name > prefix > word boundary > substring
 
-## 拿到图标之后
+## After you get an icon
 
-1. **改色**：单色图标（返回里 `mono: true`）用 `currentColor`，在 CSS 里设 `color` 即可，不要手动替换 `fill` 属性。
-2. **署名与合规**：返回结果带 `license` 与 `homepage`。MIT / Apache-2.0 / CC0 / ISC / BSD 可放心用（保留原声明为佳）；
-   品牌图标（Simple Icons 等）请注意商标使用规范——**图标可自由使用，但用它代表对应品牌时不得暗示官方背书**。
-3. **风格统一**：同一个项目尽量只用一套库，混用会出现线宽 / 圆角 / 网格不一致的问题。用 `--set` 锁定。
+1. **Coloring**: monochrome icons (`mono: true` in results) use
+   `currentColor`; set `color` in CSS instead of rewriting the `fill`
+   attribute.
+2. **Attribution & compliance**: results include `license` and `homepage`.
+   MIT / Apache-2.0 / CC0 / ISC / BSD are safe (keeping the original notice is
+   appreciated). Brand icons (Simple Icons etc.): the artwork is free to use,
+   but when a logo stands for its brand, **do not imply official endorsement**.
+3. **Consistency**: stick to one library per project — mixing shows up as
+   mismatched stroke widths / corner radii / grids. Lock it with `--set`.
 
-## 常用图标库速查
+## Quick picks
 
-| 风格 | 推荐 | 许可证 | 图标数 |
+| Style | Recommendation | License | Icons |
 | --- | --- | --- | --- |
-| 极简线性、通用 UI | Feather Icons | MIT | 286 |
-| 极简线性、数量多 | Lucide | ISC | 1,600+ |
-| 通用、覆盖最广 | Tabler Icons | MIT | 6,268 |
-| 通用、线宽可调 | Material Symbols | Apache-2.0 | 15,000+ |
-| 描边 + 实心成对 | Phosphor Icons | MIT | 9,000+ |
-| 品牌 / 技术 logo | Simple Icons | CC0-1.0 | 3,000+ |
-| 像素风 | Pixelarticons | MIT | 1,306 |
-| 表情 / 旗帜 | Twemoji / Noto Emoji | CC-BY-4.0 / OFL | 数千 |
+| Minimal outline, general UI | Feather Icons | MIT | 286 |
+| Minimal outline, large set | Lucide | ISC | 1,600+ |
+| General, widest coverage | Tabler Icons | MIT | 6,268 |
+| General, adjustable weight | Material Symbols | Apache-2.0 | 15,000+ |
+| Outline + solid pairs | Phosphor Icons | MIT | 9,000+ |
+| Brand / tech logos | Simple Icons | CC0-1.0 | 3,000+ |
+| Pixel art | Pixelarticons | MIT | 1,306 |
+| Emoji / flags | Twemoji / Noto Emoji | CC-BY-4.0 / OFL | thousands |
 
-完整清单用 `python3 scripts/search.py --collections` 查看（215 套）。
+Full list: `python3 scripts/search.py --collections` (215 sets).
 
-## 许可
+## License
 
-图标素材版权归各上游项目所有，**没有统一许可证**，以每套库上游的实际许可证为准（脚本输出里的 `license` 字段）。
-完整清单见 <https://github.com/sitong-zhang/ui-icons-hub#readme>。本技能脚本为 MIT。
+Icon artwork is owned by each upstream project — there is **no unified
+license**; each set follows its actual upstream license (the `license` field
+in CLI output). Full listing:
+<https://github.com/sitong-zhang/ui-icons-hub#readme>. The skill's scripts
+are MIT.

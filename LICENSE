@@ -1,55 +1,68 @@
-ui-icons-hub 许可证与版权声明
-================================
+# ui-icons-hub License & Copyright Notice
 
-最后更新：2026-09-29
+Last updated: 2026-09-29
 
-一、本站性质
-------------
-ui-icons-hub 是一个「索引 + 镜像」型资料站：我们把散落在各开源项目中的 SVG 图标
-收集、归一化（统一 viewBox、单色图标改 currentColor、去重分片），便于检索与预览。
-被收录的每一个图标，其著作权与商标权仍然归各自原作者 / 项目所有，本站不主张任何权利。
+## 1. What this site is
 
-二、素材（图标 / Logo / 表情）的使用许可
----------------------------------------
-素材本身**没有统一的全局许可证**，请以每个上游项目各自的实际许可证为准，
-也就是 README「收录清单」表格中「许可证」一列所标明的那个许可证。
+ui-icons-hub is an "index + mirror" reference site: we collect SVG icons scattered
+across open-source projects and normalize them (unified viewBox, monochrome icons
+switched to `currentColor`, deduplicated and chunked) so they are easy to search
+and preview. Every icon collected here remains the property of its original
+author / project — this site claims no rights over any of them.
 
-本站只收录宽松协议的集合，允许清单：
+## 2. Licensing of the assets (icons / logos / emoji)
 
-  MIT / MIT-0 / ISC / BSD-2-Clause / BSD-3-Clause / Unlicense /
-  Apache-2.0 / CC0-1.0 / CC-BY-3.0 / CC-BY-4.0 / OFL-1.1
+The assets themselves have **no single global license**. Always refer to each
+upstream project's actual license — the one listed in the "License" column of
+the collection table in the README.
 
-明确不收录：GPL / LGPL / AGPL / MPL 等 copyleft 协议、CC-BY-SA 系列（相同方式共享），
-以及任何带有「禁止商用」「禁止衍生」「禁止二次分发」等附加条款的自定义许可证。
-如出现误收，请提交 issue，核实后我们会下线整个集合。
+This site only includes collections under permissive licenses. The allow-list:
 
-约束力提示：
+    MIT / MIT-0 / ISC / BSD-2-Clause / BSD-3-Clause / Unlicense /
+    Apache-2.0 / CC0-1.0 / CC-BY-3.0 / CC-BY-4.0 / OFL-1.1
 
-  · MIT / Apache-2.0 / BSD / ISC / CC0 类：可商用、可修改、可再分发（多数要求保留声明）。
-  · CC-BY-3.0 / CC-BY-4.0：可商用、可修改，但**必须署名**原作者。
-  · CC0-1.0 / Unlicense：放弃著作权，进入公有领域。
-  · OFL-1.1：用于字型及其衍生图标，可自由使用与再分发，但不得单独出售字型本体。
+Explicitly excluded: copyleft licenses such as GPL / LGPL / AGPL / MPL,
+the CC-BY-SA family (share-alike), and any custom license carrying terms like
+"no commercial use", "no derivatives", or "no redistribution".
+If something was included by mistake, please open an issue — once verified,
+the entire collection will be taken offline.
 
-即便如此，涉及商标性质的品牌 Logo 在任何法域下仍受商标法约束，
-商业用途前请自行确认或取得权利人授权。
+Practical implications:
 
-三、本站自研部分
-----------------
-由本项目自己编写的部分 —— 站点页面（index.html、search.js、app-icons/*）、
-数据管线脚本（检索索引生成、分片打包脚本），以及由此生成的结构化元数据 ——
-采用 MIT 许可证：可自由使用、修改、分发（含商业用途），
-只需保留本文件的这一段说明。
+  * MIT / Apache-2.0 / BSD / ISC / CC0 families: commercial use, modification
+    and redistribution are allowed (most require keeping the notice).
+  * CC-BY-3.0 / CC-BY-4.0: commercial use and modification are allowed, but
+    **attribution of the original author is mandatory**.
+  * CC0-1.0 / Unlicense: copyright waived; the material is public domain.
+  * OFL-1.1: applies to fonts and their derived icons; free use and
+    redistribution are allowed, but the font itself may not be sold standalone.
 
-四、分发与免责
---------------
-无论以在线版、离线压缩包、桌面端还是移动端形式分发本项目，都必须一并携带
-本文件与完整「收录清单」（README 中的清单表格），使下游能清楚知道每一个图标
-来自哪里、适用什么许可证。
+Even so, brand logos with trademark status remain governed by trademark law in
+every jurisdiction. Confirm the usage rights yourself — or obtain permission
+from the rights holder — before any commercial use.
 
-素材按「原样」提供，不作任何明示或默示担保。若发现侵权、许可证标注错误或
-需要下线的素材，请提交 issue，我们会在核实后第一时间处理。
+## 3. Original work in this project
 
-五、向上游致谢
---------------
-感谢所有上游图标项目的作者与贡献者。若你觉得某个图标库好用，请直接去它的官方
-仓库点一颗星 —— 那才是对作者最实在的支持。
+The parts written by this project itself — the site pages (index.html,
+search.js, app-icons/*), the data-pipeline scripts (search index generation,
+chunk packing), and the structured metadata derived from them — are released
+under the MIT license: free to use, modify and distribute (including
+commercially), provided you keep this section of the notice.
+
+## 4. Distribution & disclaimer
+
+Whether you distribute this project as the online site, an offline archive,
+a desktop app or a mobile app, you must include this file together with the
+complete collection table (the listing in the README), so that downstream
+users know exactly where each icon comes from and under which license.
+
+The assets are provided "as is", without warranty of any kind, express or
+implied. If you find infringing material, a mis-labeled license, or anything
+that should be taken down, please open an issue — we will verify and act on
+it as soon as possible.
+
+## 5. Thanks to upstream
+
+Thanks to the authors and contributors of every upstream icon project. If you
+find an icon set useful, go star its official repository — that is the most
+direct way to support its authors.

@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""ui-icons-hub 检索工具（离线可用，零依赖）
+"""ui-icons-hub search CLI (offline-capable, zero dependencies)
 
-    python3 search.py "购物车"                    # 中文意图检索，默认 20 条
-    python3 search.py "齿轮" --svg --limit 3      # 连 SVG 源码一起输出
+    python3 search.py "购物车"                    # Chinese-intent search, 20 results by default
+    python3 search.py "齿轮" --svg --limit 3      # include SVG source in the output
     python3 search.py home --set feathericons__feather
-    python3 search.py --collections               # 列出 215 套图标库
-    python3 search.py --info tabler__tabler-icons # 某套库的详情
-    python3 search.py --pick "极简线性，做后台管理界面"
+    python3 search.py --collections               # list all 215 icon sets
+    python3 search.py --info tabler__tabler-icons # details of one set
+    python3 search.py --pick "minimal outline, admin dashboard"
 
-数据来源（按顺序自动选择）：
-  1) 环境变量 UIH_BASE 指向的目录（需含 index.json 与 data/）
-  2) 本脚本所在技能的 assets/ 目录
-  3) 环境变量 UIH_CDN（默认 jsDelivr 上的本仓库）
+Data sources (auto-selected in this order):
+  1) Directory in the UIH_BASE env var (must contain index.json and data/)
+  2) The assets/ directory of the skill this script belongs to
+  3) The UIH_CDN env var (defaults to this repo on jsDelivr)
 """
 import argparse
 import json
@@ -35,8 +35,14 @@ def _read(base, rel):
     if base.startswith("http"):
         with urllib.request.urlopen(base + rel, timeout=120) as r:
             return r.read().decode("utf-8")
-    with open(os.path.join(base, rel), encoding="utf-8") as f:
-        return f.read()
+    try:
+        with open(os.path.join(base, rel), encoding="utf-8") as f:
+            return f.read()
+    except (FileNotFoundError, NotADirectoryError):
+        # Local file missing (the skill bundle ships the index but not the
+        # 300 MB of chunks) -> fall back to the jsDelivr CDN
+        with urllib.request.urlopen(DEFAULT_CDN + rel, timeout=120) as r:
+            return r.read().decode("utf-8")
 
 
 def load_index(base=None):
@@ -59,14 +65,15 @@ def load_index(base=None):
             return _IDX
         except Exception as e:  # noqa: BLE001
             last = e
-    raise SystemExit("无法加载索引：%s" % last)
+    raise SystemExit("Failed to load index: %s" % last)
 
 
 def load_chunk(slug, i):
-    """读取一个数据分片。
+    """Load one data chunk.
 
-    分片格式：window.__ADD2("owner/repo", [[name, body, (w, h)?], ...], idx);
-    这里不用 exec（分片首行的中文注释会让 compile 报编码错），直接截取 JSON 数组再解析。
+    Chunk format: window.__ADD2("owner/repo", [[name, body, (w, h)?], ...], idx);
+    We avoid exec (the Chinese comment on the first line breaks compile()) and
+    extract the JSON array by bracket balancing instead.
     """
     key = "%s__%d" % (slug, i)
     if key in _CHUNK:
@@ -231,16 +238,16 @@ def pick(need, limit=3):
 
 
 def main():
-    ap = argparse.ArgumentParser(description="ui-icons-hub 图标检索（离线可用）")
-    ap.add_argument("query", nargs="?", help="检索词，中文或英文")
+    ap = argparse.ArgumentParser(description="ui-icons-hub icon search (offline-capable)")
+    ap.add_argument("query", nargs="?", help="search term, Chinese or English")
     ap.add_argument("--limit", type=int, default=20)
-    ap.add_argument("--svg", action="store_true", help="连 SVG 源码一起输出")
-    ap.add_argument("--set", dest="set_filter", help="限定图标库 slug")
-    ap.add_argument("--json", action="store_true", help="输出 JSON")
-    ap.add_argument("--collections", action="store_true", help="列出全部图标库")
-    ap.add_argument("--info", help="查看某套图标库详情")
-    ap.add_argument("--pick", help="按需求推荐图标库")
-    ap.add_argument("--base", help="索引所在目录或 CDN 地址")
+    ap.add_argument("--svg", action="store_true", help="include SVG source in the output")
+    ap.add_argument("--set", dest="set_filter", help="restrict to one icon set slug")
+    ap.add_argument("--json", action="store_true", help="output JSON")
+    ap.add_argument("--collections", action="store_true", help="list all icon sets")
+    ap.add_argument("--info", help="show details of one icon set")
+    ap.add_argument("--pick", help="recommend icon sets for a need")
+    ap.add_argument("--base", help="directory or CDN URL containing the index")
     a = ap.parse_args()
 
     load_index(a.base)
@@ -255,11 +262,11 @@ def main():
                                                ("slug", "name", "repo", "group", "license", "count", "stars", "mono", "homepage")}
                                               for s in _IDX["sets"]]}, ensure_ascii=False, indent=1))
         else:
-            print("共 %d 套图标库 · %s 个图标（general %d / brand %d / emoji %d）\n"
+            print("%d icon sets · %s icons (general %d / brand %d / emoji %d)\n"
                   % (len(_IDX["sets"]), "{:,}".format(_IDX["total"]),
                      groups.get("general", 0), groups.get("brand", 0), groups.get("emoji", 0)))
             for s in sorted(_IDX["sets"], key=lambda x: -(x.get("stars") or 0)):
-                print("  %-34s %-9s %7s 个  %-14s %s" % (
+                print("  %-34s %-9s %7s  %-14s %s" % (
                     s["name"][:34], s["license"][:9], "{:,}".format(s["count"]), s["slug"],
                     "★%s" % s.get("stars") if s.get("stars") else ""))
         return
@@ -267,7 +274,7 @@ def main():
     if a.info:
         s = _SETS.get(a.info)
         if not s:
-            raise SystemExit("没有这套图标库：%s" % a.info)
+            raise SystemExit("No such icon set: %s" % a.info)
         flat = [n for c in s["chunks"] for n in c]
         step = max(1, len(flat) // 30)
         sample = flat[::step][:30]
@@ -280,7 +287,7 @@ def main():
         else:
             for k, v in d.items():
                 if k == "names_sample":
-                    print("  图标名样例：", ", ".join(v))
+                    print("  sample names: ", ", ".join(v))
                 else:
                     print("  %-12s %s" % (k, v))
         return
@@ -292,9 +299,9 @@ def main():
                               for s in recs], ensure_ascii=False, indent=1))
         else:
             for s in recs:
-                print("· %s（%s）" % (s["name"], s["license"]))
+                print("· %s (%s)" % (s["name"], s["license"]))
                 print("    slug: %s" % s["slug"])
-                print("    %s 个图标 · ★%s · %s" % ("{:,}".format(s["count"]), s.get("stars"), s.get("homepage")))
+                print("    %s icons · ★%s · %s" % ("{:,}".format(s["count"]), s.get("stars"), s.get("homepage")))
         return
 
     if not a.query:
@@ -316,12 +323,12 @@ def main():
         print(json.dumps({"query": a.query, "count": len(out), "results": out}, ensure_ascii=False, indent=1))
         return
 
-    print("「%s」命中 %d 条（索引来自 %s）\n" % (a.query, len(hits), _IDX_FROM))
+    print("'%s' - %d hits (index from %s)\n" % (a.query, len(hits), _IDX_FROM))
     for sc, _w, _l, name, slug, chunk, via in hits:
         b = brief(slug)
         print("  %-30s %s" % (name, b["set"]))
         print("      %s · %s · %s%s" % (slug, b["license"], b["homepage"] or "",
-                                        ("  （别名命中：%s）" % via) if via else ""))
+                                        ("  (matched via alias: %s)" % via) if via else ""))
         if a.svg:
             m = load_chunk(slug, chunk)
             if name in m:
