@@ -1,6 +1,7 @@
 /* ui-icons-hub Service Worker
- * 策略：外壳预缓存 + 数据分片「先缓存后网络」——看过/搜过的图标库会被自动存下来，
- * 之后断网也能打开和检索（这也是 App「我的 → 已下载」里那些数据块的来源）。
+ * Strategy: pre-cache the shell + "cache-then-network" for data chunks — any
+ * icon set you've viewed or searched is stored automatically, so the site keeps
+ * working offline (this is also where the app's "My Downloads" blocks come from).
  */
 var VERSION = "uih-v1-2026-09-29";
 var SHELL = [
@@ -16,7 +17,7 @@ self.addEventListener("install", function (e) {
   self.skipWaiting();
   e.waitUntil(caches.open(VERSION).then(function (c) {
     return Promise.all(SHELL.map(function (u) {
-      return c.add(u).catch(function () { /* 单个资源失败不影响安装 */ });
+      return c.add(u).catch(function () { /* one failed resource does not block install */ });
     }));
   }));
 });
@@ -29,10 +30,11 @@ self.addEventListener("activate", function (e) {
 
 function isData(u) { return /\/data\/.+\.js$/.test(u.pathname) || /\/app-icons\/png\//.test(u.pathname); }
 
-/* 桌面 / 移动端的「联网版」安装包只带外壳，不带 300 多 MB 的图标数据。
- * 这种情况下本地请求会 404，需要回源到 GitHub Pages 取分片，取到后写进本机缓存，
- * 于是「我的 → 已下载」里就会一点点累积起来，之后再断网也能看。
- * 在线上（origin 本身就是 Pages）不会触发这条回源分支。 */
+/* The online (connected) install packages ship only the shell, not the 300+ MB
+ * of icon data. Local requests then 404, so we fall back to GitHub Pages to
+ * fetch the chunk, write it into the local cache, and that way the "My
+ * Downloads" section fills up little by little and stays usable offline later.
+ * On the live site (origin is already Pages) this fallback branch never fires. */
 var REMOTE = "https://sitong-zhang.github.io/ui-icons-hub";
 function isSelfHosted() { return self.location.origin !== REMOTE; }
 
@@ -42,7 +44,8 @@ self.addEventListener("fetch", function (e) {
   var url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
 
-  // 数据分片：命中缓存直接返回，否则取回网络并写入缓存（自动积累「已下载」）
+  // Data chunks: return from cache on hit, otherwise fetch over the network and
+  // write into the cache (auto-accumulating "My Downloads").
   if (isData(url)) {
     e.respondWith(caches.open(VERSION).then(function (c) {
       return c.match(req).then(function (hit) {
@@ -50,7 +53,7 @@ self.addEventListener("fetch", function (e) {
         return fetch(req).then(function (res) {
           if (res && res.status === 200 && res.type === "basic") { c.put(req, res.clone()); return res; }
           if (url.origin === REMOTE || !isSelfHosted()) return res;
-          // 本地外壳没有这块数据 → 回源到线上仓库取
+          // Local shell has no this chunk -> fetch from the live repo
           return fetch(REMOTE + url.pathname, { mode: "cors" }).then(function (r2) {
             if (r2 && r2.status === 200) c.put(req, r2.clone());
             return r2;
@@ -66,7 +69,7 @@ self.addEventListener("fetch", function (e) {
     return;
   }
 
-  // 外壳与页面：缓存优先，断网时保证可用
+  // Shell and pages: cache-first, so they stay usable offline
   e.respondWith(caches.match(req).then(function (hit) {
     if (hit) {
       fetch(req).then(function (res) {
