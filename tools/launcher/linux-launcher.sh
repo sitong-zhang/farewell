@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-# ui-icons-hub Linux 启动器
-# 在本机 127.0.0.1 起一个静态服务（用系统自带的 python3），再用默认浏览器打开。
-# 用 http:// 而不是 file://，是为了让 Service Worker 能注册，
-# 这样「我的 → 已下载」里的自动缓存统计才准确。
+# ui-icons-hub Linux launcher
+# Serve the site locally on 127.0.0.1 (using the system python3), then open it
+# in the default browser.
+# Use http:// instead of file:// so the Service Worker can register, which keeps
+# the auto-cache stats under "My Downloads" accurate.
 set -u
 HERE="$(cd "$(dirname "$0")" && pwd)"
 SITE="$HERE/site"
@@ -14,7 +15,7 @@ if [ -z "${PY:-}" ]; then
     xdg-open "$SITE/index.html"
     exit 0
   fi
-  echo "需要 python3 或 xdg-open" >&2
+  echo "python3 or xdg-open is required" >&2
   exit 1
 fi
 
@@ -26,6 +27,6 @@ trap 'kill $SRV 2>/dev/null' EXIT INT TERM
 sleep 1
 URL="http://127.0.0.1:$PORT/index.html"
 echo "ui-icons-hub: $URL"
-if command -v xdg-open >/dev/null 2>&1; then xdg-open "$URL"; else echo "请手动打开 $URL"; fi
-# 保持服务，直到用户 Ctrl+C 或关闭终端
+if command -v xdg-open >/dev/null 2>&1; then xdg-open "$URL"; else echo "Please open $URL manually"; fi
+# Keep the server alive until the user presses Ctrl+C or closes the terminal
 wait $SRV
