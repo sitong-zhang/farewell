@@ -1,17 +1,36 @@
 {
   "name": "@ui-icons-hub/icons",
   "version": "1.0.0",
-  "description": "215 套开源图标库 / 345,961 个 SVG 图标的检索 API，支持中文意图（购物车/齿轮/游戏手柄）。零依赖，浏览器与 Node 通用。",
+  "description": "Search API for 200+ open-source SVG icon sets and brand logos, with Chinese-intent support (shopping cart / gear / gamepad). Zero dependencies; works in browser and Node 18+.",
   "type": "module",
   "main": "index.mjs",
   "module": "index.mjs",
-  "exports": { ".": "./index.mjs" },
-  "files": ["index.mjs", "README.md"],
+  "exports": {
+    ".": "./index.mjs"
+  },
+  "files": [
+    "index.mjs",
+    "README.md"
+  ],
   "sideEffects": false,
-  "engines": { "node": ">=18" },
-  "keywords": ["icons", "svg", "search", "iconify", "lucide", "tabler", "feather", "simple-icons"],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "icons",
+    "svg",
+    "search",
+    "iconify",
+    "lucide",
+    "tabler",
+    "feather",
+    "simple-icons"
+  ],
   "license": "MIT",
   "homepage": "https://sitong-zhang.github.io/ui-icons-hub/",
-  "repository": { "type": "git", "url": "git+https://github.com/sitong-zhang/ui-icons-hub.git" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sitong-zhang/ui-icons-hub.git"
+  },
   "dependencies": {}
 }
