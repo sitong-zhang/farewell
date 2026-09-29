@@ -1,7 +1,9 @@
 #!/bin/bash
-# ui-icons-hub macOS 启动器
-# 离线版：直接用浏览器打开随包内置的全量站点（file:// 已验证可正常检索、看源码、收藏）
-# 联网版：打开线上站点（Apple 平台唯一合规的「App」形态就是安装到 Dock 的 Web App）
+# ui-icons-hub macOS launcher
+# Offline build: open the bundled full site directly in the browser (file://,
+# verified to search / view source / collect favorites correctly).
+# Online build: open the live site (on Apple platforms the only compliant "App"
+# form is a Dock-installed Web App).
 set -u
 HERE="$(cd "$(dirname "$0")" && pwd)"
 SITE="$HERE/../Resources/site"
@@ -17,13 +19,13 @@ if [ "$MODE" = "online" ]; then
 fi
 
 if [ -z "$URL" ]; then
-  osascript -e 'display alert "ui-icons-hub" message "站点文件缺失，请重新下载安装包。"' >/dev/null 2>&1
+  osascript -e 'display alert "ui-icons-hub" message "Site files are missing. Please re-download the installer."' >/dev/null 2>&1
   exit 1
 fi
 
 open "$URL"
 
-# 联网版额外提示：安装到 Dock 后即为独立 App
+# Extra hint for the online build: adding to the Dock makes it a standalone app
 if [ "$MODE" = "online" ]; then
-  osascript -e 'display notification "已打开在线版。在 Safari 中「分享 → 添加到 Dock」，即可像 App 一样独立启动。" with title "ui-icons-hub"' >/dev/null 2>&1
+  osascript -e 'display notification "Online version opened. In Safari choose Share → Add to Dock to launch it like a standalone app." with title "ui-icons-hub"' >/dev/null 2>&1
 fi
