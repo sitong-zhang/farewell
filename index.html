@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,11 +8,11 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="apple-mobile-web-app-title" content="图标库" />
+<meta name="apple-mobile-web-app-title" content="Icon Library" />
 <link rel="apple-touch-icon" href="icons/app-icon-192.png" />
 <link rel="icon" href="icons/app-icon-192.png" />
-<title>UI 图标与设计资源库 · GitHub 高星全量收录</title>
-<meta name="description" content="全量收录 GitHub 上高星开源图标库的完整图标目录：数万个真实 SVG 图标、45+ 套图标库、85 个 UI 设计项目。支持全库搜索、一键复制源码、下载。" />
+<title>UI Icons &amp; Design Resources · Complete Collection of Top-Starred GitHub Libraries</title>
+<meta name="description" content="A complete icon catalog of top-starred open-source icon libraries on GitHub: tens of thousands of real SVG icons, 45+ icon sets, 85 UI design projects. Supports full-library search, one-click SVG source copy, and download." />
 <style>
   :root{--bg:#0b0d17;--bg2:#121529;--card:rgba(255,255,255,.045);--line:rgba(255,255,255,.10);--line2:rgba(255,255,255,.06);
     --ink:#e8ebff;--muted:#98a0c8;--dim:#6f77a0;--acc:#7dd3fc;--acc2:#a78bfa;--gold:#ffd479;--sz:26px;--ic:#cbd5f5;}
@@ -98,7 +98,7 @@
   .skills b{display:block;font-size:13.5px}
   .skills i{display:block;font-style:normal;font-size:11.5px;color:var(--dim);margin-top:2px;line-height:1.5}
 
-  /* ---- App 化：底部导航 + 我的面板 ---- */
+  /* ---- App-style: bottom navigation + My panel ---- */
   .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;backdrop-filter:blur(14px);
     background:rgba(11,13,23,.94);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
   .tabbar button{flex:1;background:none;border:0;color:var(--dim);font-size:11.5px;display:flex;flex-direction:column;
@@ -137,43 +137,43 @@
 <body>
 <header class="hero">
   <div class="wrap">
-    <div class="badge">数据实时来自 GitHub API · 图标为仓库原始 SVG 全量收录</div>
-    <h1>UI 图标与<span>设计资源库</span></h1>
-    <p class="sub">全量收录 GitHub 上高星开源图标库的<strong>完整图标目录</strong>。每个库的图标不再抽样，而是整包抓取全部 SVG；支持跨库全量搜索、一键复制源码、直接下载。</p>
+    <div class="badge">Data is fetched live from the GitHub API · icons are the original repository SVGs, fully collected</div>
+    <h1>UI Icons &amp; <span>Design Resources</span></h1>
+    <p class="sub">A <strong>complete icon catalog</strong> of top-starred open-source icon libraries on GitHub. Instead of sampling, every set is fetched in full — all its SVGs. Supports cross-library full-text search, one-click SVG source copy, and direct download.</p>
     <div class="stats" id="stats"></div>
 <div style="margin:18px auto 0;max-width:760px;padding:12px 20px;border:1px solid rgba(167,139,250,.35);border-radius:14px;background:rgba(167,139,250,.07);display:flex;align-items:center;gap:14px;justify-content:space-between;flex-wrap:wrap;text-align:left">
   <div>
-    <b style="font-size:15px">装到电脑上离线用</b>
-    <div style="font-size:12px;color:#98a0c8;margin-top:4px">Windows / macOS / Linux 三件套，各分联网版与离线版</div>
+    <b style="font-size:15px">Use it offline on your computer</b>
+    <div style="font-size:12px;color:#98a0c8;margin-top:4px">Windows / macOS / Linux builds, each with an online and an offline edition</div>
   </div>
-  <a href="download.html" style="white-space:nowrap;font-size:13px;padding:8px 18px;border-radius:999px;background:linear-gradient(92deg,rgba(167,139,250,.25),rgba(125,211,252,.25));border:1px solid rgba(167,139,250,.55);color:#fff">下载客户端 &#8594;</a>
+  <a href="download.html" style="white-space:nowrap;font-size:13px;padding:8px 18px;border-radius:999px;background:linear-gradient(92deg,rgba(167,139,250,.25),rgba(125,211,252,.25));border:1px solid rgba(167,139,250,.55);color:#fff">Download client &#8594;</a>
 </div>
 <div style="margin:12px auto 0;max-width:760px;padding:12px 20px;border:1px solid rgba(142,224,184,.35);border-radius:14px;background:rgba(142,224,184,.06);display:flex;align-items:center;gap:14px;justify-content:space-between;flex-wrap:wrap;text-align:left">
   <div>
-    <b style="font-size:15px">开发者接入：CDN 一行引入 / MCP / npm / AI 技能</b>
-    <div style="font-size:12px;color:#98a0c8;margin-top:4px">在任何网页里 &lt;script src="cdn.js"&gt; 后 UIH.search('购物车') 即得 SVG；另有 MCP 服务器与 npm 包</div>
+    <b style="font-size:15px">Developer integration: CDN one-line include / MCP / npm / AI skill</b>
+    <div style="font-size:12px;color:#98a0c8;margin-top:4px">Drop &lt;script src="cdn.js"&gt; into any page, then UIH.search('shopping cart') returns SVG instantly; an MCP server and an npm package are also available</div>
   </div>
-  <a href="cdn.html" style="white-space:nowrap;font-size:13px;padding:8px 18px;border-radius:999px;background:linear-gradient(92deg,rgba(142,224,184,.22),rgba(125,211,252,.22));border:1px solid rgba(142,224,184,.55);color:#fff">查看用法 &#8594;</a>
+  <a href="cdn.html" style="white-space:nowrap;font-size:13px;padding:8px 18px;border-radius:999px;background:linear-gradient(92deg,rgba(142,224,184,.22),rgba(125,211,252,.22));border:1px solid rgba(142,224,184,.55);color:#fff">See usage &#8594;</a>
 </div>
 <div style="margin:12px auto 0;max-width:760px;padding:14px 20px;border:1px solid rgba(125,211,252,.35);border-radius:14px;background:rgba(125,211,252,.07);display:flex;align-items:center;gap:14px;justify-content:space-between;flex-wrap:wrap;text-align:left">
   <div>
-    <b style="font-size:15px">iOS26 苹果风格应用图标 · 独立分区</b>
-    <div style="font-size:12px;color:#98a0c8;margin-top:4px">797 个应用图标（PNG），Apple iOS 圆角风格，支持搜索 · 预览 · 下载</div>
+    <b style="font-size:15px">iOS26 Apple-style app icons · standalone section</b>
+    <div style="font-size:12px;color:#98a0c8;margin-top:4px">797 app icons (PNG), Apple iOS rounded style, with search · preview · download</div>
   </div>
-  <a href="app-icons/index.html" style="white-space:nowrap;font-size:13px;padding:8px 18px;border-radius:999px;background:linear-gradient(92deg,rgba(125,211,252,.25),rgba(167,139,250,.25));border:1px solid rgba(125,211,252,.55);color:#fff">进入分区 &#8594;</a>
+  <a href="app-icons/index.html" style="white-space:nowrap;font-size:13px;padding:8px 18px;border-radius:999px;background:linear-gradient(92deg,rgba(125,211,252,.25),rgba(167,139,250,.25));border:1px solid rgba(125,211,252,.55);color:#fff">Enter section &#8594;</a>
 </div>
 <div class="skills">
   <a href="skills/software/index.html">
     <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M9 21h6M8 8h4M8 12h8"/></svg>
-    <span><b>软件界面设计规范</b><i>栅格 / 密度 / 状态 / 深色模式 / 无障碍，配可直接抄用的图标实践</i></span>
+    <span><b>Software UI Design Guidelines</b><i>Grid / density / states / dark mode / accessibility, with ready-to-use icon practices</i></span>
   </a>
   <a href="skills/website/index.html">
     <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"/></svg>
-    <span><b>网站设计方法论</b><i>首屏 / 响应式 / 排版节奏 / 性能预算 / SEO 与合规</i></span>
+    <span><b>Web Design Methodology</b><i>Above-the-fold / responsive / typographic rhythm / performance budget / SEO &amp; compliance</i></span>
   </a>
   <a href="skills/game/index.html">
     <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="8" width="20" height="10" rx="5"/><path d="M7 13h4M9 11v4M16 12h.01M18 14h.01"/></svg>
-    <span><b>游戏 UI 设计要点</b><i>HUD 分层 / 技能栏 / 状态配色 / 触屏手势 / 9-slice 与自适应</i></span>
+    <span><b>Game UI Design Essentials</b><i>HUD layering / skill bar / state colors / touch gestures / 9-slice &amp; adaptive</i></span>
   </a>
 </div>
   </div>
@@ -183,11 +183,11 @@
   <div class="wrap">
     <div class="search">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-      <input id="q" type="search" placeholder="全库搜索：arrow / home / cart，或直接打中文「购物车」「齿轮」「游戏手柄」" autocomplete="off" />
+      <input id="q" type="search" placeholder="Search the whole library: arrow / home / cart, or plain-language words — shopping cart / gear / gamepad" autocomplete="off" />
     </div>
     <div class="ctrl">
-      <span>尺寸</span><input id="szR" type="range" min="16" max="56" value="26" />
-      <span>颜色</span><input id="col" type="color" value="#cbd5f5" />
+      <span>Size</span><input id="szR" type="range" min="16" max="56" value="26" />
+      <span>Color</span><input id="col" type="color" value="#cbd5f5" />
     </div>
     <nav class="tabs" id="tabs"></nav>
   </div>
@@ -195,17 +195,17 @@
 
 <main class="wrap">
   <section id="resSec" style="display:none">
-    <div class="sec-head"><h2>搜索结果</h2><p id="scanInfo" class="scan"></p></div>
+    <div class="sec-head"><h2>Search Results</h2><p id="scanInfo" class="scan"></p></div>
     <div class="grid" id="resGrid" style="padding:0 0 10px"></div>
   </section>
   <div id="iconSecs"></div>
   <div id="kitSecs"></div>
-  <div class="empty" id="noRes" style="display:none">没有匹配结果，换个关键词试试。</div>
+  <div class="empty" id="noRes" style="display:none">No matching results. Try another keyword.</div>
 </main>
 
 <footer class="ft">
   <div class="wrap">
-    数据来源：GitHub 官方 API 与仓库原始文件 · 图标版权与许可证归各开源项目所有，请遵循对应 License 使用<br/><span id="ftStat"></span>
+    Data source: official GitHub API and original repository files · icon copyright and licenses belong to each open-source project; use them under their respective licenses<br/><span id="ftStat"></span>
   </div>
 </footer>
 
@@ -215,31 +215,31 @@
     <h5 id="mName"></h5>
     <div id="mMeta" style="font-size:12px;color:#6f77a0;margin-top:4px"></div>
     <div class="btns">
-      <button class="btn pri" id="bCopy">复制 SVG 源码</button>
-      <button class="btn" id="bDown">下载 .svg</button>
-      <button class="btn" id="bName">复制图标名</button>
-      <button class="btn" id="bFav">收藏</button>
-      <button class="btn" id="bClose">关闭</button>
+      <button class="btn pri" id="bCopy">Copy SVG source</button>
+      <button class="btn" id="bDown">Download .svg</button>
+      <button class="btn" id="bName">Copy icon name</button>
+      <button class="btn" id="bFav">Favorite</button>
+      <button class="btn" id="bClose">Close</button>
     </div>
-    <div class="hint">单色图标已统一为 <code>currentColor</code>，可用 CSS <code>color</code> 任意改色。</div>
+    <div class="hint">Monochrome icons use <code>currentColor</code>, so you can recolor them freely with the CSS <code>color</code> property.</div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
 <nav class="tabbar" id="tabbar">
-  <button class="on" data-act="browse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>图标库</span></button>
-  <button data-act="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span>搜索</span></button>
-  <button data-act="skills"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg><span>设计技能</span></button>
-  <button data-act="me"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg><span>我的</span></button>
+  <button class="on" data-act="browse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Icons</span></button>
+  <button data-act="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span>Search</span></button>
+  <button data-act="skills"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg><span>Skills</span></button>
+  <button data-act="me"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg><span>My</span></button>
 </nav>
 <div class="appsheet" id="appsheet">
   <div class="mask" data-close="1"></div>
   <div class="panel">
-    <h3 id="asTitle">我的<span class="x" data-close="1">&#215;</span></h3>
+    <h3 id="asTitle">My<span class="x" data-close="1">&#215;</span></h3>
     <div class="as-tabs" id="asTabs">
-      <button class="on" data-t="dl">已下载</button>
-      <button data-t="fav">我的收藏</button>
-      <button data-t="sk">设计技能</button>
-      <button data-t="about">关于</button>
+      <button class="on" data-t="dl">Downloaded</button>
+      <button data-t="fav">Favorites</button>
+      <button data-t="sk">Skills</button>
+      <button data-t="about">About</button>
     </div>
     <div class="as-body" id="asBody"></div>
   </div>
@@ -253,10 +253,10 @@
 (function(){
   var SETS = window.ICON_SETS || [], KITS = window.UI_KITS || [];
   var DATA = {}, GOT = {}, PENDING = {};
-  var GL = {general:"通用 UI 图标", brand:"品牌 · 技术 · 应用图标", emoji:"表情 · 旗帜 · 动效"};
-  var GN = {general:"界面通用图标：导航、操作、文件、媒体、设备等，单色 SVG 可任意改色。",
-            brand:"品牌 logo、技术栈、文件类型与应用图标，多为彩色原图。",
-            emoji:"表情、国旗与加载动效，均为矢量源文件。"};
+  var GL = {general:"General UI icons", brand:"Brands · tech · app icons", emoji:"Emoji · flags · animations"};
+  var GN = {general:"Common interface icons: navigation, actions, files, media, devices, etc. Monochrome SVGs can be recolored freely.",
+            brand:"Brand logos, tech stacks, file types, and app icons, mostly in full color.",
+            emoji:"Emoji, country flags, and loading animations, all vector source files."};
   var ORDER = ["general","brand","emoji"];
   var curIcon = null, scanToken = 0, RES_CAP = 3000;
 
@@ -267,32 +267,32 @@
   var totalKits = KITS.reduce(function(a,g){return a+g.items.length;},0);
   var stars = SETS.concat(KITS.reduce(function(a,g){return a.concat(g.items);},[])).reduce(function(a,x){return a+(x.stars||0);},0);
   document.getElementById("stats").innerHTML = [
-    ["图标库", SETS.length+" 套"], ["收录图标", totalIcons.toLocaleString()+" 个"],
-    ["UI 资源", totalKits+" 个项目"], ["星标合计", stars>=1e6?(stars/1e6).toFixed(2)+"M":(stars/1000).toFixed(1)+"k"]
+    ["Icon sets", SETS.length+" sets"], ["Icons", totalIcons.toLocaleString()],
+    ["UI resources", totalKits+" projects"], ["Total stars", stars>=1e6?(stars/1e6).toFixed(2)+"M":(stars/1000).toFixed(1)+"k"]
   ].map(function(p){return '<div class="stat"><b>'+p[1]+'</b><i>'+p[0]+'</i></div>';}).join("");
-  var ftDefault = "共 "+SETS.length+" 套图标库 / "+totalIcons.toLocaleString()+" 个 SVG 图标 / "+totalKits+" 个 UI 设计项目 · 抓取于 2026-09-20";
+  var ftDefault = SETS.length+" icon sets / "+totalIcons.toLocaleString()+" SVG icons / "+totalKits+" UI design projects · crawled on 2026-09-20";
   document.getElementById("ftStat").textContent = ftDefault;
 
-  // ---------- 骨架 ----------
+  // ---------- Skeleton ----------
   function setCard(s){
     return '<div class="set" data-set="'+esc(s.repo)+'">'+
       '<div class="set-hd"><h3>'+esc(s.name)+'</h3><span class="star">★ '+s.stars.toLocaleString()+'</span>'+
       (s.license?'<span class="tag lic">'+esc(s.license)+'</span>':'')+
-      '<span class="tag">全量 '+s.count.toLocaleString()+' 个</span>'+
-      (s.mono?'<span class="tag">单色可改色</span>':'<span class="tag">彩色原图</span>')+
+      '<span class="tag">All '+s.count.toLocaleString()+' icons</span>'+
+      (s.mono?'<span class="tag">Recolorable mono</span>':'<span class="tag">Full-color original</span>')+
       '<span class="spacer"></span>'+
-      (s.homepage?'<a class="lnk" href="'+esc(s.homepage)+'" target="_blank" rel="noopener">官方预览</a>':'')+
-      '<a class="lnk" href="'+esc(s.url)+'" target="_blank" rel="noopener">仓库</a></div>'+
+      (s.homepage?'<a class="lnk" href="'+esc(s.homepage)+'" target="_blank" rel="noopener">Live preview</a>':'')+
+      '<a class="lnk" href="'+esc(s.url)+'" target="_blank" rel="noopener">Repo</a></div>'+
       '<div class="grid" id="g_'+esc(s.repo)+'"></div>'+
-      '<div class="more" id="m_'+esc(s.repo)+'"><button data-more="'+esc(s.repo)+'">显示该库全部 '+s.count.toLocaleString()+' 个图标</button></div></div>';
+      '<div class="more" id="m_'+esc(s.repo)+'"><button data-more="'+esc(s.repo)+'">Show all '+s.count.toLocaleString()+' icons in this set</button></div></div>';
   }
   function kitCard(k){
     return '<div class="kit" data-kit="'+esc(k.repo)+'"><h4>'+esc(k.name)+' <span class="star">★ '+k.stars.toLocaleString()+'</span>'+
       (k.license?'<span class="tag lic">'+esc(k.license)+'</span>':'')+'</h4>'+
-      '<div class="repo">'+esc(k.repo)+'</div><p>'+esc(k.desc||"（暂无描述）")+'</p>'+
-      '<div class="row">'+(k.lang?'<span class="tag">'+esc(k.lang)+'</span>':'')+(k.homepage?'<span class="tag">有官网</span>':'')+'</div>'+
-      '<div class="go">'+(k.homepage?'<a href="'+esc(k.homepage)+'" target="_blank" rel="noopener">官网 / 预览</a>':'')+
-      '<a href="'+esc(k.url)+'" target="_blank" rel="noopener">GitHub 仓库</a></div></div>';
+      '<div class="repo">'+esc(k.repo)+'</div><p>'+esc(k.desc||"(No description yet)")+'</p>'+
+      '<div class="row">'+(k.lang?'<span class="tag">'+esc(k.lang)+'</span>':'')+(k.homepage?'<span class="tag">Has site</span>':'')+'</div>'+
+      '<div class="go">'+(k.homepage?'<a href="'+esc(k.homepage)+'" target="_blank" rel="noopener">Site / preview</a>':'')+
+      '<a href="'+esc(k.url)+'" target="_blank" rel="noopener">GitHub repo</a></div></div>';
   }
   var tabs = ORDER.filter(function(g){return SETS.some(function(s){return s.group===g;});}).map(function(g){return {key:g,label:GL[g]};});
   KITS.forEach(function(g){tabs.push({key:"k_"+g.key,label:g.label});});
@@ -302,16 +302,16 @@
   ORDER.forEach(function(g){
     var list = SETS.filter(function(s){return s.group===g;});
     if(!list.length) return;
-    html += '<section class="sec" id="s_'+g+'"><div class="sec-head"><h2>'+GL[g]+'（'+list.length+' 套 · '+
-      list.reduce(function(a,s){return a+s.count;},0).toLocaleString()+' 个）</h2><p>'+GN[g]+'</p></div>'+list.map(setCard).join("")+'</section>';
+    html += '<section class="sec" id="s_'+g+'"><div class="sec-head"><h2>'+GL[g]+' ('+list.length+' sets · '+
+      list.reduce(function(a,s){return a+s.count;},0).toLocaleString()+' icons)</h2><p>'+GN[g]+'</p></div>'+list.map(setCard).join("")+'</section>';
   });
   KITS.forEach(function(g){
-    html += '<section class="sec" id="s_k_'+g.key+'"><div class="sec-head"><h2>'+g.label+'（'+g.items.length+' 个）</h2><p>'+g.note+'</p></div>'+
+    html += '<section class="sec" id="s_k_'+g.key+'"><div class="sec-head"><h2>'+g.label+' ('+g.items.length+' items)</h2><p>'+g.note+'</p></div>'+
       '<div class="cards">'+g.items.map(kitCard).join("")+'</div></section>';
   });
   document.getElementById("iconSecs").innerHTML = html;
 
-  // ---------- 分块加载 ----------
+  // ---------- Chunked loading ----------
   function tiles(repo, arr, mono){
     return arr.map(function(i){
       return '<div class="ico'+(mono?" mono":"")+'" title="'+esc(i.n)+'" data-set="'+esc(repo)+'" data-name="'+esc(i.n)+'">'+i.s+'</div>';
@@ -334,7 +334,7 @@
     updateMore(repo);
     if(PENDING[repo]){ delete PENDING[repo]; }
   };
-  /* v2 数据：分片只存 body + 每套一份 svg 外框，浏览器端拼装完整 SVG（省约 10% 体积） */
+  /* v2 data: each shard stores only the body plus one SVG wrapper per set; the browser assembles the full SVG (saves about 10% size) */
   var DEF_WRAP = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">';
   function wrapFor(s, p){
     if(p.length > 2) return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+p[2]+' '+p[3]+'">';
@@ -369,7 +369,7 @@
     if(got >= s.chunks){ box.style.display = "none"; return; }
     var shown = (DATA[repo]||[]).length;
     box.style.display = "";
-    box.querySelector("button").textContent = "继续加载（已显示 " + shown.toLocaleString() + " / 共 " + s.count.toLocaleString() + "）";
+    box.querySelector("button").textContent = "Load more (showing " + shown.toLocaleString() + " / " + s.count.toLocaleString() + ")";
   }
   function nextChunk(repo){
     var s = byRepo(repo); if(!s) return;
@@ -388,7 +388,7 @@
     if(b){ var r = b.getAttribute("data-more"); var s = byRepo(r); if(s){ for(var i=0;i<s.chunks;i++) loadChunk(r,i); } }
   });
 
-  // ---------- 过滤（当前分区内） ----------
+  // ---------- Filtering (within the current section) ----------
   function applyFilterTo(repo){
     var v = document.getElementById("q").value.trim().toLowerCase();
     if(v) return;
@@ -400,7 +400,7 @@
     Array.prototype.forEach.call(document.querySelectorAll(".set"), function(el){ el.style.display = ""; });
   }
 
-  // ---------- 分区切换 ----------
+  // ---------- Section switching ----------
   function show(key, push){
     Array.prototype.forEach.call(document.querySelectorAll(".sec"), function(el){ el.classList.toggle("on", el.id==="s_"+key); });
     Array.prototype.forEach.call(document.querySelectorAll(".tab"), function(el){ el.classList.toggle("on", el.getAttribute("data-k")===key); });
@@ -411,7 +411,7 @@
     var t = e.target.closest(".tab"); if(t){ document.getElementById("q").value=""; stopScan(); show(t.getAttribute("data-k")); }
   });
 
-  // ---------- 全库扫描搜索 ----------
+  // ---------- Whole-library scan search ----------
   var q = document.getElementById("q"), resSec = document.getElementById("resSec"),
       resGrid = document.getElementById("resGrid"), scanInfo = document.getElementById("scanInfo");
   var timer = null;
@@ -441,20 +441,20 @@
     resSec.style.display = "";
     resGrid.innerHTML = "";
     document.getElementById("noRes").style.display = "none";
-    scanInfo.innerHTML = "正在准备检索索引…";
+    scanInfo.innerHTML = "Preparing the search index…";
 
     var pg = setInterval(function(){
       if(token !== scanToken){ clearInterval(pg); return; }
       var pr = window.__SEARCH.progress();
-      if(pr < 1) scanInfo.innerHTML = "正在建立检索索引… <b>"+Math.round(pr*100)+"%</b>（首次约 2-3 秒，之后一直复用）";
+      if(pr < 1) scanInfo.innerHTML = "Building the search index… <b>"+Math.round(pr*100)+"%</b> (first run ~2-3s, then reused)";
     }, 220);
     window.__SEARCH.init(function(err){
       clearInterval(pg);
       if(token !== scanToken) return;
-      if(err){ scanInfo.innerHTML = "检索索引加载失败，请刷新重试"; return; }
+      if(err){ scanInfo.innerHTML = "Failed to load the search index. Please refresh and retry."; return; }
       var hits = window.__SEARCH.search(v, Math.max(RES_CAP * 2, 200));
       if(!hits.length){
-        scanInfo.innerHTML = "没有匹配的图标，换个说法试试（支持中文意图，如「购物车」「齿轮」「游戏手柄」）";
+        scanInfo.innerHTML = "No matching icons. Try a different phrasing (natural-language intent is supported, e.g. shopping cart / gear / gamepad)";
         document.getElementById("noRes").style.display = "";
         return;
       }
@@ -474,7 +474,7 @@
         }
       }
       var remain = jobs.length;
-      scanInfo.innerHTML = "命中 <b>"+hits.length.toLocaleString()+"</b> 条，正在取回 <b>"+remain+"</b> 个数据块…";
+      scanInfo.innerHTML = "Matched <b>"+hits.length.toLocaleString()+"</b> results, fetching <b>"+remain+"</b> data chunks…";
       if(!remain){ drawResults(); return; }
       jobs.forEach(function(job){
         loadChunkOnce(job[0], job[1], function(){
@@ -498,9 +498,9 @@
           }
         }
         resGrid.innerHTML = out;
-        scanInfo.innerHTML = "命中并展示 <b>"+matched.toLocaleString()+"</b> 个图标"+
-          (matched >= RES_CAP ? " · 已达展示上限 "+RES_CAP.toLocaleString() : "") +
-          " · 平均 "+ (window.__SEARCH_BUILD_MS || 0) +"ms 建索引";
+        scanInfo.innerHTML = "Matched and showing <b>"+matched.toLocaleString()+"</b> icons"+
+          (matched >= RES_CAP ? " · display cap of "+RES_CAP.toLocaleString()+" reached" : "") +
+          " · index built in "+ (window.__SEARCH_BUILD_MS || 0) +"ms on average";
         document.getElementById("noRes").style.display = matched ? "none" : "";
       }
     });
@@ -508,7 +508,7 @@
   function searchTile(it, f){
     var nm = f && f.name ? f.name : "";
     var rp = f && f.repo ? f.repo : "";
-    return '<div class="ico'+(f&&f.mono?" mono":"")+'" title="'+esc(it.n)+'（'+nm+'）" data-set="'+esc(rp)+'" data-name="'+esc(it.n)+'">'+it.s+'</div>';
+    return '<div class="ico'+(f&&f.mono?" mono":"")+'" title="'+esc(it.n)+' ('+nm+')" data-set="'+esc(rp)+'" data-name="'+esc(it.n)+'">'+it.s+'</div>';
   }
   function loadChunkOnce(repo, idx, cb){
     var s = byRepo(repo); if(!s){ cb(); return; }
@@ -523,12 +523,12 @@
     document.head.appendChild(el);
   }
 
-  // ---------- 尺寸 / 颜色 ----------
+  // ---------- Size / Color ----------
   var szR = document.getElementById("szR"), col = document.getElementById("col");
   szR.addEventListener("input", function(){ document.documentElement.style.setProperty("--sz", szR.value+"px"); });
   col.addEventListener("input", function(){ document.documentElement.style.setProperty("--ic", col.value); });
 
-  // ---------- 弹窗 ----------
+  // ---------- Modal ----------
   var modal = document.getElementById("modal"), toast = document.getElementById("toast");
   function tip(m){ toast.textContent=m; toast.classList.add("on"); setTimeout(function(){toast.classList.remove("on");},1600); }
   document.addEventListener("click", function(e){
@@ -540,7 +540,7 @@
     var s = byRepo(repo); curIcon = ic; curIcon.__repo = repo; syncFavBtn();
     document.getElementById("pv").innerHTML = ic.s;
     document.getElementById("mName").textContent = ic.n;
-    document.getElementById("mMeta").textContent = (s?s.name:repo)+" · ★"+(s?s.stars.toLocaleString():"")+" · "+((s&&s.license)||"开源")+" · "+((s&&s.mono)?"单色 currentColor":"彩色原图");
+    document.getElementById("mMeta").textContent = (s?s.name:repo)+" · ★"+(s?s.stars.toLocaleString():"")+" · "+((s&&s.license)||"open source")+" · "+((s&&s.mono)?"mono currentColor":"full-color original");
     modal.classList.add("on");
   });
   function close(){ modal.classList.remove("on"); }
@@ -549,22 +549,22 @@
   document.addEventListener("keydown", function(e){ if(e.key==="Escape") close(); });
   document.getElementById("bCopy").onclick = function(){
     if(!curIcon) return; var t = curIcon.s;
-    if(navigator.clipboard) navigator.clipboard.writeText(t).then(function(){tip("SVG 源码已复制");});
-    else { var ta=document.createElement("textarea"); ta.value=t; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove(); tip("SVG 源码已复制"); }
+    if(navigator.clipboard) navigator.clipboard.writeText(t).then(function(){tip("SVG source copied");});
+    else { var ta=document.createElement("textarea"); ta.value=t; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove(); tip("SVG source copied"); }
   };
-  document.getElementById("bName").onclick = function(){ if(!curIcon) return; if(navigator.clipboard) navigator.clipboard.writeText(curIcon.n); tip("已复制："+curIcon.n); };
+  document.getElementById("bName").onclick = function(){ if(!curIcon) return; if(navigator.clipboard) navigator.clipboard.writeText(curIcon.n); tip("Copied: "+curIcon.n); };
   document.getElementById("bDown").onclick = function(){
     if(!curIcon) return;
     var blob=new Blob([curIcon.s],{type:"image/svg+xml;charset=utf-8"});
     var a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=curIcon.n+".svg";
     document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){URL.revokeObjectURL(a.href);},1500);
-    tip("已下载 "+curIcon.n+".svg");
+    tip("Downloaded "+curIcon.n+".svg");
   };
 
   var h = location.hash.slice(1);
   show(tabs.some(function(t){return t.key===h;}) ? h : tabs[0].key, false);
 
-  // ================= App 化：收藏 / 我的 / PWA =================
+  // ================= App features: Favorites / My / PWA =================
   var FAVK = "uih.fav";
   function favs(){ try{ return JSON.parse(localStorage.getItem(FAVK)||"[]"); }catch(e){ return []; } }
   function setFavs(a){ try{ localStorage.setItem(FAVK, JSON.stringify(a)); }catch(e){} }
@@ -573,16 +573,16 @@
     if(!curIcon || !bFav) return;
     var a = favs(), hit = false;
     for(var i=0;i<a.length;i++) if(a[i].r===curIcon.__repo && a[i].n===curIcon.n) hit = true;
-    bFav.textContent = hit ? "已收藏 · 点击取消" : "收藏";
+    bFav.textContent = hit ? "Favorited · click to remove" : "Favorite";
     bFav.style.borderColor = hit ? "rgba(125,211,252,.6)" : "";
   }
   if(bFav) bFav.onclick = function(){
     if(!curIcon) return;
     var a = favs(), idx = -1;
     for(var i=0;i<a.length;i++) if(a[i].r===curIcon.__repo && a[i].n===curIcon.n) idx = i;
-    if(idx >= 0){ a.splice(idx,1); tip("已取消收藏"); }
-    else { if(a.length >= 300){ tip("收藏最多 300 个"); return; }
-           a.push({r:curIcon.__repo, n:curIcon.n, s:curIcon.s}); tip("已收藏，可在「我的」查看"); }
+    if(idx >= 0){ a.splice(idx,1); tip("Removed from favorites"); }
+    else { if(a.length >= 300){ tip("You can favorite at most 300 icons"); return; }
+           a.push({r:curIcon.__repo, n:curIcon.n, s:curIcon.s}); tip("Added to favorites — see 'My'"); }
     setFavs(a); syncFavBtn();
   };
 
@@ -605,8 +605,8 @@
     });
   }
   function renderDL(){
-    asTitle.innerHTML = '已下载<span class="x" data-close="1">&#215;</span>';
-    asBody.innerHTML = '<div class="as-row">正在统计本地缓存…</div>';
+    asTitle.innerHTML = 'Downloaded<span class="x" data-close="1">&#215;</span>';
+    asBody.innerHTML = '<div class="as-row">Counting local cache…</div>';
     cachedChunks().then(function(urls){
       var bySet = {}, nAppIcons = 0;
       urls.forEach(function(u){
@@ -620,28 +620,28 @@
         var st = null;
         for(var i=0;i<SETS.length;i++) if(SETS[i].slug === sl) { st = SETS[i]; break; }
         lines.push('<div class="as-row"><b>'+(st?esc(st.name):esc(sl))+'</b><br/>'
-          + '已缓存 '+bySet[sl]+' / '+(st?st.chunks:"?")+' 个数据块'
-          + (st? ' · 约 '+Math.round(st.count * bySet[sl] / Math.max(st.chunks,1)).toLocaleString()+' 个图标' : '')
+          + 'Cached '+bySet[sl]+' / '+(st?st.chunks:"?")+' data chunks'
+          + (st? ' · about '+Math.round(st.count * bySet[sl] / Math.max(st.chunks,1)).toLocaleString()+' icons' : '')
           + '</div>');
       });
-      var head = '<div class="as-row"><b>共 '+urls.length.toLocaleString()+' 个本地文件</b><br/>'
-        + (window.__OFFLINE ? '离线版：全部数据已随安装包内置，断网可用' : '联网版：浏览过的图标库会自动存到本机，之后断网也能继续看；进入 App 后下拉/搜索即开始下载')
+      var head = '<div class="as-row"><b>'+urls.length.toLocaleString()+' local files in total</b><br/>'
+        + (window.__OFFLINE ? 'Offline edition: all data is bundled with the installer and works without a network' : 'Online edition: icon sets you browse are auto-saved to this device, so they keep working offline; open the app and scroll or search to start downloading')
         + '</div>';
-      asBody.innerHTML = head + (lines.join("") || '<div class="as-row">还没有缓存。随便浏览或搜索几套图标库，数据块会自动存到本机。</div>')
-        + (nAppIcons ? '<div class="as-row"><b>iOS26 应用图标</b><br/>已缓存 '+nAppIcons+' 张 PNG</div>' : '')
-        + (window.__OFFLINE ? '<div class="as-row">离线版：全部 352,371 个图标已在本机，无需再下载，可放心断网使用。</div>'
-           : '<div class="as-row"><button class="btn" id="clearCache">清除本机缓存</button> '
-             + '<button class="btn" id="dlAll" >下载全部（离线完整包，约数百 MB）</button></div>');
+      asBody.innerHTML = head + (lines.join("") || '<div class="as-row">Nothing cached yet. Browse or search a few icon sets and their data chunks will be saved to this device automatically.</div>')
+        + (nAppIcons ? '<div class="as-row"><b>iOS26 app icons</b><br/>'+nAppIcons+' PNGs cached</div>' : '')
+        + (window.__OFFLINE ? '<div class="as-row">Offline edition: all 352,371 icons are already on this device, no download needed — safe to use offline.</div>'
+           : '<div class="as-row"><button class="btn" id="clearCache">Clear local cache</button> '
+             + '<button class="btn" id="dlAll" >Download all (offline full bundle, several hundred MB)</button></div>');
       var cc = document.getElementById("clearCache");
       if(cc) cc.onclick = function(){
         if(!window.caches) return;
         caches.keys().then(function(ks){ return Promise.all(ks.map(function(k){ return caches.delete(k); })); })
-          .then(function(){ tip("已清除本机缓存"); renderDL(); });
+          .then(function(){ tip("Local cache cleared"); renderDL(); });
       };
       var da = document.getElementById("dlAll");
       if(da) da.onclick = function(){
-        if(!confirm("将逐块下载全部图标库数据（约 305MB），建议在 Wi-Fi 下进行。确定继续？")) return;
-        da.disabled = true; da.textContent = "正在下载…";
+        if(!confirm("This will download all icon-set data chunk by chunk (~305MB). It is recommended to do this over Wi-Fi. Continue?")) return;
+        da.disabled = true; da.textContent = "Downloading…";
         var jobs = [], i, j;
         for(i=0;i<SETS.length;i++) for(j=0;j<SETS[i].chunks;j++) jobs.push([SETS[i].repo, j]);
         var done = 0, ptr = 0;
@@ -650,8 +650,8 @@
             var job = jobs[ptr++];
             loadChunkOnce(job[0], job[1], function(){
               done++;
-              da.textContent = "正在下载… " + Math.round(done*100/jobs.length) + "%（" + done + "/" + jobs.length + "）";
-              if(done >= jobs.length){ da.disabled = false; da.textContent = "全部已下载"; tip("全部图标数据已存到本机"); }
+              da.textContent = "Downloading… " + Math.round(done*100/jobs.length) + "% (" + done + "/" + jobs.length + ")";
+              if(done >= jobs.length){ da.disabled = false; da.textContent = "All downloaded"; tip("All icon data has been saved to this device"); }
               else pump();
             });
           }
@@ -661,9 +661,9 @@
     });
   }
   function renderFav(){
-    asTitle.innerHTML = '我的收藏<span class="x" data-close="1">&#215;</span>';
+    asTitle.innerHTML = 'My favorites<span class="x" data-close="1">&#215;</span>';
     var a = favs();
-    if(!a.length){ asBody.innerHTML = '<div class="as-row">还没有收藏。点开任意图标 → 弹窗里点「收藏」，之后在这里就能看到源码。</div>'; return; }
+    if(!a.length){ asBody.innerHTML = '<div class="as-row">No favorites yet. Open any icon → click "Favorite" in the popup, and it will show up here with its source.</div>'; return; }
     var grid = "";
     for(var i=0;i<a.length;i++){
       grid += '<div class="ico" data-set="'+esc(a[i].r)+'" data-name="'+esc(a[i].n)+'" title="'+esc(a[i].n)+'">'+a[i].s+'</div>';
@@ -672,50 +672,50 @@
       for(var k=0;k<arr.length;k++) if(arr[k].n === a[i].n) has = true;
       if(!has) arr.push({n:a[i].n, s:a[i].s});
     }
-    asBody.innerHTML = '<div class="as-row"><b>'+a.length+' 个收藏</b><br/>点任意图标可看源码、复制或下载</div>'
+    asBody.innerHTML = '<div class="as-row"><b>'+a.length+' favorites</b><br/>Click any icon to view its source, copy, or download</div>'
       + '<div class="as-grid" id="favGrid">'+grid+'</div>'
-      + '<div class="as-row"><button class="btn" id="expFav">导出全部 SVG（打包 .zip 需手动）</button> '
-      + '<button class="btn" id="clrFav">清空收藏</button></div>';
+      + '<div class="as-row"><button class="btn" id="expFav">Export all SVGs (zip packaging is manual)</button> '
+      + '<button class="btn" id="clrFav">Clear favorites</button></div>';
     var ex = document.getElementById("expFav");
     if(ex) ex.onclick = function(){
       var out = [];
       favs().forEach(function(f){ out.push("<!-- "+f.r+" / "+f.n+" -->\n"+f.s); });
       var blob = new Blob([out.join("\n")], {type:"image/svg+xml;charset=utf-8"});
       var el = document.createElement("a"); el.href = URL.createObjectURL(blob); el.download = "favorites.svg";
-      document.body.appendChild(el); el.click(); el.remove(); tip("已导出 favorites.svg");
+      document.body.appendChild(el); el.click(); el.remove(); tip("Exported favorites.svg");
     };
     var cl = document.getElementById("clrFav");
-    if(cl) cl.onclick = function(){ if(confirm("清空全部收藏？")){ setFavs([]); renderFav(); } };
+    if(cl) cl.onclick = function(){ if(confirm("Clear all favorites?")){ setFavs([]); renderFav(); } };
   }
   function renderSkills(){
-    asTitle.innerHTML = '设计技能<span class="x" data-close="1">&#215;</span>';
+    asTitle.innerHTML = 'Design skills<span class="x" data-close="1">&#215;</span>';
     asBody.innerHTML = '<div class="as-links">'
-      + '<a href="skills/software/index.html"><b>软件界面设计规范</b><i>栅格 / 密度 / 颜色对比 / 图标系统 / 无障碍</i></a>'
-      + '<a href="skills/website/index.html"><b>网站设计方法论</b><i>首屏 / 响应式 / 排版 / 性能预算 / SEO</i></a>'
-      + '<a href="skills/game/index.html"><b>游戏 UI 设计要点</b><i>HUD 分层 / 数值 / 触屏手势 / 多分辨率</i></a>'
-      + '<a href="app-icons/index.html"><b>iOS26 应用图标分区</b><i>797 个 Apple 风格应用图标（PNG）</i></a>'
+      + '<a href="skills/software/index.html"><b>Software UI Design Guidelines</b><i>Grid / density / color contrast / icon system / accessibility</i></a>'
+      + '<a href="skills/website/index.html"><b>Web Design Methodology</b><i>Above-the-fold / responsive / typography / performance budget / SEO</i></a>'
+      + '<a href="skills/game/index.html"><b>Game UI Design Essentials</b><i>HUD layering / values / touch gestures / multi-resolution</i></a>'
+      + '<a href="app-icons/index.html"><b>iOS26 app icons section</b><i>797 Apple-style app icons (PNG)</i></a>'
       + '</div>';
   }
   function renderAbout(){
-    asTitle.innerHTML = '关于<span class="x" data-close="1">&#215;</span>';
-    asBody.innerHTML = '<div class="as-row"><b>ui-icons-hub</b><br/>'+SETS.length+' 套图标库 · '
-      + (SETS.reduce(function(a,s){return a+s.count;},0)).toLocaleString()+' 个 SVG 图标 · '
+    asTitle.innerHTML = 'About<span class="x" data-close="1">&#215;</span>';
+    asBody.innerHTML = '<div class="as-row"><b>ui-icons-hub</b><br/>'+SETS.length+' icon sets · '
+      + (SETS.reduce(function(a,s){return a+s.count;},0)).toLocaleString()+' SVG icons · '
       + '<span id="verLine"></span></div>'
-      + '<div class="as-row">素材版权归各上游项目所有，<b>没有统一许可证</b>，请以每个集合上游的实际许可证为准；'
-      + '本站代码与生成脚本为 MIT。详见仓库 <code>LICENSE</code> 与 README 收录清单。</div>'
+      + '<div class="as-row">Icon artwork belongs to each upstream project; there is <b>no unified license</b>, so follow each set\'s actual upstream license. '
+      + 'This site\'s code and generation scripts are MIT. See the repo <code>LICENSE</code> and the README listing.</div>'
       + '<div class="as-row" id="pwaLine"></div>'
       + '<div class="as-row" id="dlLine"></div>'
-      + '<div class="as-links"><a href="./download.html">下载客户端（Windows / macOS / Linux）</a>'
-      + '<a href="https://github.com/sitong-zhang/ui-icons-hub" target="_blank" rel="noopener">GitHub 仓库</a>'
-      + '<a href="https://sitong-zhang.github.io/ui-icons-hub/" target="_blank" rel="noopener">在线版本</a></div>';
+    + '<div class="as-links"><a href="./download.html">Download client (Windows / macOS / Linux)</a>'
+    + '<a href="https://github.com/sitong-zhang/ui-icons-hub" target="_blank" rel="noopener">GitHub repo</a>'
+    + '<a href="https://sitong-zhang.github.io/ui-icons-hub/" target="_blank" rel="noopener">Online version</a></div>';
     var dl = document.getElementById("dlLine");
     if(dl) dl.innerHTML = window.__OFFLINE
-      ? '<b>离线版</b>已包含全部数据；需要其它平台安装包可到 <a href="./download.html">下载页</a> 查看。'
-      : '想装到手机 / 电脑上离线用？<a href="./download.html">下载客户端</a>（三端 × 联网 / 离线）。';
+      ? '<b>Offline edition</b> already includes all data; for installers on other platforms, see the <a href="./download.html">download page</a>.'
+      : 'Want to install it on your phone / computer for offline use? <a href="./download.html">Download the client</a> (three platforms × online / offline).';
     var pl = document.getElementById("pwaLine");
     if(pl) pl.innerHTML = window.__OFFLINE
-      ? '<b>离线版</b><br/>全部数据已内置，无需联网；如需更新请重新下载离线包。'
-      : '<b>联网版</b><br/>数据按需从 GitHub Pages 拉取并自动缓存到本地。安装到桌面 / 主屏后即为 App（支持离线重开）。';
+      ? '<b>Offline edition</b><br/>All data is bundled, no network needed; to update, re-download the offline bundle.'
+      : '<b>Online edition</b><br/>Data is pulled on demand from GitHub Pages and auto-cached locally. Once installed to your desktop / home screen it becomes an app (reopenable offline).';
   }
   var RENDER = {dl:renderDL, fav:renderFav, sk:renderSkills, about:renderAbout};
   asTabs.addEventListener("click", function(e){
@@ -745,10 +745,10 @@
     }
   });
 
-  // PWA：注册 Service Worker（仅 http/https 环境，file:// 打开时跳过）
+  // PWA: register the Service Worker (HTTP/HTTPS only, skipped when opened via file://)
   if("serviceWorker" in navigator && location.protocol.indexOf("http") === 0){
     addEventListener("load", function(){
-      navigator.serviceWorker.register("sw.js").catch(function(){ /* 不支持则忽略 */ });
+      navigator.serviceWorker.register("sw.js").catch(function(){ /* ignore if unsupported */ });
     });
   }
 })();

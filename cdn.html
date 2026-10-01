@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="theme-color" content="#0b0d17" />
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="icon" href="icons/app-icon-192.png" />
-<title>CDN 用法预览 · UI 图标与设计资源库</title>
-<meta name="description" content="一行脚本引入，在任意网页里检索 ui-icons-hub 的 215 套图标库 / 345,961 个 SVG 图标，支持中文意图搜索。" />
+<title>CDN Usage Preview · UI Icons &amp; Design Assets Hub</title>
+<meta name="description" content="Add one script tag to search ui-icons-hub's 215 icon sets / 345,961 SVG icons from any web page, with intent-based search support." />
 <style>
   :root{--bg:#0b0d17;--bg2:#121529;--card:rgba(255,255,255,.045);--line:rgba(255,255,255,.10);--line2:rgba(255,255,255,.06);
     --ink:#e8ebff;--muted:#98a0c8;--dim:#6f77a0;--acc:#7dd3fc;--acc2:#a78bfa;--gold:#ffd479;--ok:#8ee0b8;}
@@ -62,91 +62,91 @@
 <body>
 <div class="wrap">
 <header>
-  <h1>把图标库<span>当 CDN 用</span></h1>
-  <div class="sub">一行脚本引入，在任意网页 / CodePen / 你自己的项目里检索 <b>215 套图标库 · 345,961 个 SVG 图标</b>，支持中文意图</div>
-  <a class="back" href="./index.html">← 回到图标库</a>
+  <h1>Use the icon library <span>as a CDN</span></h1>
+  <div class="sub">Add one script tag to search <b>215 icon sets · 345,961 SVG icons</b> from any web page / CodePen / your own project, with intent-based search</div>
+  <a class="back" href="./index.html">← Back to the icon library</a>
 </header>
 
 <main>
 
-  <div class="alert">本页就是 <code>cdn.js</code> 的真实调用示例，下面的搜索框和结果是<b>真的在跑</b>（不是截图）。打开控制台能看到它按需加载了哪些分片。</div>
+  <div class="alert">This page is a live demo of <code>cdn.js</code> — the search box and results below are <b>really running</b> (not a screenshot). Open the console to see which shards it loads on demand.</div>
 
-  <h2>1. 引入</h2>
+  <h2>1. Include</h2>
   <div class="box">
     <pre>&lt;script src="https://cdn.jsdelivr.net/gh/sitong-zhang/ui-icons-hub@v1.0.0/cdn.js"&gt;&lt;/script&gt;</pre>
     <div class="note" style="margin:10px 0 0">
-      <span class="tag ok">零依赖</span><span class="tag">约 10 KB</span><span class="tag">索引 gzip 后 1.4 MB，首次检索时才拉</span>
-      也可以锁版本：<code>@v1.0.0</code> 换成 <code>@main</code> 永远取最新。
+      <span class="tag ok">Zero dependencies</span><span class="tag">~10 KB</span><span class="tag">Index is 1.4 MB gzipped, fetched on first search</span>
+      You can also pin a version: swap <code>@v1.0.0</code> for <code>@main</code> to always get the latest.
     </div>
   </div>
 
-  <h2>2. 用</h2>
+  <h2>2. Usage</h2>
   <div class="box">
-    <pre>// 只拿名字和归属（快，不下载任何图标数据）
-const list = await UIH.search('购物车');
+    <pre>// Names and ownership only (fast, no icon data downloaded)
+const list = await UIH.search('shopping cart');
 // → [{ name:'cart', slug:'ionic-team__ionicons', set:'Ionicons', license:'MIT', ... }]
 
-// 连 SVG 源码一起拿（会自动加载命中所在的分片，只加载那几个）
-const withSvg = await UIH.searchSvg('齿轮', { limit: 20 });
+// Names plus SVG source (loads only the shards that matched)
+const withSvg = await UIH.searchSvg('gear', { limit: 20 });
 // → [..., svg:'&lt;svg xmlns="..."&gt;&lt;path .../&gt;&lt;/svg&gt;']
 
-// 精确取一个
+// Fetch exactly one
 const one = await UIH.icon('feathericons__feather', 'activity');
 
-// 看库里都有什么
-const sets = await UIH.list();          // 215 套
-const names = await UIH.names('tabler__tabler-icons');  // 某一套的全部图标名
+// See what's in the library
+const sets = await UIH.list();          // 215 sets
+const names = await UIH.names('tabler__tabler-icons');  // all icon names in one set
 
-// 中文意图词典（183 条），可自己接
-const syn = await UIH.synonyms();       // { '购物车': ['cart','shopping-cart',...] }</pre>
+// Intent dictionary (183 entries), plug in your own
+const syn = await UIH.synonyms();       // { 'shopping cart': ['cart','shopping-cart',...] }</pre>
   </div>
 
-  <h2>3. 试试（真实运行）</h2>
+  <h2>3. Try it (live)</h2>
   <div class="box">
     <div class="demo">
-      <input id="q" value="购物车" placeholder="中文或英文，如 购物车 / 齿轮 / 游戏手柄 / cart / arrow" />
-      <button class="btn" id="go">搜索</button>
-      <button class="btn gray" id="svgOn">取源码</button>
+      <input id="q" value="shopping cart" placeholder="Any language, e.g. shopping cart / gear / gamepad / cart / arrow" />
+      <button class="btn" id="go">Search</button>
+      <button class="btn gray" id="svgOn">Get SVG</button>
     </div>
     <div class="chips">
-      <span class="chip">购物车</span><span class="chip">齿轮</span><span class="chip">太阳</span>
-      <span class="chip">游戏手柄</span><span class="chip">曲线图</span><span class="chip">邮件</span>
+      <span class="chip">shopping cart</span><span class="chip">gear</span><span class="chip">sun</span>
+      <span class="chip">gamepad</span><span class="chip">chart</span><span class="chip">mail</span>
       <span class="chip">home</span><span class="chip">arrow-left</span><span class="chip">trash</span>
     </div>
-    <div id="stat">正在加载索引…</div>
+    <div id="stat">Loading index…</div>
     <div class="grid" id="grid"></div>
   </div>
 
-  <h2>4. 返回的字段</h2>
+  <h2>4. Returned fields</h2>
   <div class="box">
     <table>
-      <tr><th>字段</th><th>说明</th></tr>
-      <tr><td><code>name</code></td><td>图标名，如 <code>shopping-cart</code></td></tr>
-      <tr><td><code>alias</code></td><td>若该结果是通过别名命中的，这里是别名（否则 <code>null</code>）</td></tr>
-      <tr><td><code>slug</code></td><td>图标库 id，如 <code>feathericons__feather</code>，可直接传给 <code>UIH.icon()</code></td></tr>
-      <tr><td><code>set</code> / <code>repo</code></td><td>图标库名称 / GitHub 仓库</td></tr>
-      <tr><td><code>license</code></td><td>该图标库的许可证（<code>MIT</code>、<code>CC0-1.0</code>、<code>Apache-2.0</code>…）</td></tr>
-      <tr><td><code>homepage</code></td><td>上游官网，便于署名与溯源</td></tr>
+      <tr><th>Field</th><th>Description</th></tr>
+      <tr><td><code>name</code></td><td>Icon name, e.g. <code>shopping-cart</code></td></tr>
+      <tr><td><code>alias</code></td><td>The alias that matched, if any (otherwise <code>null</code>)</td></tr>
+      <tr><td><code>slug</code></td><td>Icon set id, e.g. <code>feathericons__feather</code>; pass it straight to <code>UIH.icon()</code></td></tr>
+      <tr><td><code>set</code> / <code>repo</code></td><td>Icon set name / GitHub repo</td></tr>
+      <tr><td><code>license</code></td><td>License of the icon set (<code>MIT</code>, <code>CC0-1.0</code>, <code>Apache-2.0</code>…)</td></tr>
+      <tr><td><code>homepage</code></td><td>Upstream homepage, for attribution and tracing</td></tr>
       <tr><td><code>group</code></td><td><code>general</code> / <code>brand</code> / <code>emoji</code></td></tr>
-      <tr><td><code>mono</code></td><td>是否为单色（可用 CSS <code>color</code> 改色）</td></tr>
-      <tr><td><code>svg</code></td><td>仅 <code>searchSvg</code> / <code>icon</code> 返回，完整 SVG 源码</td></tr>
+      <tr><td><code>mono</code></td><td>Whether it is monochrome (recolors via the CSS <code>color</code> property)</td></tr>
+      <tr><td><code>svg</code></td><td>Returned only by <code>searchSvg</code> / <code>icon</code>: the full SVG source</td></tr>
     </table>
   </div>
 
-  <h2>5. 说明与许可</h2>
+  <h2>5. Notes &amp; licensing</h2>
   <div class="box note" style="color:var(--muted);font-size:13.5px">
-    <p style="margin-bottom:8px"><b>为什么没有"单个 svg 文件的直链"？</b>　345,961 个图标是按分片打包的（一个文件里几千个），
-    要为每个图标生成一个独立文件会让仓库多出 35 万个文件、约 1.5 GB，托管方也会限流。
-    改成"一个脚本 + 按需加载"，用起来比逐个直链更方便，也省流量。</p>
-    <p><b>许可：</b>图标素材版权归各上游项目所有，<b>没有统一许可证</b>，以每个集合上游的实际许可证为准（
-    <code>UIH.search()</code> 返回的 <code>license</code> 字段就是它的许可证）。
-    完整清单见仓库 <a href="https://github.com/sitong-zhang/ui-icons-hub#readme" style="color:var(--acc)">README</a>。
-    本站代码与 <code>cdn.js</code> 为 MIT。</p>
+    <p style="margin-bottom:8px"><b>Why is there no direct link for a single SVG file?</b> The 345,961 icons are packed into shards (thousands per file);
+    generating a separate file per icon would add 350k files and about 1.5 GB to the repo, and hosts would rate-limit us.
+    A single script with on-demand loading is easier to use than per-icon links and saves bandwidth.</p>
+    <p><b>Licensing:</b> icon assets belong to their upstream projects and there is <b>no single unified license</b> — follow the upstream license of each set (the
+    <code>license</code> field returned by <code>UIH.search()</code> is that license).
+    See the repository <a href="https://github.com/sitong-zhang/ui-icons-hub#readme" style="color:var(--acc)">README</a> for the full list.
+    This site's code and <code>cdn.js</code> are MIT.</p>
   </div>
 
 </main>
 <footer>
-  ui-icons-hub · <a href="./index.html">图标库</a> · <a href="./download.html">下载客户端</a> ·
+  ui-icons-hub · <a href="./index.html">Icon library</a> · <a href="./download.html">Download desktop app</a> ·
   <a href="https://github.com/sitong-zhang/ui-icons-hub">GitHub</a>
 </footer>
 </div>
@@ -167,7 +167,7 @@ const syn = await UIH.synonyms();       // { '购物车': ['cart','shopping-cart
   document.getElementById('go').onclick = run;
   document.getElementById('svgOn').onclick = function(){
     withSvg = !withSvg;
-    this.textContent = withSvg ? '取源码：开' : '取源码';
+    this.textContent = withSvg ? 'Get SVG: on' : 'Get SVG';
     run();
   };
   q.addEventListener('keydown', function(e){ if(e.key === 'Enter') run(); });
@@ -175,13 +175,13 @@ const syn = await UIH.synonyms();       // { '购物车': ['cart','shopping-cart
   function run(){
     var v = q.value.trim(); if(!v) return;
     t0 = performance.now();
-    stat.textContent = '搜索中…';
+    stat.textContent = 'Searching…';
     grid.innerHTML = '';
     var p = withSvg ? UIH.searchSvg(v, {limit: 48}) : UIH.search(v, {limit: 48});
     p.then(function(list){
       var ms = Math.round(performance.now() - t0);
-      stat.textContent = '命中 ' + list.length + ' 个（限 48）· ' + ms + ' ms' + (withSvg ? ' · 含 SVG 源码' : ' · 点「取源码」可连源码一起拿');
-      if(!list.length){ grid.innerHTML = '<div style="color:var(--dim);font-size:13px">没找到，换个词试试</div>'; return; }
+      stat.textContent = list.length + ' hits (max 48) · ' + ms + ' ms' + (withSvg ? ' · includes SVG source' : ' · click "Get SVG" to fetch source too');
+      if(!list.length){ grid.innerHTML = '<div style="color:var(--dim);font-size:13px">Nothing found, try another term</div>'; return; }
       list.forEach(function(it){
         var d = document.createElement('div');
         d.className = 'cell';
@@ -193,20 +193,20 @@ const syn = await UIH.synonyms();       // { '购物车': ['cart','shopping-cart
           var go = it.svg ? Promise.resolve(it) : UIH.icon(it.slug, it.name);
           go.then(function(x){
             var svg = x && x.svg;
-            if(svg && navigator.clipboard) navigator.clipboard.writeText(svg).then(function(){ toast('已复制 ' + it.name + ' 的 SVG'); });
-            else toast(svg ? it.name : '取源码失败');
+            if(svg && navigator.clipboard) navigator.clipboard.writeText(svg).then(function(){ toast('Copied the SVG of ' + it.name); });
+            else toast(svg ? it.name : 'Failed to get SVG source');
           });
         };
         grid.appendChild(d);
       });
     }).catch(function(e){
-      stat.textContent = '出错了：' + e.message;
+      stat.textContent = 'Error: ' + e.message;
       console.error(e);
     });
   }
 
   UIH.ready(function(){
-    stat.textContent = '就绪：' + (UIH.version) + ' · 索引已加载，开始搜索';
+    stat.textContent = 'Ready: ' + (UIH.version) + ' · index loaded, start searching';
     run();
   });
 })();

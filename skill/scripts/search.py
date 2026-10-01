@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 """ui-icons-hub search CLI (offline-capable, zero dependencies)
 
-    python3 search.py "购物车"                    # Chinese-intent search, 20 results by default
-    python3 search.py "齿轮" --svg --limit 3      # include SVG source in the output
+    python3 search.py "cart"                     # Chinese-intent search, 20 results by default
+    python3 search.py "gear" --svg --limit 3      # include SVG source in the output
     python3 search.py home --set feathericons__feather
     python3 search.py --collections               # list all 215 icon sets
     python3 search.py --info tabler__tabler-icons # details of one set
@@ -209,10 +209,10 @@ def brief(slug):
 
 def pick(need, limit=3):
     kw = (need or "").lower()
-    want_mono = bool(re.search(r"线性|线框|描边|outline|stroke|minimal|极简|细|通用|后台|管理", kw))
-    want_brand = bool(re.search(r"品牌|logo|厂商|brand", kw))
-    want_emoji = bool(re.search(r"emoji|表情|旗帜|国旗", kw))
-    want_pixel = bool(re.search(r"像素|pixel", kw))
+    want_mono = bool(re.search(r"linear|wireframe|outline|stroke|minimal|thin|generic|dashboard|admin|backend", kw))
+    want_brand = bool(re.search(r"brand|logo|vendor|tech-logo", kw))
+    want_emoji = bool(re.search(r"emoji|emoticon|flag|fun", kw))
+    want_pixel = bool(re.search(r"pixel", kw))
     out = []
     for s in _IDX["sets"]:
         sc = 0.0
@@ -223,7 +223,7 @@ def pick(need, limit=3):
             sc += 6
         if not want_brand and not want_emoji and s["group"] == "general":
             sc += 3
-        if want_pixel and re.search(r"pixel|像素|dot", low):
+        if want_pixel and re.search(r"pixel|bitmap|dot", low):
             sc += 6
         if want_mono and s.get("mono"):
             sc += 2

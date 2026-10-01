@@ -1,7 +1,7 @@
 {
-  "name": "ui-icons-hub · UI 图标与设计资源库",
-  "short_name": "图标库",
-  "description": "215 套开源图标库 / 352,371 个 SVG 图标，支持中文意图检索、一键复制源码与下载，含软件·网站·游戏设计技能",
+  "name": "ui-icons-hub · UI Icon & Design Resource Library",
+  "short_name": "Icon Hub",
+  "description": "215 open-source icon sets / 352,371 SVG icons, with Chinese-intent search, one-click source copy and download, plus software, web and game design skills",
   "id": "./index.html",
   "start_url": "./index.html",
   "scope": "./",
@@ -9,7 +9,7 @@
   "orientation": "any",
   "background_color": "#0b0d17",
   "theme_color": "#0b0d17",
-  "lang": "zh-CN",
+  "lang": "en",
   "dir": "ltr",
   "categories": [
     "productivity",
@@ -38,23 +38,23 @@
   ],
   "shortcuts": [
     {
-      "name": "软件界面设计规范",
-      "short_name": "软件 UI",
+      "name": "Software UI Design Guidelines",
+      "short_name": "Software UI",
       "url": "skills/software/index.html"
     },
     {
-      "name": "网站设计方法论",
-      "short_name": "网站设计",
+      "name": "Web Design Methodology",
+      "short_name": "Web Design",
       "url": "skills/website/index.html"
     },
     {
-      "name": "游戏 UI 设计要点",
-      "short_name": "游戏 UI",
+      "name": "Game UI Design Essentials",
+      "short_name": "Game UI",
       "url": "skills/game/index.html"
     },
     {
-      "name": "iOS26 应用图标分区",
-      "short_name": "应用图标",
+      "name": "iOS26 App Icon Section",
+      "short_name": "App Icons",
       "url": "app-icons/index.html"
     }
   ]

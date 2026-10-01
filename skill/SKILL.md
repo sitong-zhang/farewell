@@ -26,16 +26,16 @@ bundled data, falls back to the CDN automatically):
 
 ```bash
 # Chinese-intent search (recommended first step)
-python3 scripts/search.py "购物车" --limit 10
+python3 scripts/search.py "shopping cart" --limit 10
 
 # Include SVG source in the output
-python3 scripts/search.py "齿轮" --limit 3 --svg
+python3 scripts/search.py "gear" --limit 3 --svg
 
 # Restrict to one library (consistent style)
 python3 scripts/search.py "arrow" --set lucide-icons__lucide --limit 10
 
 # JSON output for programmatic use
-python3 scripts/search.py "游戏手柄" --json --limit 5
+python3 scripts/search.py "gamepad" --json --limit 5
 
 # Which libraries are available
 python3 scripts/search.py --collections
@@ -60,7 +60,7 @@ fallback when local chunks are absent).
   cloud, folder, tag, shopping, payment, support, QR scan, gamepad…
 - For Chinese words missing from the dictionary, **splitting into characters
   or switching to English keywords** usually works better
-  (e.g. 物流 → `truck` / `shipping`)
+  (e.g. logistics → `truck` / `shipping`)
 - English supports **multi-word OR**: `feather home` matches names containing
   feather OR home
 - Ranking: exact name > prefix > word boundary > substring

@@ -22,7 +22,7 @@ window.ICON_SETS = [
 },
 {
 "repo": "simple-icons/simple-icons",
-"name": "Simple Icons（品牌图标）",
+"name": "Simple Icons (Brand Icons)",
 "group": "brand",
 "stars": 25882,
 "license": "CC0-1.0",
@@ -143,7 +143,7 @@ window.ICON_SETS = [
 },
 {
 "repo": "lipis/flag-icons",
-"name": "Flag Icons（国旗）",
+"name": "Flag Icons (Flags)",
 "group": "emoji",
 "stars": 12407,
 "license": "MIT",
@@ -164,7 +164,7 @@ window.ICON_SETS = [
 },
 {
 "repo": "devicons/devicon",
-"name": "Devicon（技术栈图标）",
+"name": "Devicon (Tech Stack Icons)",
 "group": "brand",
 "stars": 11826,
 "license": "MIT",
@@ -180,7 +180,7 @@ window.ICON_SETS = [
 },
 {
 "repo": "Templarian/MaterialDesign",
-"name": "Material Design Icons（社区版）",
+"name": "Material Design Icons (Community Edition)",
 "group": "general",
 "stars": 11315,
 "license": "Apache-2.0",
@@ -201,7 +201,7 @@ window.ICON_SETS = [
 },
 {
 "repo": "microsoft/fluentui-emoji",
-"name": "Fluent Emoji（微软）",
+"name": "Fluent Emoji (Microsoft)",
 "group": "emoji",
 "stars": 10114,
 "license": "MIT",
@@ -259,7 +259,7 @@ window.ICON_SETS = [
 },
 {
 "repo": "primer/octicons",
-"name": "Octicons（GitHub 官方）",
+"name": "Octicons (GitHub Official)",
 "group": "general",
 "stars": 8757,
 "license": "MIT",
@@ -332,7 +332,7 @@ window.ICON_SETS = [
 },
 {
 "repo": "SamHerbert/SVG-Loaders",
-"name": "SVG Loaders（加载动效）",
+"name": "SVG Loaders (Loading Animations)",
 "group": "emoji",
 "stars": 7027,
 "license": "MIT",
@@ -369,7 +369,7 @@ window.ICON_SETS = [
 },
 {
 "repo": "vscode-icons/vscode-icons",
-"name": "VS Code Icons（文件类型）",
+"name": "VS Code Icons (File Types)",
 "group": "brand",
 "stars": 5149,
 "license": "MIT",
@@ -511,7 +511,7 @@ window.ICON_SETS = [
 },
 {
 "repo": "lobehub/lobe-icons",
-"name": "Lobe Icons（AI 品牌）",
+"name": "Lobe Icons (AI Brands)",
 "group": "brand",
 "stars": 2522,
 "license": "MIT",
@@ -527,7 +527,7 @@ window.ICON_SETS = [
 },
 {
 "repo": "jdecked/twemoji",
-"name": "Twemoji（Twitter 表情）",
+"name": "Twemoji (Twitter Emoji)",
 "group": "emoji",
 "stars": 1851,
 "license": "MIT",
@@ -559,7 +559,7 @@ window.ICON_SETS = [
 },
 {
 "repo": "HatScripts/circle-flags",
-"name": "Circle Flags（圆形国旗）",
+"name": "Circle Flags (Circular Flags)",
 "group": "emoji",
 "stars": 1592,
 "license": "MIT",
@@ -622,7 +622,7 @@ window.ICON_SETS = [
 },
 {
 "repo": "halfmage/pixelarticons",
-"name": "Pixelarticons（像素风）",
+"name": "Pixelarticons (Pixel Style)",
 "group": "general",
 "stars": 851,
 "license": "MIT",
@@ -685,7 +685,7 @@ window.ICON_SETS = [
 },
 {
 "repo": "Tencent/tdesign-icons",
-"name": "TDesign Icons（腾讯）",
+"name": "TDesign Icons (Tencent)",
 "group": "general",
 "stars": 94,
 "license": "MIT",
