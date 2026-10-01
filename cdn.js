@@ -1,16 +1,16 @@
 /*! ui-icons-hub cdn.js v1.0.0 · MIT
- * 一行引入，即可在任意网页里检索 215 套图标库 / 345,961 个 SVG 图标，支持中文意图。
+ * One-line include to search 215 icon sets / 345,961 SVG icons in any web page, with Chinese-intent support.
  *
  *   <script src="https://cdn.jsdelivr.net/gh/sitong-zhang/ui-icons-hub@v1.0.0/cdn.js"></script>
  *   <script>
- *     UIH.searchSvg('购物车').then(r => console.log(r[0].name, r[0].svg));
+ *     UIH.searchSvg('cart').then(r => console.log(r[0].name, r[0].svg));
  *     UIH.list().then(list => console.log(list.length));   // 215
  *   </script>
  *
- * 设计要点：
- *  - 索引（index-compact.json，gzip 后约 1.4 MB）首次检索时按需拉取，之后交给浏览器缓存。
- *  - 命中之后才去拉对应数据分片（data/<slug>__<i>.js），不会为了搜一个词把 300 MB 全下下来。
- *  - 分片沿用本站既有格式 window.__ADD2(repo,[[name,body]],idx)，这里实现一个最小收集器。
+ * Design notes:
+ *  - The index (index-compact.json, ~1.4 MB gzipped) is fetched on demand on first search, then left to the browser cache.
+ *  - Only after a hit do we fetch the relevant data chunk (data/<slug>__<i>.js); we don't download the full 300 MB just to search one word.
+ *  - Chunks reuse this site's existing format window.__ADD2(repo,[[name,body]],idx); here we implement a minimal collector.
  */
 (function (global) {
   "use strict";
@@ -27,7 +27,7 @@
     return src ? src.replace(/cdn\.js(\?.*)?$/, "") : "./";
   })();
 
-  // 分片收集器：__ADD2 把数据推进来，我们在 onload 之后取走
+  // Chunk collector: __ADD2 pushes data in, and we pick it up after onload
   var pending = null;
   global.__ADD2 = function (repo, pairs, idx) { pending = { repo: repo, pairs: pairs, idx: idx }; };
 
@@ -39,7 +39,7 @@
       var e = document.createElement("script");
       e.src = url; e.async = true;
       e.onload = function () { res(url); };
-      e.onerror = function () { rej(new Error("加载失败：" + url)); };
+      e.onerror = function () { rej(new Error("Failed to load: " + url)); };
       document.head.appendChild(e);
     });
   }
@@ -64,7 +64,7 @@
     if (loading) return loading;
     loading = fetch(base + "index-compact.json")
       .then(function (r) {
-        if (!r.ok) throw new Error("索引加载失败 HTTP " + r.status + "：" + base + "index-compact.json");
+        if (!r.ok) throw new Error("Index load failed HTTP " + r.status + ": " + base + "index-compact.json");
         return r.json();
       })
       .then(function (j) { IDX = j; afterIndex(); return j; })
@@ -72,9 +72,9 @@
     return loading;
   }
 
-  // 把 query 拆成若干候选词：
-  //   "购物车" → ["购物车","cart","shopping-cart","basket"]（查中文意图词典）
-  //   "feather home" → 先试整串，再拆成 ["feather","home"] 各查一次（多词 OR）
+  // Split the query into several candidate terms:
+  //   "cart" -> ["cart","shopping-cart","basket"] (via the Chinese-intent dictionary, keyed by Chinese)
+  //   "feather home" -> try the whole string first, then split into ["feather","home"] and query each (multi-word OR)
   function expand(q) {
     var whole = String(q == null ? "" : q).trim();
     var out = [];
@@ -100,7 +100,7 @@
     return out;
   }
 
-  // 0 完全同名 · 1 前缀 · 2 词边界 · 3 子串
+  // 0 exact match · 1 prefix · 2 word boundary · 3 substring
   function score(name, terms) {
     var ln = name.toLowerCase(), best = 99, where = -1;
     for (var i = 0; i < terms.length; i++) {
@@ -178,14 +178,14 @@
     };
   }
 
-  // 分片按序加载：__ADD2 的收集器是共享的，并发会互相覆盖，所以串行化
+  // Load chunks in sequence: the __ADD2 collector is shared, and concurrency would overwrite it, so we serialize
   var chain = Promise.resolve();
 
   function loadChunk(slug, i) {
     var run = function () {
       var key = slug + "__" + i;
       if (CHUNK[key]) return Promise.resolve(CHUNK[key]);
-      // 分片里 __ADD2 的第一个参数是图标库的原始 repo（保留大小写），以索引里的为准
+      // The first arg of __ADD2 in a chunk is the icon set's original repo (keep its case); trust the index's value
       var st = SET_INFO[slug] || {};
       var expect = st.repo || slug.replace("__", "/");
       return scriptOnce(base + "data/" + key + ".js").then(function () {
@@ -218,19 +218,19 @@
     version: VERSION,
     base: base,
 
-    /** 加载索引，返回 Promise<API>（也接受回调） */
+    /** Load the index, returns Promise<API> (also accepts a callback) */
     ready: function (cb) {
       var p = loadIndex();
       if (typeof cb === "function") p.then(function () { cb(API); });
       return p.then(function () { return API; });
     },
 
-    /** 检索：返回 [{name, slug, set, repo, license, homepage, alias}]，不含 svg */
+    /** Search: returns [{name, slug, set, repo, license, homepage, alias}], without svg */
     search: function (q, opt) {
       return search(q, opt).then(function (list) { return list.map(describe); });
     },
 
-    /** 检索并取回 svg 源码（会加载命中所在的那些分片） */
+    /** Search and fetch the svg source (loads the chunks that contain the matches) */
     searchSvg: function (q, opt) {
       return search(q, opt).then(function (list) {
         return Promise.all(list.map(function (h) {
@@ -243,7 +243,7 @@
       });
     },
 
-    /** 取单个图标（含 svg 源码） */
+    /** Get a single icon (with svg source) */
     icon: function (slug, name) {
       return loadIndex().then(function () {
         var pos = indexOfName(slug, name);
@@ -261,14 +261,14 @@
       });
     },
 
-    /** 215 套图标库清单，可按 group 过滤（general / brand / emoji） */
+    /** List of 215 icon sets, filterable by group (general / brand / emoji) */
     list: function (group) {
       return loadIndex().then(function () {
         return SET_LIST.filter(function (s) { return !group || s.group === group; });
       });
     },
 
-    /** 单套图标库的图标名单 */
+    /** Icon name list for a single icon set */
     names: function (slug) {
       return loadIndex().then(function () {
         var arr = NAMES[slug];
@@ -279,10 +279,10 @@
       });
     },
 
-    /** 中文意图词典（183 条） */
+    /** Chinese-intent dictionary (183 entries) */
     synonyms: function () { return loadIndex().then(function () { return IDX.y; }); },
 
-    /** 测试用：清空内存缓存 */
+    /** Test helper: clear the in-memory cache */
     _reset: function () {
       IDX = null; loading = null; CHUNK = {}; NAMES = {}; ALIAS = []; SYN = {};
       SET_INFO = {}; SET_LIST = [];

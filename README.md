@@ -22,8 +22,8 @@ browser.
 
 ## How to search
 
-- Chinese intent works: `购物车` (shopping cart), `齿轮` (gear), `曲线图` (chart),
-  `游戏手柄` (gamepad), `太阳` (sun), `货币` (currency) … all resolve to the
+- Chinese keywords work: queries such as "shopping cart", "gear", "chart",
+  "gamepad", "sun", "currency" (and their Chinese equivalents) … all resolve to the
   matching English icon names.
 - Fuzzy English works too: `cart` → `cart-shopping` / `shopping-cart` / `carthrottle`;
   even a prefix like `sh` suggests `shopping-cart`.
@@ -58,7 +58,7 @@ License column = the collection's actual upstream license. ★ = GitHub stars.
 | Glyphs | 3,452 | MIT | 473 | [Repo](https://github.com/gorango/glyphs) |
 | MingCute Icon | 3,336 | Apache-2.0 | 1,646 | [Website](https://github.com/Richard9394/MingCute) · [Repo](https://github.com/richard9394/mingcute) |
 | Remix Icon | 3,229 | Apache-2.0 | 0 | [Website](https://github.com/cyberalien/RemixIcon) · [Repo](https://github.com/cyberalien/remixicon) |
-| Carbon Icons（IBM） | 2,776 | Apache-2.0 | 9,465 | [Website](https://www.carbondesignsystem.com) · [Repo](https://github.com/carbon-design-system/carbon) |
+| Carbon Icons (IBM) | 2,776 | Apache-2.0 | 9,465 | [Website](https://www.carbondesignsystem.com) · [Repo](https://github.com/carbon-design-system/carbon) |
 | Health Icons | 2,709 | MIT | 866 | [Repo](https://github.com/resolvetosavelives/healthicons) |
 | IconPark | 2,658 | Apache-2.0 | 9,047 | [Website](https://github.com/bytedance/IconPark) · [Repo](https://github.com/bytedance/iconpark) |
 | Myna UI Icons | 2,658 | MIT | 171 | [Repo](https://github.com/praveenjuge/mynaui-icons) |

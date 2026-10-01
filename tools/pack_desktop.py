@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""打包三端（Windows / macOS / Linux）× 两版（联网 / 离线）安装包 + 离线全量压缩包。
+"""Build installers for three platforms (Windows / macOS / Linux) x two variants (online / offline) plus an offline full archive.
 
-联网版：只带外壳（页面 / 检索索引 / 技能页），图标数据按需从 GitHub Pages 下载并缓存到本机。
-离线版：215 套 / 352,371 个 SVG + 797 个 PNG 全部内置，断网可用。
+Online variant: ships only the shell (pages / search index / skill pages); icon data is downloaded on demand from GitHub Pages and cached locally.
+Offline variant: all 215 sets / 352,371 SVGs + 797 PNGs are bundled in, usable without a network.
 
     python3 tools/pack_desktop.py [all|online|offline]
 """
 import os, shutil, struct, subprocess, sys, time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-REPO = os.path.dirname(HERE)            # tools/ 的上级就是站点根目录
+REPO = os.path.dirname(HERE)            # The parent directory of tools/ is the site root
 DIST = os.environ.get("UIH_DIST", os.path.join(REPO, "dist"))
 LAUN = os.path.join(HERE, "launcher")
 VER = "1.0.0"
@@ -23,7 +23,7 @@ def log(*a):
 
 
 def copy_site(dst, online):
-    """online=True 时跳过 data/ 与 app-icons/png/（改成按需从线上拉取）"""
+    """When online=True, skip data/ and app-icons/png/ (changed to fetch on demand from the web)"""
     if os.path.isdir(dst):
         shutil.rmtree(dst)
     os.makedirs(dst)
@@ -50,7 +50,7 @@ def build_ico(png, ico):
 
 
 def build_icns(png, icns):
-    """最小可用 .icns：把 PNG 直接塞进 icns 容器（ic07/ic08/ic09）"""
+    """Minimal usable .icns: stuff the PNG directly into an icns container (ic07/ic08/ic09)"""
     from PIL import Image
     im = Image.open(png).convert("RGBA")
     chunks = b""
@@ -73,7 +73,7 @@ Name "UI Icons Hub {label}"
 OutFile "{out}"
 InstallDir "$LOCALAPPDATA\\ui-icons-hub{suffix}"
 RequestExecutionLevel user
-BrandingText "ui-icons-hub · UI 图标与设计资源库"
+BrandingText "ui-icons-hub · UI Icons & Design Resource Library"
 
 !define MUI_ICON "{ico}"
 !define MUI_UNICON "{ico}"
@@ -86,7 +86,7 @@ BrandingText "ui-icons-hub · UI 图标与设计资源库"
 !insertmacro MUI_UNPAGE_INSTFILES
 !insertmacro MUI_LANGUAGE "SimpChinese"
 
-Section "站点文件"
+Section "Site files"
   SetOutPath "$INSTDIR"
   File "{ico}"
   File "{cmdname}"
@@ -96,10 +96,10 @@ Section "站点文件"
   WriteUninstaller "$INSTDIR\\uninstall.exe"
 SectionEnd
 
-Section "快捷方式"
+Section "Shortcuts"
   CreateDirectory "$SMPROGRAMS\\UI Icons Hub"
   CreateShortcut "$SMPROGRAMS\\UI Icons Hub\\UI Icons Hub{suffix}.lnk" "$INSTDIR\\{cmdname}" "" "$INSTDIR\\{ico}"
-  CreateShortcut "$SMPROGRAMS\\UI Icons Hub\\卸载.lnk" "$INSTDIR\\uninstall.exe"
+  CreateShortcut "$SMPROGRAMS\\UI Icons Hub\\Uninstall.lnk" "$INSTDIR\\uninstall.exe"
   CreateShortcut "$DESKTOP\\UI Icons Hub{suffix}.lnk" "$INSTDIR\\{cmdname}" "" "$INSTDIR\\{ico}"
 SectionEnd
 
@@ -121,15 +121,15 @@ def build_windows(variant, site_src, out):
     shutil.copy2(os.path.join(LAUN, "UI Icons Hub.cmd"), os.path.join(work, "UI Icons Hub.cmd"))
     nsi = os.path.join(work, "%s.nsi" % variant)
     open(nsi, "w", encoding="utf-8").write(NSI_TMPL.format(
-        label="（离线版）" if variant == "offline" else "（联网版）",
+        label="(Offline)" if variant == "offline" else "(Online)",
         out=out, ico=ico, cmdname="UI Icons Hub.cmd", ps1=os.path.join(work, "serve.ps1"),
-        site_src=site_src, suffix="（离线）" if variant == "offline" else ""))
+        site_src=site_src, suffix=" (Offline)" if variant == "offline" else ""))
     log("makensis %s …" % variant)
     r = subprocess.run(["makensis", "-V2", nsi], capture_output=True, text=True)
     if r.returncode != 0:
         print(r.stdout[-2000:], r.stderr[-1000:])
         return None
-    log("生成 %s：%.1f MB" % (out, os.path.getsize(out) / 1024 / 1024))
+    log("Generated %s: %.1f MB" % (out, os.path.getsize(out) / 1024 / 1024))
     return out
 
 
@@ -148,13 +148,13 @@ def build_macos(variant, site_src, out_zip):
                os.path.join(app, "Contents", "Resources", "AppIcon.icns"))
     open(os.path.join(app, "Contents", "Resources", "mode.txt"), "w").write(variant)
     if variant == "offline":
-        # 离线版把全量站点放 Resources/site，启动器直接用浏览器打开（file:// 已验证可用）
+        # For the offline variant, put the full site in Resources/site; the launcher opens it directly in a browser (file:// has been verified to work)
         shutil.copytree(site_src, os.path.join(app, "Contents", "Resources", "site"))
     if os.path.exists(out_zip):
         os.remove(out_zip)
-    log("打包 %s …" % os.path.basename(out_zip))
+    log("Packaging %s ..." % os.path.basename(out_zip))
     subprocess.run(["zip", "-r", "-q", "-9", out_zip, "UI Icons Hub.app"], cwd=work, check=True)
-    log("生成 %s：%.1f MB" % (out_zip, os.path.getsize(out_zip) / 1024 / 1024))
+    log("Generated %s: %.1f MB" % (out_zip, os.path.getsize(out_zip) / 1024 / 1024))
     return out_zip
 
 
@@ -168,7 +168,7 @@ def build_linux(variant, site_src, out_tgz):
     os.chmod(os.path.join(root, "ui-icons-hub"), 0o755)
     shutil.copy2(os.path.join(LAUN, "ui-icons-hub.desktop"), os.path.join(root, "ui-icons-hub.desktop"))
     shutil.copy2(os.path.join(REPO, "icons", "app-icon-512.png"), os.path.join(root, "ui-icons-hub.png"))
-    open(os.path.join(root, "安装.sh"), "w").write(
+    open(os.path.join(root, "install.sh"), "w").write(
         "#!/usr/bin/env bash\nset -e\n"
         "SRC=\"$(cd \"$(dirname \"$0\")\" && pwd)\"\n"
         "BIN=\"$HOME/.local/share/ui-icons-hub\"\n"
@@ -177,44 +177,44 @@ def build_linux(variant, site_src, out_tgz):
         "ln -sf \"$BIN/ui-icons-hub\" \"$HOME/.local/bin/ui-icons-hub\"\n"
         "cp \"$BIN/ui-icons-hub.png\" \"$HOME/.local/share/icons/hicolor/512x512/apps/ui-icons-hub.png\"\n"
         "sed \"s|^Exec=.*|Exec=$BIN/ui-icons-hub|\" \"$BIN/ui-icons-hub.desktop\" > \"$HOME/.local/share/applications/ui-icons-hub.desktop\"\n"
-        "echo \"已安装到 $BIN，在应用菜单搜索「UI Icons Hub」即可启动\"\n")
-    os.chmod(os.path.join(root, "安装.sh"), 0o755)
+        "echo \"Installed to $BIN; search for 'UI Icons Hub' in the application menu to launch\"\n")
+    os.chmod(os.path.join(root, "install.sh"), 0o755)
     shutil.copytree(site_src, os.path.join(root, "site"))
-    log("打包 %s …" % os.path.basename(out_tgz))
+    log("Packaging %s ..." % os.path.basename(out_tgz))
     subprocess.run(["tar", "-czf", out_tgz, "-C", work, "ui-icons-hub"], check=True)
-    log("生成 %s：%.1f MB" % (out_tgz, os.path.getsize(out_tgz) / 1024 / 1024))
+    log("Generated %s: %.1f MB" % (out_tgz, os.path.getsize(out_tgz) / 1024 / 1024))
     return out_tgz
 
 
-OFFLINE_README = """ui-icons-hub 离线版
+OFFLINE_README = """ui-icons-hub Offline Edition
 ====================
 
-215 套图标库 / 352,371 个 SVG 图标 + 797 个 iOS26 风格应用图标 PNG，
-软件 · 网站 · 游戏三个设计技能分区全部内置，断网也能完整使用。
+215 icon sets / 352,371 SVG icons + 797 iOS26-style app icon PNGs,
+with the Software, Website, and Game design-skill sections all bundled in — fully usable offline.
 
-怎么用
-------
-1. 解压到任意目录（路径尽量不含中文和空格）。
-2. 双击 index.html 用浏览器打开即可。
-   - Chrome：菜单 → 更多工具 → 创建快捷方式 → 勾选「在窗口中打开」，就是独立 App 窗口。
-   - macOS：拖到 Dock，或 Safari 里「文件 → 添加到 Dock」。
-3. 若浏览器限制本地文件，在本目录执行：
+How to use
+----------
+1. Extract to any directory (avoid Chinese characters and spaces in the path if possible).
+2. Double-click index.html to open it in a browser.
+   - Chrome: Menu -> More tools -> Create shortcut -> check "Open in window" to get a standalone app window.
+   - macOS: Drag to the Dock, or in Safari use "File -> Add to Dock".
+3. If the browser restricts local files, run this in the directory:
        python3 -m http.server 8899
-   然后访问 http://127.0.0.1:8899
+   then visit http://127.0.0.1:8899
 
-目录
-----
-  index.html        主站（全库检索 + 设计技能入口 + 底部 App 导航）
-  search-data.js    全量检索索引（352,371 个图标名 + 32,142 个别名 + 183 条中文意图）
-  data/             图标数据分片，按需加载（913 个文件）
-  app-icons/        iOS26 风格应用图标分区
-  skills/           设计技能：软件 / 网站 / 游戏
-  vendor/           FlexSearch 检索引擎（Apache-2.0）
+Directory layout
+----------------
+  index.html        Main site (full-library search + design-skill entry + bottom app navigation)
+  search-data.js    Full search index (352,371 icon names + 32,142 aliases + 183 Chinese-intent entries)
+  data/             Icon data chunks, loaded on demand (913 files)
+  app-icons/        iOS26-style app icon section
+  skills/           Design skills: Software / Website / Game
+  vendor/           FlexSearch search engine (Apache-2.0)
 
-许可证
-------
-图标素材版权归各上游项目所有，没有统一许可证，请以每个集合上游的实际许可证为准。
-完整收录清单见 README.md，授权口径见 LICENSE。本站代码与生成脚本为 MIT。
+License
+-------
+Icon assets are copyrighted by their respective upstream projects and have no single unified license; please refer to each set's actual upstream license.
+See README.md for the full inclusion list and LICENSE for the licensing summary. This site's code and build scripts are MIT.
 """
 
 
@@ -226,18 +226,18 @@ def main():
 
     made = {}
     if which in ("all", "online"):
-        log("生成联网版外壳 …")
+        log("Generating the online shell ...")
         n = copy_site(shell, online=True)
-        log("联网版外壳：%d 个文件" % n)
+        log("Online shell: %d files" % n)
         made["win_online"] = build_windows("online", shell, os.path.join(DIST, "ui-icons-hub-online-windows-setup.exe"))
         made["linux_online"] = build_linux("online", shell, os.path.join(DIST, "ui-icons-hub-online-linux.tar.gz"))
         made["mac_online"] = build_macos("online", shell, os.path.join(DIST, "ui-icons-hub-online-macos.zip"))
 
     if which in ("all", "offline"):
-        log("生成离线版全量站点 …")
+        log("Generating the full offline site ...")
         n = copy_site(offline, online=False)
-        log("离线版站点：%d 个文件" % n)
-        # 给每个页面打上 __OFFLINE 标记，隐藏「下载全部 / 清除缓存」等联网版操作
+        log("Offline site: %d files" % n)
+        # Tag each page with the __OFFLINE marker, hiding online-only actions like "Download all / Clear cache"
         tag = '<script>window.__OFFLINE=true;</script>'
         for rel in ["index.html", "app-icons/index.html",
                     "skills/software/index.html", "skills/website/index.html", "skills/game/index.html"]:
@@ -247,7 +247,7 @@ def main():
             s = open(p, encoding="utf-8").read()
             s = s.replace("<head>", "<head>" + tag, 1)
             open(p, "w", encoding="utf-8").write(s)
-        open(os.path.join(offline, "使用说明.txt"), "w", encoding="utf-8").write(OFFLINE_README)
+        open(os.path.join(offline, "OFFLINE-README.txt"), "w", encoding="utf-8").write(OFFLINE_README)
         open(os.path.join(offline, "OFFLINE-README.md"), "w", encoding="utf-8").write(OFFLINE_README)
         made["win_offline"] = build_windows("offline", offline, os.path.join(DIST, "ui-icons-hub-offline-windows-setup.exe"))
         made["mac_offline"] = build_macos("offline", offline, os.path.join(DIST, "ui-icons-hub-offline-macos.zip"))
@@ -255,14 +255,14 @@ def main():
         z = os.path.join(DIST, "ui-icons-hub-offline-full.zip")
         if os.path.exists(z):
             os.remove(z)
-        log("打包离线全量压缩包 …")
+        log("Packaging the full offline archive ...")
         subprocess.run(["zip", "-r", "-q", "-9", z, "."], cwd=offline, check=True)
         made["zip_offline"] = z
-        log("生成 %s：%.1f MB" % (z, os.path.getsize(z) / 1024 / 1024))
+        log("Generated %s: %.1f MB" % (z, os.path.getsize(z) / 1024 / 1024))
 
-    print("\n产物：")
+    print("\nArtifacts:")
     for k, v in made.items():
-        print("  %-14s %s  %s" % (k, v, ("%.1f MB" % (os.path.getsize(v) / 1024 / 1024)) if v and os.path.exists(v) else "失败"))
+        print("  %-14s %s  %s" % (k, v, ("%.1f MB" % (os.path.getsize(v) / 1024 / 1024)) if v and os.path.exists(v) else "failed"))
 
 
 if __name__ == "__main__":

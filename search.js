@@ -1,11 +1,12 @@
-/* ui-icons-hub 检索引擎：FlexSearch + 中文意图同义词 + 别名 + 增量建索引
+/* ui-icons-hub search engine: FlexSearch + Chinese-intent synonyms + aliases + incremental indexing
  *
- * 设计要点：
- * 1) 索引里只存「图标名 / 别名」，用数值 id 反解 (库下标, 分片下标, 名称位置)，
- *    避免为几十万条记录再建一份对象数组；名称按需从 SEARCH_DATA 取回。
- * 2) 38 万级文档同步建索引会卡住主线程，这里按时间切片增量构建，前端可显示进度。
- * 3) 命中后才去加载对应的少数几个数据分片，渲染时才需要 SVG 本体，
- *    彻底取代原来「拉全部库全部块做线性扫描」的方式。
+ * Design notes:
+ * 1) The index stores only "icon name / alias", and uses numeric ids to resolve (set index, chunk index, name position),
+ *    avoiding a second object array for hundreds of thousands of records; names are fetched on demand from SEARCH_DATA.
+ * 2) Synchronously building an index for ~380k documents would block the main thread; here we build it incrementally in
+ *    time-sliced chunks, and the UI can show progress.
+ * 3) Only after a hit do we load the few corresponding data chunks; the SVG itself is needed only at render time,
+ *    fully replacing the old approach of "pulling every set and every chunk for a linear scan".
  */
 (function () {
   "use strict";
@@ -36,7 +37,7 @@
     el.onerror = function () {
       loading = false; loadErr = true;
       SD = { sets: [] };
-      flush(new Error("索引数据加载失败"));
+      flush(new Error("Failed to load index data"));
     };
     document.head.appendChild(el);
   }
@@ -50,7 +51,7 @@
     SETIDX.add(s, (st.name || "") + " " + (st.repo || ""));
   }
 
-  /* 别名：同一图形的其它叫法，索引里单列一条，命中后指向父图标 */
+  /* Aliases: alternative names for the same glyph; indexed as a separate entry that points to the parent icon on a hit */
   function buildAlias() {
     ALIAS = [];
     for (var s = 0; s < SD.sets.length; s++) {
@@ -90,7 +91,7 @@
     setTimeout(step, 0);
   }
 
-  /* 中文意图 -> 英文关键词展开 */
+  /* Chinese intent -> English keyword expansion */
   function expand(q) {
     var out = [], seen = {};
     var lower = String(q || "").toLowerCase();
@@ -120,7 +121,7 @@
     return { t: "icon", s: s, c: Math.floor(r / CHUNK), p: r % CHUNK };
   }
 
-  /* 相关性排序：完全同名 > 前缀命中 > 词边界命中 > 子串命中；同分按名字更短优先 */
+  /* Relevance ranking: exact name > prefix hit > word-boundary hit > substring hit; ties broken by shorter name first */
   function nameOf(h) {
     if (!SD || !SD.sets) return "";
     var st = SD.sets[h.s];
@@ -158,7 +159,7 @@
         for (j = 0; j < r.length; j++) { var key = "i" + r[j]; if (!seen[key]) { seen[key] = 1; got.push(key); } }
         r = SETIDX.search(t, 8) || [];
         for (j = 0; j < r.length; j++) { var k2 = "s" + r[j]; if (!seen[k2]) { seen[k2] = 1; got.push(k2); } }
-      } catch (e) { /* 单个词异常不影响整体 */ }
+      } catch (e) { /* A single word's error does not affect the whole */ }
     }
     var out = [];
     for (i = 0; i < got.length && out.length < cap; i++) {
@@ -196,7 +197,7 @@
     info: info
   };
 
-  /* 空闲时预热，让第一次搜索不卡 */
+  /* Warm up when idle so the first search doesn't stutter */
   function preload() {
     if (SD || loading) return;
     ensure(function (e) { if (!e) build(); });

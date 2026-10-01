@@ -1,6 +1,6 @@
-# ui-icons-hub 本地服务（Windows）
-# 作用：在本机起一个最小静态服务，避免 file:// 下 Service Worker / 缓存统计被浏览器限制。
-# 由「UI Icons Hub.cmd」调用，无需安装任何依赖（只用 Windows 自带的 PowerShell / .NET）。
+# ui-icons-hub local server (Windows)
+# Purpose: start a minimal static server on this machine, to avoid browser restrictions on Service Worker / cache stats under file://.
+# Invoked by "UI Icons Hub.cmd"; requires no installed dependencies (only uses PowerShell / .NET built into Windows).
 param([int]$PreferredPort = 8899)
 
 $ErrorActionPreference = "Stop"
@@ -34,9 +34,9 @@ $listener.Prefixes.Add($prefix)
 $listener.Start()
 
 $url = $prefix + "index.html"
-Write-Host "ui-icons-hub 已启动：$url"
-Write-Host "数据目录：$site"
-Write-Host "关闭此窗口即停止服务。"
+Write-Host "ui-icons-hub started: $url"
+Write-Host "Data directory: $site"
+Write-Host "Close this window to stop the server."
 try { Start-Process $url } catch { }
 
 while ($listener.IsListening) {

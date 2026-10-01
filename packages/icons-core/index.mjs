@@ -1,15 +1,15 @@
 /*! @ui-icons-hub/icons v1.0.0 · MIT
- * 215 套开源图标库 / 345,961 个 SVG 图标的检索 API。零依赖，浏览器与 Node 18+ 通用。
+ * Search API for 215 open-source icon sets / 345,961 SVG icons. Zero dependencies, works in browsers and Node 18+.
  *
  *   import { searchSvg, icon, list } from "@ui-icons-hub/icons";
- *   const hits = await searchSvg("购物车");            // [{name, set, license, svg, ...}]
+ *   const hits = await searchSvg("cart");               // [{name, set, license, svg, ...}]
  *   const one  = await icon("feathericons__feather", "activity");
- *   const sets = await list();                          // 215 套
+ *   const sets = await list();                          // 215 sets
  *
- * 数据来源（按优先级）：
- *   1) options.base / UIH_BASE 环境变量 —— 本地目录（需含 index.json 与 data/，离线包解压即得）
- *   2) jsDelivr 上的本仓库（默认）
- * 索引首次调用时拉取（gzip 约 1.4 MB），SVG 按需下载命中所在的分片。
+ * Data sources (in priority order):
+ *   1) options.base / UIH_BASE env var -- local directory (must contain index.json and data/, e.g. an extracted offline bundle)
+ *   2) This repo on jsDelivr (default)
+ * The index is fetched on first call (≈1.4 MB gzipped); SVGs are downloaded on demand from the chunk containing the hit.
  */
 
 const DEFAULT_CDN = "https://cdn.jsdelivr.net/gh/sitong-zhang/ui-icons-hub@main/";
@@ -62,7 +62,7 @@ async function loadIndex() {
       } catch (e) { last = e; }
     }
     loading = null;
-    throw new Error("无法加载索引：" + (last && last.message));
+    throw new Error("Failed to load index: " + (last && last.message));
   })();
   return loading;
 }
@@ -182,13 +182,13 @@ async function rawSearch(q, opt = {}) {
   return out;
 }
 
-/** 检索：[{name, slug, set, repo, license, homepage, group, mono, alias}]（不含 svg，很快） */
+/** Search: [{name, slug, set, repo, license, homepage, group, mono, alias}] (no svg, very fast) */
 export async function search(q, opt = {}) {
   const list = await rawSearch(q, opt);
   return list.map((h) => Object.assign({ name: h.name, slug: h.slug, alias: h.via || null }, brief(h.slug)));
 }
 
-/** 检索并取回 SVG 源码（自动加载命中所在的分片） */
+/** Search and retrieve SVG source (auto-loads the chunk containing the hit) */
 export async function searchSvg(q, opt = {}) {
   const list = await rawSearch(q, opt);
   return Promise.all(list.map(async (h) => {
@@ -200,7 +200,7 @@ export async function searchSvg(q, opt = {}) {
   }));
 }
 
-/** 精确取一个图标（含 SVG 源码） */
+/** Fetch a single icon precisely (with SVG source) */
 export async function icon(slug, name) {
   await loadIndex();
   const c = indexOfChunk(slug, name);
@@ -211,7 +211,7 @@ export async function icon(slug, name) {
   return Object.assign({ name, slug, svg: wrapSvg(slug, pair[1], pair) }, brief(slug));
 }
 
-/** 215 套图标库清单，可按 group（general/brand/emoji）过滤 */
+/** List of 215 icon sets, filterable by group (general/brand/emoji) */
 export async function list(group) {
   await loadIndex();
   return IDX.sets
@@ -220,20 +220,20 @@ export async function list(group) {
                    count: s.count, stars: s.stars, mono: s.mono, homepage: s.homepage }));
 }
 
-/** 某套库的全部图标名 */
+/** All icon names of a set */
 export async function names(slug) {
   await loadIndex();
   const arr = NAMES[slug];
   return arr ? arr.flat() : null;
 }
 
-/** 中文意图词典（183 条） */
+/** Chinese-intent dictionary (183 entries) */
 export async function synonyms() {
   await loadIndex();
   return SYN;
 }
 
-/** 当前索引来自哪里（调试用） */
+/** Where the current index came from (for debugging) */
 export function source() { return IDX_FROM || null; }
 
 export default { search, searchSvg, icon, list, names, synonyms, configure, source };
