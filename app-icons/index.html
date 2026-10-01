@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>iOS26 · 苹果风格应用图标分区 · Farewell UI 图标库</title>
-<meta name="description" content="iOS26 风格应用图标包全量收录 · 797 个应用图标（PNG），苹果 iOS 圆角风格" />
+<title>iOS26 · Apple-Style App Icons · Farewell UI Icon Library</title>
+<meta name="description" content="Complete collection of iOS26-style app icon packs · 797 app icons (PNG), Apple iOS rounded style" />
 <style>
   :root{--bg:#0b0d17;--bg2:#121529;--card:rgba(255,255,255,.045);--line:rgba(255,255,255,.10);--line2:rgba(255,255,255,.06);
     --ink:#e8ebff;--muted:#98a0c8;--dim:#6f77a0;--acc:#7dd3fc;--acc2:#a78bfa;--gold:#ffd479;}
@@ -57,32 +57,32 @@
 </head>
 <body>
 <div class="wrap hero">
-  <a class="badge" href="../index.html">← 返回 Farewell UI 图标库</a>
-  <h1>iOS26 <span>苹果风格应用图标</span></h1>
-  <p class="sub">从「iOS26」图标包（v2026.06.09.1）提取的 <b>797 个应用图标</b>,苹果 iOS 风格圆角图标（PNG）,按应用名命名。点击图标可预览 / 下载。</p>
+  <a class="badge" href="../index.html">← Back to Farewell UI Icon Library</a>
+  <h1>iOS26 <span>Apple-Style App Icons</span></h1>
+  <p class="sub">Extracted from the "iOS26" icon pack (v2026.06.09.1): <b>797 app icons</b>, Apple iOS-style rounded icons (PNG), named after each app. Click any icon to preview or download.</p>
   <div class="stats" id="stats"></div>
 </div>
 <div class="toolbar"><div class="wrap">
-  <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input id="q" placeholder="搜索应用名,如 WeChat / QQ / Alipay" /></div>
-  <div class="ctrl">尺寸 <input type="range" id="szR" min="36" max="96" value="52" /> <span id="szT">52px</span></div>
+  <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input id="q" placeholder="Search app names, e.g. WeChat / QQ / Alipay" /></div>
+  <div class="ctrl">Size <input type="range" id="szR" min="36" max="96" value="52" /> <span id="szT">52px</span></div>
 </div></div>
 <main class="wrap">
-  <div class="sec-head"><h2>全量 797 个应用图标</h2><p id="cnt"></p></div>
+  <div class="sec-head"><h2>All 797 App Icons</h2><p id="cnt"></p></div>
   <div class="grid" id="grid"></div>
-  <div class="no-res" id="noRes">未找到匹配图标</div>
+  <div class="no-res" id="noRes">No matching icons found</div>
 </main>
 <div class="pv-bg" id="pv"><div class="pv-card">
   <img id="pvImg" alt="" />
   <h4 id="pvName"></h4>
   <div class="meta" id="pvMeta"></div>
   <div class="btns">
-    <button class="btn pri" id="bDown">下载 PNG</button>
-    <button class="btn" id="bName">复制文件名</button>
-    <button class="btn" id="bClose">关闭</button>
+    <button class="btn pri" id="bDown">Download PNG</button>
+    <button class="btn" id="bName">Copy file name</button>
+    <button class="btn" id="bClose">Close</button>
   </div>
 </div></div>
 <div class="toast" id="toast"></div>
-<footer>Farewell UI 图标库 · iOS26 应用图标分区 · 数据来源：iOS26 图标包（开源）</footer>
+<footer>Farewell UI Icon Library · iOS26 App Icon Section · Data source: iOS26 icon pack (open source)</footer>
 <script src="icons.js"></script>
 <script>
 (function(){
@@ -90,9 +90,9 @@
   var cur = null, qv = "";
   function esc(s){return String(s||"");}
   document.getElementById("stats").innerHTML = [
-    ["应用图标",ICONS.length+" 个"],["风格","Apple iOS"],["格式","PNG"]
+    ["App Icons",ICONS.length+" icons"],["Style","Apple iOS"],["Format","PNG"]
   ].map(function(p){return '<div class="stat"><b>'+p[1]+'</b><i>'+p[0]+'</i></div>';}).join("");
-  document.getElementById("cnt").textContent = "共收录 "+ICONS.length+" 个图标 · 点击任意图标可预览与下载";
+  document.getElementById("cnt").textContent = ICONS.length+" icons in total · Click any icon to preview and download";
   function render(){
     var grid = document.getElementById("grid"), out = "", n = 0;
     for(var i=0;i<ICONS.length;i++){
@@ -120,7 +120,7 @@
     cur = {n:nm, f:f};
     document.getElementById("pvImg").src = f;
     document.getElementById("pvName").textContent = nm;
-    document.getElementById("pvMeta").textContent = "iOS26 应用图标 · PNG";
+    document.getElementById("pvMeta").textContent = "iOS26 App Icon · PNG";
     document.getElementById("pv").classList.add("on");
   });
   document.getElementById("bClose").onclick = function(){ document.getElementById("pv").classList.remove("on"); };
@@ -129,11 +129,11 @@
   document.getElementById("bDown").onclick = function(){
     if(!cur) return;
     var a=document.createElement("a"); a.href=cur.f; a.download=cur.n+".png"; document.body.appendChild(a); a.click(); a.remove();
-    tip("已开始下载 "+cur.n+".png");
+    tip("Downloading "+cur.n+".png");
   };
   document.getElementById("bName").onclick = function(){
     if(!cur) return;
-    if(navigator.clipboard) navigator.clipboard.writeText(cur.n).then(function(){tip("已复制："+cur.n);});
+    if(navigator.clipboard) navigator.clipboard.writeText(cur.n).then(function(){tip("Copied: "+cur.n);});
     else tip(cur.n);
   };
 })();

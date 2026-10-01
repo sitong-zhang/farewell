@@ -2,7 +2,7 @@
 
 ESM core for [ui-icons-hub](https://github.com/sitong-zhang/ui-icons-hub) —
 search **215 open-source icon libraries / 345,961 SVG icons** from Node.js,
-with Chinese-intent support.
+with intent-based search support.
 
 Zero dependencies. Data chunks load on demand from a CDN (or a local
 directory) — a search never downloads the full 300 MB dataset.
@@ -19,11 +19,11 @@ npm i @ui-icons-hub/icons
 import { search, searchSvg, icon, list, configure } from '@ui-icons-hub/icons';
 
 // Search (names only, no SVG bodies)
-const hits = await search('购物车', { limit: 5 });   // Chinese intent: shopping cart
+const hits = await search('shopping cart', { limit: 5 });   // intent: shopping cart
 // → [{ name: 'cart', set: 'Ionicons', license: 'MIT', ... }]
 
 // Search and fetch SVG source (loads matched chunks)
-const svgs = await searchSvg('购物车', { limit: 3 });
+const svgs = await searchSvg('shopping cart', { limit: 3 });
 console.log(svgs[0].svg);   // '<svg xmlns="http://www.w3.org/2000/svg" ...>...</svg>'
 
 // One exact icon

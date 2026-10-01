@@ -1,14 +1,16 @@
 #!/usr/bin/env node
-/*! ui-icons-hub MCP 服务器 v1.0.0 · MIT
+/*! ui-icons-hub MCP Server v1.0.0 · MIT
  *
- * 让 AI 助手（Claude Desktop / Cursor / 任何 MCP 客户端）直接检索本站的
- * 215 套图标库 / 345,961 个 SVG 图标，支持中文意图，并能拿到 SVG 源码。
+ * Lets AI assistants (Claude Desktop / Cursor / any MCP client) search this
+ * site's 215 icon sets / 345,961 SVG icons, with Chinese-intent support, and
+ * retrieve SVG source code.
  *
- * 零依赖：不装 @modelcontextprotocol/sdk，直接实现 stdio 上的 JSON-RPC 2.0。
- * 数据来源（按优先级）：
- *   1) 环境变量 UIH_BASE 指定的本地/自建目录（需含 index.json 与 data/）
- *   2) 环境变量 UIH_CDN 指定的 CDN 目录（默认 jsDelivr 上的本仓库）
- * 索引只在第一次用到时拉取，之后缓存在内存里。
+ * Zero dependencies: no @modelcontextprotocol/sdk; implements JSON-RPC 2.0 over
+ * stdio directly.
+ * Data sources (in priority order):
+ *   1) Local/self-hosted directory set by the UIH_BASE env var (must contain index.json and data/)
+ *   2) CDN directory set by the UIH_CDN env var (defaults to this repo on jsDelivr)
+ * The index is fetched only on first use, then cached in memory.
  */
 
 import { readFile } from "node:fs/promises";
@@ -23,7 +25,7 @@ const CDN_BASE = (process.env.UIH_CDN || DEFAULT_CDN).replace(/\/?$/, "/");
 
 let IDX = null, IDX_FROM = null, SET_INFO = {}, NAMES = {}, ALIAS = [], SYN = {}, CHUNK = {};
 
-// ---------- 数据加载 ----------
+// ---------- Data loading ----------
 function isUrl(s) { return /^https?:\/\//.test(s); }
 
 async function readText(base, rel) {
@@ -50,7 +52,7 @@ async function loadIndex() {
       return IDX;
     } catch (e) { lastErr = e; }
   }
-  throw new Error("无法加载索引：" + (lastErr && lastErr.message));
+  throw new Error("Failed to load index: " + (lastErr && lastErr.message));
 }
 
 function afterIndex() {
@@ -62,7 +64,7 @@ function afterIndex() {
   SYN = IDX.syn || {};
 }
 
-// 分片：浏览器端是 window.__ADD2；Node 里用 new Function 造一个同名收集器
+// Chunks: in the browser this is window.__ADD2; in Node we build a same-named collector with new Function
 async function loadChunk(slug, i) {
   const key = `${slug}__${i}`;
   if (CHUNK[key]) return CHUNK[key];
@@ -76,7 +78,7 @@ async function loadChunk(slug, i) {
   return map;
 }
 
-// ---------- 检索 ----------
+// ---------- Search ----------
 function expand(q) {
   const whole = String(q ?? "").trim();
   const out = [];
@@ -148,7 +150,7 @@ function search(q, opt = {}) {
 }
 
 function clampW(slug, body) {
-  // 分片里若带了自定义 viewBox（4 元组），用它
+  // If a chunk carries a custom viewBox (4-tuple), use it
   return body;
 }
 
@@ -166,89 +168,89 @@ function brief(slug) {
   return { set: s.name, repo: s.repo, license: s.license, homepage: s.homepage, group: s.group, mono: s.mono };
 }
 
-// ---------- 工具定义 ----------
+// ---------- Tool definitions ----------
 const TOOLS = [
   {
     name: "search_icons",
     description:
-      "在 ui-icons-hub 的 215 套开源图标库（345,961 个 SVG 图标）里检索图标。支持中文意图（如「购物车」「齿轮」「游戏手柄」「曲线图」）与英文（cart、arrow-left），多词按 OR 匹配。默认只返回名字与归属（很快）；把 with_svg 设为 true 会连 SVG 源码一起返回。写页面缺图标时优先用它，比凭记忆编造图标名可靠。",
+      "Search icons across ui-icons-hub's 215 open-source icon sets (345,961 SVG icons). Supports Chinese-intent queries (e.g. cart, gear, gamepad, line chart) as well as English (cart, arrow-left); multiple words match as OR. By default it returns only names and set attribution (very fast); set with_svg to true to also return the SVG source. Prefer this when you need an icon for a page — more reliable than inventing icon names from memory.",
     inputSchema: {
       type: "object",
       properties: {
-        query: { type: "string", description: "检索词，中文或英文，如「购物车」「齿轮」「home」「arrow-left」" },
-        limit: { type: "number", description: "返回条数，默认 20，上限 100" },
-        with_svg: { type: "boolean", description: "是否连 SVG 源码一起返回（会多下载一点数据），默认 false" },
-        set: { type: "string", description: "限定在某套图标库内检索，传 slug，如 feathericons__feather（可先调 list_collections 查）" },
-        mono_only: { type: "boolean", description: "只要单色图标（可用 CSS color 改色），默认 false" },
+        query: { type: "string", description: "Search term, Chinese or English, e.g. cart, gear, home, arrow-left" },
+        limit: { type: "number", description: "Number of results to return, default 20, max 100" },
+        with_svg: { type: "boolean", description: "Whether to also return the SVG source (downloads a bit more data), default false" },
+        set: { type: "string", description: "Restrict search to one icon set; pass its slug, e.g. feathericons__feather (call list_collections first to look it up)" },
+        mono_only: { type: "boolean", description: "Only monochrome icons (recolorable via CSS color), default false" },
       },
       required: ["query"],
     },
   },
   {
     name: "get_icon",
-    description: "按图标库 slug 与图标名精确取一个图标的 SVG 源码。适合已经知道确切名字时直接拿源码。",
+    description: "Fetch the SVG source of one icon by its set slug and icon name. Best when you already know the exact name and want the source directly.",
     inputSchema: {
       type: "object",
       properties: {
-        slug: { type: "string", description: "图标库 slug，如 feathericons__feather" },
-        name: { type: "string", description: "图标名，如 activity" },
+        slug: { type: "string", description: "Icon set slug, e.g. feathericons__feather" },
+        name: { type: "string", description: "Icon name, e.g. activity" },
       },
       required: ["slug", "name"],
     },
   },
   {
     name: "list_collections",
-    description: "列出收录的 215 套图标库（名称 / slug / 图标数 / 许可证 / 星标 / 官网），可按 group 过滤。不知道有哪些库时先调它。",
+    description: "List the 215 included icon sets (name / slug / icon count / license / stars / homepage), filterable by group. Call this first when you don't know which sets exist.",
     inputSchema: {
       type: "object",
       properties: {
-        group: { type: "string", enum: ["general", "brand", "emoji"], description: "通用 UI / 品牌技术 / 表情旗帜" },
-        keyword: { type: "string", description: "按名称或仓库关键词过滤，如 feather、tabler、品牌" },
-        limit: { type: "number", description: "返回条数，默认 60" },
+        group: { type: "string", enum: ["general", "brand", "emoji"], description: "General UI / Brand & tech / Emoji & flags" },
+        keyword: { type: "string", description: "Filter by name or repo keyword, e.g. feather, tabler, brand" },
+        limit: { type: "number", description: "Number of results to return, default 60" },
       },
     },
   },
   {
     name: "collection_info",
-    description: "看某套图标库的详情：许可证、官网、图标总数、图标名样例（便于判断风格是否合用）。",
+    description: "View details of one icon set: license, homepage, total icon count, and sample icon names (to judge whether the style fits).",
     inputSchema: {
       type: "object",
       properties: {
-        slug: { type: "string", description: "图标库 slug" },
-        sample: { type: "number", description: "返回多少个图标名样例，默认 30" },
+        slug: { type: "string", description: "Icon set slug" },
+        sample: { type: "number", description: "How many sample icon names to return, default 30" },
       },
       required: ["slug"],
     },
   },
   {
     name: "pick_set",
-    description: "根据需求描述推荐一套最合适的图标库，并说明理由（按风格关键词匹配：线性/实心、像素、品牌、emoji、开源协议宽松等）。",
+    description: "Recommend the most suitable icon set based on a need description, with reasoning (matches style keywords: outline/solid, pixel, brand, emoji, permissive license, etc.).",
     inputSchema: {
       type: "object",
       properties: {
-        need: { type: "string", description: "需求描述，如「极简线性、用于后台管理界面」「要品牌 logo」「像素风游戏」" },
-        limit: { type: "number", description: "最多推荐几套，默认 3" },
+        need: { type: "string", description: "Need description, e.g. 'minimalist outline, for admin dashboard UI', 'need a brand logo', 'pixel-style game'" },
+        limit: { type: "number", description: "Maximum number of sets to recommend, default 3" },
       },
       required: ["need"],
     },
   },
 ];
 
-// pick_set 的粗略打分：风格关键词 + 协议宽松度 + 星标
+// pick_set rough scoring: style keywords + license permissiveness + stars
 function pickSet(need, limit) {
   const kw = String(need || "").toLowerCase();
-  const wantMono = /线性|线框|描边|outline|stroke|minimal|极简|细|通用|后台|管理/.test(kw);
-  const wantBrand = /品牌|logo|厂商|技术标|brand/.test(kw);
-  const wantEmoji = /emoji|表情|旗帜|国旗|趣味/.test(kw);
-  const wantPixel = /像素|pixel/.test(kw);
-  const wantFill = /实心|填充|solid|fill|粗/.test(kw);
+  const wantMono = /linear|wireframe|outline|stroke|minimal|thin|generic|dashboard|admin|backend/.test(kw);
+  const wantBrand = /brand|logo|vendor|tech-logo/.test(kw);
+  const wantEmoji = /emoji|emoticon|flag|fun/.test(kw);
+  const wantPixel = /pixel/.test(kw);
+  const wantFill = /solid|fill|filled|bold/.test(kw);
   const list = IDX.sets.map((s) => {
     let sc = 0;
     const nameLow = (s.name + " " + (s.desc || "") + " " + s.slug).toLowerCase();
     if (wantBrand && s.group === "brand") sc += 6;
     if (wantEmoji && s.group === "emoji") sc += 6;
     if (!wantBrand && !wantEmoji && s.group === "general") sc += 3;
-    if (wantPixel && /pixel|像素|bitmap|dot/.test(nameLow)) sc += 6;
+    if (wantPixel && /pixel|bitmap|dot/.test(nameLow)) sc += 6;
     if (wantMono && s.mono) sc += 2;
     if (wantFill && !s.mono) sc += 2;
     if (/^MIT$|CC0|Apache|ISC|BSD|Unlicense/.test(s.license || "")) sc += 1.5;
@@ -262,15 +264,15 @@ function pickSet(need, limit) {
     count: x.s.count, stars: x.s.stars, homepage: x.s.homepage,
     group: x.s.group, mono: x.s.mono,
     why: [
-      x.s.group === "brand" ? "品牌/技术标专用集合" : x.s.group === "emoji" ? "表情与旗帜集合" : "通用 UI 图标集合",
-      x.s.mono ? "单色，可用 CSS color 改色" : "含彩色图形",
-      `许可证 ${x.s.license}`,
-      x.s.stars ? `上游 ${x.s.stars} 星` : "",
+      x.s.group === "brand" ? "Brand / tech-logo collection" : x.s.group === "emoji" ? "Emoji & flag collection" : "General UI icon collection",
+      x.s.mono ? "Monochrome, recolorable via CSS color" : "Contains colored graphics",
+      `License ${x.s.license}`,
+      x.s.stars ? `Upstream ${x.s.stars} stars` : "",
     ].filter(Boolean).join(" · "),
   }));
 }
 
-// ---------- 工具执行 ----------
+// ---------- Tool execution ----------
 async function callTool(name, args = {}) {
   await loadIndex();
 
@@ -295,10 +297,10 @@ async function callTool(name, args = {}) {
 
   if (name === "get_icon") {
     const pos = indexOfName(args.slug, args.name);
-    if (!pos) return { error: `未找到 ${args.slug} / ${args.name}` };
+    if (!pos) return { error: `Not found: ${args.slug} / ${args.name}` };
     const map = await loadChunk(args.slug, pos.c);
     const pair = map[args.name];
-    if (!pair) return { error: `分片里没有 ${args.name}` };
+    if (!pair) return { error: `Chunk does not contain ${args.name}` };
     return { name: args.name, slug: args.slug, ...brief(args.slug), svg: wrapSvg(args.slug, pair[1], pair) };
   }
 
@@ -322,7 +324,7 @@ async function callTool(name, args = {}) {
 
   if (name === "collection_info") {
     const s = SET_INFO[args.slug];
-    if (!s) return { error: `没有这套图标库：${args.slug}（可调 list_collections 查看全部）` };
+    if (!s) return { error: `No such icon set: ${args.slug} (call list_collections to see all)` };
     const flat = [];
     for (let c = 0; c < s.chunks.length; c++) for (const n of s.chunks[c]) flat.push(n);
     const sample = args.sample || 30;
@@ -341,7 +343,7 @@ async function callTool(name, args = {}) {
     return { need: args.need, recommendations: pickSet(args.need, Math.min(args.limit || 3, 10)) };
   }
 
-  throw new Error("未知工具：" + name);
+  throw new Error("Unknown tool: " + name);
 }
 
 // ---------- JSON-RPC over stdio ----------
@@ -358,7 +360,7 @@ async function handle(req) {
       serverInfo: SERVER,
     });
   }
-  if (method === "notifications/initialized" || method === "initialized") return; // 通知，无需回复
+  if (method === "notifications/initialized" || method === "initialized") return; // Notification, no reply needed
 
   if (method === "tools/list") return ok(id, { tools: TOOLS });
 
@@ -373,7 +375,7 @@ async function handle(req) {
       });
     } catch (e) {
       return ok(id, {
-        content: [{ type: "text", text: "调用失败：" + (e && e.message ? e.message : String(e)) }],
+        content: [{ type: "text", text: "Call failed: " + (e && e.message ? e.message : String(e)) }],
         isError: true,
       });
     }
@@ -382,13 +384,13 @@ async function handle(req) {
   if (method === "ping") return ok(id, {});
   if (method === "resources/list") return ok(id, { resources: [] });
   if (method === "prompts/list") return ok(id, { prompts: [] });
-  return err(id, -32601, "不支持的方法：" + method);
+  return err(id, -32601, "Method not found: " + method);
 }
 
 let buf = "";
-let inflight = 0;          // 正在处理的请求数
-let ended = false;         // stdin 是否已结束
-let drainCb = null;        // 排空后的回调
+let inflight = 0;          // Number of requests currently being processed
+let ended = false;         // Whether stdin has ended
+let drainCb = null;        // Callback invoked after draining
 
 function maybeExit() {
   if (ended && inflight === 0) {
@@ -416,7 +418,7 @@ process.stdin.on("data", (chunk) => {
 });
 process.stdin.on("end", () => {
   ended = true;
-  // stdin 关掉时请求可能还在跑（比如首次要下载索引），给它们一点时间
+  // When stdin closes, requests may still be running (e.g. first-time index download); give them some time
   setTimeout(maybeExit, 250);
   setTimeout(() => process.exit(0), Number(process.env.UIH_EXIT_TIMEOUT || 600000));
 });

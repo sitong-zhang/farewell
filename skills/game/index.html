@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>游戏 UI 设计要点 · ui-icons-hub 设计技能</title>
-<meta name="description" content="HUD 分层、数值可视化、技能/道具图标、触屏手势、多分辨率与本地化：一套面向实机的游戏 UI 实践。" />
+<title>Game UI Design Essentials · ui-icons-hub Design Skills</title>
+<meta name="description" content="HUD layering, numeric visualization, skill/item icons, touch gestures, multi-resolution and localization: a set of on-device game UI practices." />
 <style>
   :root{--bg:#0b0d17;--bg2:#121529;--card:rgba(255,255,255,.045);--line:rgba(255,255,255,.10);
     --line2:rgba(255,255,255,.06);--ink:#e8ebff;--muted:#98a0c8;--dim:#6f77a0;--acc:#7dd3fc;--acc2:#a78bfa;--gold:#ffd479}
@@ -64,223 +64,223 @@
 <body>
 <header class="hero">
   <div class="wrap">
-    <a class="badge" href="../../index.html">&#8592; 返回 ui-icons-hub 图标库</a>
-    <h1>游戏 UI 设计要点</h1>
-    <p class="sub">HUD 分层、数值可视化、技能/道具图标、触屏手势、多分辨率与本地化：一套面向实机的游戏 UI 实践。</p>
-    <div class="meta"><span class="pill">11 个章节</span><span class="pill">实机验收项</span><span class="pill">含上线前检查清单</span></div>
+    <a class="badge" href="../../index.html">&#8592; Back to the ui-icons-hub icon library</a>
+    <h1>Game UI Design Essentials</h1>
+    <p class="sub">HUD layering, numeric visualization, skill/item icons, touch gestures, multi-resolution and localization: a set of on-device game UI practices.</p>
+    <div class="meta"><span class="pill">11 chapters</span><span class="pill">On-device acceptance items</span><span class="pill">Includes pre-launch checklist</span></div>
   </div>
 </header>
 <div class="wrap">
 <main>
 <nav class="toc">
-  <b>目录</b>
-  <ol><li><a href="#s1">先搞清楚：游戏 UI 服务的是「信息」，不是排版</a></li>
-<li><a href="#s2">HUD 分层：先分类，再排位置</a></li>
-<li><a href="#s3">数值可视化：条、段、数字各有用法</a></li>
-<li><a href="#s4">图标语义：一眼可辨 > 好看</a></li>
-<li><a href="#s5">菜单：局内和局外是两套逻辑</a></li>
-<li><a href="#s6">触屏交互：手势要有兜底</a></li>
-<li><a href="#s7">颜色与反馈：把「爽感」系统化</a></li>
-<li><a href="#s8">字体：数值可读性是硬指标</a></li>
-<li><a href="#s9">新手引导：教会一件事再给下一件</a></li>
-<li><a href="#s10">多分辨率、多语言与本地化</a></li>
-<li><a href="#s11">上线前检查清单</a></li></ol>
+  <b>Contents</b>
+  <ol><li><a href="#s1">First, get this straight: game UI serves information, not layout</a></li>
+<li><a href="#s2">HUD layering: classify first, then position</a></li>
+<li><a href="#s3">Numeric visualization: bars, segments and digits each have a use</a></li>
+<li><a href="#s4">Icon semantics: recognizable at a glance beats good-looking</a></li>
+<li><a href="#s5">Menus: in-game and out-of-game are two different logics</a></li>
+<li><a href="#s6">Touch interaction: gestures need a fallback</a></li>
+<li><a href="#s7">Color and feedback: systematize the "game feel"</a></li>
+<li><a href="#s8">Fonts: number readability is a hard requirement</a></li>
+<li><a href="#s9">Onboarding: teach one thing before handing over the next</a></li>
+<li><a href="#s10">Multi-resolution, multi-language and localization</a></li>
+<li><a href="#s11">Pre-launch checklist</a></li></ol>
 </nav>
 <section id="s1">
-  <h2>先搞清楚：游戏 UI 服务的是「信息」，不是排版 <i>定位</i></h2>
+  <h2>First, get this straight: game UI serves information, not layout <i>Positioning</i></h2>
   
-  <p>游戏 UI 的第一目标是<b>让玩家在 0.2 秒内读懂当前状态</b>，第二才是好看。任何遮挡视野、逼玩家在菜单里连翻三层才能操作的 UI 都是失败的。</p>
+  <p>The first goal of game UI is to <b>let the player read the current state within 0.2 seconds</b>; looking good comes second. Any UI that blocks the view, or forces the player to dig three levels deep through menus before they can act, is a failed UI.</p>
   <ul>
-    <li><b>安全区</b>：留出刘海/挖孔（顶部 44–59dp）、圆角、底部手势条（34dp）区域，别把血条顶到边上。</li>
-    <li>核心操作区在拇指自然弧线内（左下 / 右下），而不是屏幕中间。</li>
-    <li>HUD 占用控制在视野的 <b>20–25%</b> 以内，其余留给游戏画面。</li>
+    <li><b>Safe area</b>: leave room for notches / punch-holes (44–59dp at the top), rounded corners and the bottom gesture bar (34dp); don't push the health bar right up against the edge.</li>
+    <li>Put the core action zone inside the natural thumb arc (bottom-left / bottom-right), not in the middle of the screen.</li>
+    <li>Keep the HUD footprint within <b>20–25%</b> of the view and leave the rest to the game scene.</li>
   </ul>
   <div class="chips">
-  <a href="../index.html?q=gamepad-2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>gamepad 手柄</a>
-  <a href="../index.html?q=crosshair"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>crosshair 准星</a>
+  <a href="../index.html?q=gamepad-2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>gamepad Controller</a>
+  <a href="../index.html?q=crosshair"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>crosshair Crosshair</a>
   <a href="../index.html?q=layout-dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>dashboard HUD</a>
   </div>
 </section>
 <section id="s2">
-  <h2>HUD 分层：先分类，再排位置 <i>分层</i></h2>
+  <h2>HUD layering: classify first, then position <i>Layering</i></h2>
   
   <table>
-    <tr><th>层</th><th>内容</th><th>要点</th></tr>
-    <tr><td>背景层</td><td>半透面板、渐变遮罩</td><td>明 drawn 度 ≤ 30%，不要抢画面</td></tr>
-    <tr><td>信息层</td><td>血量、弹药、计时、资源</td><td>固定位置、永远可见、对比足够</td></tr>
-    <tr><td>操作层</td><td>技能键、攻击、跳跃</td><td>拇指可达、热区大、可自定义</td></tr>
-    <tr><td>反馈层</td><td>伤害数字、拾取提示、大字串覆盖率</td><td>短停留（&lt; 800ms）、不挡关键区</td></tr>
+    <tr><th>Layer</th><th>Content</th><th>Key points</th></tr>
+    <tr><td>Background</td><td>Semi-transparent panels, gradient masks</td><td>Opacity ≤ 30%, never steal the scene</td></tr>
+    <tr><td>Information</td><td>Health, ammo, timer, resources</td><td>Fixed position, always visible, enough contrast</td></tr>
+    <tr><td>Action</td><td>Skill buttons, attack, jump</td><td>Thumb-reachable, large hit areas, customizable</td></tr>
+    <tr><td>Feedback</td><td>Damage numbers, pickup prompts, large text callouts</td><td>Short dwell (&lt; 800ms), doesn't cover key areas</td></tr>
   </table>
   <ul>
-    <li>信息层的位置<b>永远固定</b>：血量在左上就是一直左上，别让它跟着场景动。</li>
-    <li>反馈层遵循「快进快出」原则：出现快、消失快、互不重叠。</li>
-    <li>重要数字下方压一层 1–2px 描边或深色渐变，保证任何背景上都读得清。</li>
+    <li>Information-layer positions are <b>always fixed</b>: if health is top-left, it stays top-left forever; don't let it drift with the scene.</li>
+    <li>The feedback layer follows "fast in, fast out": appear fast, disappear fast, and never overlap itself.</li>
+    <li>Put a 1–2px outline or a dark gradient under important numbers so they stay readable on any background.</li>
   </ul>
   <div class="chips">
-  <a href="../index.html?q=layers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>layers 图层</a>
-  <a href="../index.html?q=heart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>heart 血量</a>
-  <a href="../index.html?q=timer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>timer 计时</a>
+  <a href="../index.html?q=layers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>layers Layers</a>
+  <a href="../index.html?q=heart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>heart Health</a>
+  <a href="../index.html?q=timer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>timer Timer</a>
   </div>
 </section>
 <section id="s3">
-  <h2>数值可视化：条、段、数字各有用法 <i>数值</i></h2>
+  <h2>Numeric visualization: bars, segments and digits each have a use <i>Numbers</i></h2>
   
   <ul>
-    <li><b>长条</b>：血量、能量这类连续且需要「还剩多少」直觉的数值。</li>
-    <li><b>分段</b>：弹药、充能、回合数——离散可读比精确重要。</li>
-    <li><b>数字</b>：伤害、金币、分数；务必 tabular-nums 并加描边。</li>
-    <li>长条掉血用「延迟白条」表现损失量，能显著提升感知清晰度。</li>
-    <li>颜色之外加<b>形状/图标</b>辅助：红绿色盲玩家读不出「毒 vs 治疗」。</li>
+    <li><b>Bars</b>: for continuous values such as health and energy, where the intuition of "how much is left" matters.</li>
+    <li><b>Segments</b>: ammo, charges, turn counts — discrete readability matters more than precision.</li>
+    <li><b>Digits</b>: damage, coins, score; always use tabular-nums and add an outline.</li>
+    <li>Show lost health with a "delayed white bar"; it noticeably improves perceived clarity.</li>
+    <li>Add <b>shape / icon</b> cues on top of color: players with red-green color blindness can't tell "poison vs heal" apart.</li>
   </ul>
   <div class="chips">
-  <a href="../index.html?q=battery-charging"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>battery 能量</a>
-  <a href="../index.html?q=shield"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>shield 护盾</a>
-  <a href="../index.html?q=coins"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>coins 金币</a>
+  <a href="../index.html?q=battery-charging"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>battery Energy</a>
+  <a href="../index.html?q=shield"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>shield Shield</a>
+  <a href="../index.html?q=coins"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>coins Coins</a>
   </div>
 </section>
 <section id="s4">
-  <h2>图标语义：一眼可辨 > 好看 <i>图标</i></h2>
+  <h2>Icon semantics: recognizable at a glance beats good-looking <i>Icons</i></h2>
   
   <ul>
-    <li>技能/道具图标<b>轮廓优先</b>：48×48 缩略到 40px 仍能辨认才算合格（尝试灰度化检查）。</li>
-    <li>三态必须区分：<b>可用 / 冷却中 / 不可用</b>——用去饱和 + 半透明遮罩 + 倒计时数字。</li>
-    <li>同一功能在不同界面用同一图标，「返回」别一会儿箭头一会儿叉。</li>
-    <li>状态图标（中毒、燃烧、减速）风格要和道具图标区开，避免混淆。</li>
-    <li>本仓库的 <b>Game Icons（4,134 个，CC BY 3.0）</b> 与各类 UI 套均可直接复用。</li>
+    <li>Skill / item icons are <b>silhouette first</b>: they only pass if a 48×48 source is still recognizable when scaled down to 40px (try a grayscale check).</li>
+    <li>The three states must be distinguishable: <b>available / cooling down / unavailable</b> — use desaturation + a semi-transparent mask + a countdown number.</li>
+    <li>Use the same icon for the same function across screens; "back" shouldn't be an arrow in one place and a cross in another.</li>
+    <li>Status icons (poisoned, burning, slowed) should look different from item icons to avoid confusion.</li>
+    <li>This repo's <b>Game Icons (4,134 icons, CC BY 3.0)</b> and the various UI sets can all be reused directly.</li>
   </ul>
   <div class="chips">
-  <a href="../index.html?q=swords"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>swords 战斗</a>
-  <a href="../index.html?q=flask-conical"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>flask 道具</a>
-  <a href="../index.html?q=dices"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>dice 随机</a>
-  <a href="../index.html?q=skull"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>skull 危险</a>
+  <a href="../index.html?q=swords"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>swords Combat</a>
+  <a href="../index.html?q=flask-conical"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>flask Items</a>
+  <a href="../index.html?q=dices"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>dice Random</a>
+  <a href="../index.html?q=skull"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>skull Danger</a>
   </div>
 </section>
 <section id="s5">
-  <h2>菜单：局内和局外是两套逻辑 <i>菜单</i></h2>
+  <h2>Menus: in-game and out-of-game are two different logics <i>Menus</i></h2>
   
   <ul>
-    <li><b>局内菜单</b>（背包、技能树）：不超过 2 次点击到达目标，支持暂停/ rayas 半暂停。</li>
-    <li><b>局外菜单</b>（主城、设置、商店）：信息密度可以高，但要稳定的层级和一致的返回路径。</li>
-    <li>背包网格推荐正交网格 + 稀有度描边 + 数量角标 + tooltip 详情（悬停 / 长按）。</li>
-    <li>每屏至少有明确退出路径；手柄/键盘/触屏三者的「返回」键位要各自正确。</li>
+    <li><b>In-game menus</b> (inventory, skill tree): reach the target within 2 clicks; support pause / semi-pause.</li>
+    <li><b>Out-of-game menus</b> (hub, settings, shop): information density can be higher, but they need a stable hierarchy and a consistent back path.</li>
+    <li>For inventory grids, prefer an orthogonal grid + rarity outline + quantity badge + tooltip detail (hover / long-press).</li>
+    <li>Every screen needs at least one clear exit path; the "back" key must be correct for gamepad, keyboard and touch respectively.</li>
   </ul>
   <div class="chips">
-  <a href="../index.html?q=backpack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>backpack 背包</a>
-  <a href="../index.html?q=library"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>library 图鉴</a>
-  <a href="../index.html?q=sliders"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>sliders 设置</a>
+  <a href="../index.html?q=backpack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>backpack Inventory</a>
+  <a href="../index.html?q=library"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>library Codex</a>
+  <a href="../index.html?q=sliders"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>sliders Settings</a>
   </div>
 </section>
 <section id="s6">
-  <h2>触屏交互：手势要有兜底 <i>触屏</i></h2>
+  <h2>Touch interaction: gestures need a fallback <i>Touch</i></h2>
   
   <ul>
-    <li>虚拟摇杆<b>跟随触发</b>（碰到屏幕任意位置生成）比固定位置更友好；死区 8–12%。</li>
-    <li>按钮 ≥ <b>48dp</b>，相邻按钮间距 ≥ 8dp；视觉小图标也要有大热区。</li>
-    <li>多指并发要处理（移动 + 射击同时）；手指数量限制写在说明里。</li>
-    <li>长按 / 拖拽 / 双击都要有<b>等效的显式按钮</b>，别让手势成为唯一入口。</li>
-    <li>边缘防误触：底部托盘、系统手势边缘区的滑入要有确认或 ≥ 12dp 的触发阈值。</li>
+    <li>A <b>floating</b> virtual stick (spawns wherever the screen is touched) is friendlier than a fixed position; dead zone 8–12%.</li>
+    <li>Buttons ≥ <b>48dp</b>, spacing between adjacent buttons ≥ 8dp; even small visual icons need large hit areas.</li>
+    <li>Handle multi-touch concurrency (move + shoot at the same time); document the finger-count limit in the instructions.</li>
+    <li>Long-press / drag / double-tap all need an <b>equivalent explicit button</b>; never make a gesture the only entry point.</li>
+    <li>Protect against edge false touches: swiping in from the bottom tray or the system gesture edge needs confirmation or a ≥ 12dp trigger threshold.</li>
   </ul>
   <div class="chips">
-  <a href="../index.html?q=hand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>hand 手势</a>
-  <a href="../index.html?q=move"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>move 移动</a>
-  <a href="../index.html?q=rotate-ccw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>rotate 摇杆</a>
+  <a href="../index.html?q=hand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>hand Gesture</a>
+  <a href="../index.html?q=move"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>move Move</a>
+  <a href="../index.html?q=rotate-ccw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>rotate Stick</a>
   </div>
 </section>
 <section id="s7">
-  <h2>颜色与反馈：把「爽感」系统化 <i>反馈</i></h2>
+  <h2>Color and feedback: systematize the "game feel" <i>Feedback</i></h2>
   
   <ul>
-    <li>稀有度配色约定俗成：灰 → 绿 → 蓝 → 紫 → 橙/红，不要自创六色体系。</li>
-    <li>增益用暖亮色 + 上浮动效，减益用冷暗色 + 抖动/闪烁。</li>
-    <li>命中反馈三件套：<b>闪白 + 数字飘字 + 命中停顿（hitstop 30–80ms）</b>。</li>
-    <li>屏幕震动要给开关和强度滑条（晕动症玩家必须能关）。</li>
-    <li>所有反馈 ≤ 300ms 收尾，持续 GIF 式的光污染会让人疲劳。</li>
+    <li>Rarity colors follow convention: gray → green → blue → purple → orange/red; don't invent your own six-color system.</li>
+    <li>Buffs use warm bright colors + an upward float animation; debuffs use cool dark colors + shake / flash.</li>
+    <li>The hit-feedback trio: <b>white flash + floating damage number + hitstop (30–80ms)</b>.</li>
+    <li>Screen shake needs an on/off switch and an intensity slider (players with motion sickness must be able to turn it off).</li>
+    <li>All feedback should wrap up within 300ms; GIF-style permanent light pollution wears people out.</li>
   </ul>
   <div class="chips">
-  <a href="../index.html?q=sparkles"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>sparkles 特效</a>
-  <a href="../index.html?q=flame"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>flame 燃烧</a>
-  <a href="../index.html?q=zap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>zap 电击</a>
+  <a href="../index.html?q=sparkles"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>sparkles Effects</a>
+  <a href="../index.html?q=flame"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>flame Burning</a>
+  <a href="../index.html?q=zap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>zap Shock</a>
   </div>
 </section>
 <section id="s8">
-  <h2>字体：数值可读性是硬指标 <i>字体</i></h2>
+  <h2>Fonts: number readability is a hard requirement <i>Fonts</i></h2>
   
   <ul>
-    <li>数值（伤害、金币）用<b>等宽/ tabular 数字</b>，否则跳字；像素风格要有 8/16px 对齐。</li>
-    <li>中文叙事文本用黑体系（圆体会削弱严肃感），按钮短标签可用圆体。</li>
-    <li>字体预算：中文常用字集子集化通常 1.5–3MB，超大字库考虑位图字或用系统字。</li>
-    <li>小字号（≤ 14px）避免细体 + 高笔画密度；必要时用描边提升可读性。</li>
+    <li>Use <b>monospaced / tabular figures</b> for numbers (damage, coins), otherwise digits jump around; pixel styles need 8/16px alignment.</li>
+    <li>Use a sans-serif family for narrative text (rounded faces undercut seriousness); short button labels may use rounded faces.</li>
+    <li>Font budget: subsetting a common Chinese character set usually costs 1.5–3MB; for very large glyph sets consider bitmap fonts or system fonts.</li>
+    <li>At small sizes (≤ 14px) avoid light weights plus high stroke density; add an outline when needed to improve readability.</li>
   </ul>
   <div class="chips">
-  <a href="../index.html?q=type"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>type 字体</a>
-  <a href="../index.html?q=hash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>hash 编号</a>
-  <a href="../index.html?q=bold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>bold 强调</a>
+  <a href="../index.html?q=type"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>type Font</a>
+  <a href="../index.html?q=hash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>hash Numbering</a>
+  <a href="../index.html?q=bold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>bold Emphasis</a>
   </div>
 </section>
 <section id="s9">
-  <h2>新手引导：教会一件事再给下一件 <i>引导</i></h2>
+  <h2>Onboarding: teach one thing before handing over the next <i>Onboarding</i></h2>
   
   <ul>
-    <li>渐进式：核心操作用<b>强制小步骤</b>，次要功能用被动提示（小红点 / 侧边 tips）。</li>
-    <li>蒙层引导必须能<b>跳过</b>，且跳过后在帮助中心能重新找回。</li>
-    <li>手势引导用动画演示而非大段文字；一次只教一个手势。</li>
-    <li>避免一次性弹出五个红点：主线只留一个，其余收进「任务」列表。</li>
+    <li>Progressive: core actions use <b>forced small steps</b>, secondary features use passive hints (red dots / side tips).</li>
+    <li>Masked tutorials must be <b>skippable</b>, and must be findable again in the help center after skipping.</li>
+    <li>Teach gestures with animation instead of long paragraphs of text; one gesture at a time.</li>
+    <li>Don't pop five red dots at once: keep only one on the main path and put the rest into a "quests" list.</li>
   </ul>
   <div class="chips">
-  <a href="../index.html?q=graduation-cap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>graduation 教学</a>
-  <a href="../index.html?q=lightbulb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>lightbulb 提示</a>
-  <a href="../index.html?q=map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>map 路径</a>
+  <a href="../index.html?q=graduation-cap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>graduation Tutorial</a>
+  <a href="../index.html?q=lightbulb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>lightbulb Hints</a>
+  <a href="../index.html?q=map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>map Path</a>
   </div>
 </section>
 <section id="s10">
-  <h2>多分辨率、多语言与本地化 <i>适配</i></h2>
+  <h2>Multi-resolution, multi-language and localization <i>Adaptation</i></h2>
   
   <ul>
-    <li><b>9-slice / 矢量优先</b>：面板用九宫格拉伸，图标优先矢量，避免为每个分辨率切一版 PNG。</li>
-    <li>宽高比从 16:9 到 21:9（甚至 4:3 平板）都要测：用<b>锚点 + 安全区</b>而不是写死坐标。</li>
-    <li>文本膨胀预留 <b>30–40%</b> 空间（英文译俄语/德语）；RTL 语言要做镜像布局。</li>
-    <li>UI 资源分档 @1x/@2x/@3x，低端机走低档，别一律塞最高清。</li>
-    <li>深色底配高饱和图标在户外强光下会糊成一团，记得实机到阳光下验一遍。</li>
+    <li><b>9-slice / vector first</b>: stretch panels with nine-slice, prefer vector icons, and avoid cutting a separate PNG set for every resolution.</li>
+    <li>Test aspect ratios from 16:9 to 21:9 (and even 4:3 tablets): use <b>anchors + safe area</b> instead of hardcoded coordinates.</li>
+    <li>Reserve <b>30–40%</b> extra space for text expansion (English into Russian/German); RTL languages need a mirrored layout.</li>
+    <li>Tier UI assets as @1x/@2x/@3x; low-end devices use the lower tier, don't always ship the highest resolution.</li>
+    <li>Highly saturated icons on a dark background turn into mush outdoors in bright light — remember to verify on a real device under sunlight.</li>
   </ul>
   <div class="chips">
-  <a href="../index.html?q=smartphone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>smartphone 手机</a>
-  <a href="../index.html?q=monitor"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>monitor 大屏</a>
-  <a href="../index.html?q=languages"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>languages 多语言</a>
+  <a href="../index.html?q=smartphone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>smartphone Phone</a>
+  <a href="../index.html?q=monitor"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>monitor Large screen</a>
+  <a href="../index.html?q=languages"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>languages Multi-language</a>
   </div>
 </section>
 <section id="s11">
-  <h2>上线前检查清单 <i>清单</i></h2>
+  <h2>Pre-launch checklist <i>Checklist</i></h2>
   <div class="ck">
-    <label><input type="checkbox" value="game-41764" /> 安全区内没有任何关键 UI（刘海、挖孔、圆角、手势条都避开）</label>
-    <label><input type="checkbox" value="game-53778" /> HUD 占屏 ≤ 25%，关键数值位置全程固定</label>
-    <label><input type="checkbox" value="game-98639" /> 所有数值可读：有描边/渐变衬底，any 背景下都能看清</label>
-    <label><input type="checkbox" value="game-31491" /> 色盲模拟下「增益/减益/危险」仍能区分（不只靠红绿）</label>
-    <label><input type="checkbox" value="game-350" /> 触屏按钮 ≥ 48dp、间距 ≥ 8dp，多指并发无冲突</label>
-    <label><input type="checkbox" value="game-94216" /> 所有手势都有等效显式按钮，长按/拖拽可兜底</label>
-    <label><input type="checkbox" value="game-19644" /> 9-slice 或矢量资源，16:9 → 21:9 → 4:3 全部通过视觉验收</label>
-    <label><input type="checkbox" value="game-59392" /> 文本膨胀 35% 后不溢出不留截断，RTL 布局已镜像</label>
-    <label><input type="checkbox" value="game-27411" /> 新手引导可跳过且有二次入口；屏幕震动可关闭</label>
-    <label><input type="checkbox" value="game-512" /> 图标风格统一，缩到 40px 灰度化后仍可辨认</label>
+    <label><input type="checkbox" value="game-41764" /> No critical UI sits inside the safe area (notch, punch-hole, rounded corners and gesture bar all avoided)</label>
+    <label><input type="checkbox" value="game-53778" /> HUD occupies ≤ 25% of the screen; key numeric positions stay fixed throughout</label>
+    <label><input type="checkbox" value="game-98639" /> All numbers are readable: outlined / gradient-backed and legible on any background</label>
+    <label><input type="checkbox" value="game-31491" /> Under colorblind simulation, "buff / debuff / danger" are still distinguishable (not by red-green alone)</label>
+    <label><input type="checkbox" value="game-350" /> Touch buttons ≥ 48dp with ≥ 8dp spacing; no multi-touch conflicts</label>
+    <label><input type="checkbox" value="game-94216" /> Every gesture has an equivalent explicit button; long-press / drag can serve as a fallback</label>
+    <label><input type="checkbox" value="game-19644" /> 9-slice or vector assets; 16:9 → 21:9 → 4:3 all pass visual review</label>
+    <label><input type="checkbox" value="game-59392" /> After 35% text expansion there is no overflow and no truncation; the RTL layout is mirrored</label>
+    <label><input type="checkbox" value="game-27411" /> Onboarding is skippable and has a second entry point; screen shake can be turned off</label>
+    <label><input type="checkbox" value="game-512" /> Icon style is consistent and still recognizable at 40px after grayscale conversion</label>
   </div>
 </section>
 <section>
-  <h2>更多可抄用的资源</h2>
+  <h2>More resources worth copying</h2>
   <div class="cards">
-  <div class="res"><b>Game UI Database</b><span>社区收录</span><em>按游戏类型翻 HUD / 菜单参考图，找方向最快的办法。</em><br/><a href="https://www.gameuidatabase.com/" target="_blank" rel="noopener">官网</a></div>
-  <div class="res"><b>Game-icons.net</b><span>CC BY 3.0</span><em>4,000+ 游戏图标，本仓库已全量收录。</em></div>
-  <div class="res"><b>Xbox / PlayStation / Switch 规范</b><span>平台方</span><em>做主机移植时的硬性：安全区、字号、按键提示。</em></div>
-  <div class="res"><b>Unity / Unreal UI 文档</b><span>引擎方</span><em>Canvas Scaler、UMG、多分辨率适配的实操细节。</em></div>
-  <div class="res"><b>9-slice / Scale Form / DPI 缩放</b><span>—</span><em>九宫格与矢量优先，避免把 UI 切成一堆 PNG。</em></div>
-  <div class="res"><b>Localization 指南</b><span>—</span><em>文本膨胀、RTL、字体子集的成本控制。</em></div>
+  <div class="res"><b>Game UI Database</b><span>Community collection</span><em>Browse HUD / menu reference images by game genre — the fastest way to find a direction.</em><br/><a href="https://www.gameuidatabase.com/" target="_blank" rel="noopener">Official site</a></div>
+  <div class="res"><b>Game-icons.net</b><span>CC BY 3.0</span><em>4,000+ game icons, fully included in this repo.</em></div>
+  <div class="res"><b>Xbox / PlayStation / Switch guidelines</b><span>Platform holders</span><em>Hard requirements for console ports: safe area, font size, button prompts.</em></div>
+  <div class="res"><b>Unity / Unreal UI docs</b><span>Engine vendors</span><em>Practical details of Canvas Scaler, UMG and multi-resolution adaptation.</em></div>
+  <div class="res"><b>9-slice / Scale Form / DPI scaling</b><span>—</span><em>Nine-slice and vector first; avoid slicing the UI into a pile of PNGs.</em></div>
+  <div class="res"><b>Localization guides</b><span>—</span><em>Cost control for text expansion, RTL and font subsetting.</em></div>
 </div>
 </section>
 <div class="navprev">
-<a href="software/index.html"><b>软件界面设计规范</b>桌面 / Web App / 移动 App 的通用 UI 规则</a>
-<a href="website/index.html"><b>网站设计方法论</b>营销站 / 内容站 / 落地页</a>
-<a href="../../index.html"><b>回到图标库</b>215 套 / 352,371 个 SVG 图标检索</a>
+<a href="software/index.html"><b>Software Interface Design Guidelines</b>Common UI rules for desktop / Web App / mobile App</a>
+<a href="website/index.html"><b>Website Design Methodology</b>Marketing site / content site / landing page</a>
+<a href="../../index.html"><b>Back to the icon library</b>215 sets / 352,371 SVG icons searchable</a>
 </div>
 </main>
-<footer>本页内容为设计实践总结，配图所用图标均来自本仓库收录的开源图标集（各以其上游许可证为准）· ui-icons-hub</footer>
+<footer>The content of this page is a summary of design practice; the icons used in the illustrations all come from the open-source icon sets collected in this repository (each subject to its upstream license) · ui-icons-hub</footer>
 </div>
 <div class="top" id="totop">&#8593;</div>
 <script>
