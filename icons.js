@@ -217,7 +217,7 @@ window.ICON_SETS = [
 },
 {
 "repo": "carbon-design-system/carbon",
-"name": "Carbon Icons（IBM）",
+"name": "Carbon Icons (IBM)",
 "group": "general",
 "stars": 9465,
 "license": "Apache-2.0",
